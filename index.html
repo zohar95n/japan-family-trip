@@ -160,40 +160,26 @@ body{font-family:'Heebo',sans-serif;background:#f5f3ef;color:#1a1a2e;direction:r
 .type-chip.on{background:#1a1a2e;border-color:#1a1a2e;color:#fff}
 
 /* BUDGET */
-.cur-row{display:flex;gap:5px;margin-bottom:10px}
-.cur-btn{flex:1;padding:7px;border-radius:9px;border:1.5px solid #e5e1d8;background:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:'Heebo',sans-serif;color:#6b7280;transition:all 0.15s;text-align:center}
-.cur-btn.on{border-color:#e8628a;background:#fce4ec;color:#c2185b}
-.bs2{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px}
-.bsc{background:#fff;border:1px solid #e5e1d8;border-radius:11px;padding:11px;text-align:center}
-.bsn{font-size:18px;font-weight:800;color:#e8628a;line-height:1}.bsl{font-size:10px;color:#9ca3af;margin-top:2px}
-.cat-g{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:10px}
-.cat-c{background:#fff;border:1px solid #e5e1d8;border-radius:10px;padding:7px 4px;text-align:center}
-.cat-c.act{border-color:#e8628a;background:#fce4ec}
-.cat-e{font-size:17px;display:block;margin-bottom:2px}
-.cat-n{font-size:10px;font-weight:700;color:#374151}.cat-t{font-size:11px;font-weight:800;color:#e8628a;margin-top:1px}
-.er2{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #f0ece4}
-.er2:last-child{border:none}
-.dt-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #f0ece4;font-size:12px}
-.dt-row:last-child{border:none}
-.bar-bg{background:#f0ece4;border-radius:3px;height:4px;margin-top:2px;overflow:hidden}
-.bar-fill{height:100%;border-radius:3px;background:#e8628a;transition:width 0.5s}
-.exp-del{background:none;border:none;cursor:pointer;color:#d1d5db;font-size:13px;padding:0 2px;flex-shrink:0}
-.exp-del:hover{color:#c62828}
-
-/* OVERVIEW */
-.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:11px}
-.sc{background:#fff;border:1px solid #e5e1d8;border-radius:11px;padding:11px 7px;text-align:center}
-.sn{font-size:21px;font-weight:800;color:#e8628a;line-height:1}.sl{font-size:9px;color:#9ca3af;margin-top:2px}
-.ri{display:flex;gap:9px}.rl{display:flex;flex-direction:column;align-items:center;width:26px;flex-shrink:0}
-.rd{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px}
-.rc3{width:2px;flex:1;min-height:24px;margin:3px 0}
-.rinfo{flex:1;padding-bottom:11px}.rcity{font-weight:800;font-size:13px}.rdates{font-size:10px;color:#9ca3af;margin-top:1px}
-.tags2{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px}
-.tip{background:#fdf3d8;border:1px solid rgba(201,152,42,0.3);border-radius:10px;padding:10px;margin-bottom:8px}
-.tip-t{font-size:10px;font-weight:800;color:#8d6519;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
-.tip ul{list-style:none;font-size:11px;color:#7a5c1e;line-height:1.9}
-.tip ul li::before{content:'💡 '}
-
+.bg-summary-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:11px}
+.bs3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+.dbc{background:#fff;border:1px solid #e5e1d8;border-radius:13px;margin-bottom:9px;overflow:hidden}
+.dbc-top{padding:11px 13px;display:flex;align-items:center;justify-content:space-between}
+.dbc-date{font-weight:800;font-size:13px;color:#1a1a2e}
+.dbc-title{font-size:11px;color:#9ca3af;margin-top:1px}
+.dbc-nums{text-align:left;direction:ltr}
+.dbc-spent{font-size:15px;font-weight:800;line-height:1}
+.dbc-target{font-size:10px;color:#9ca3af;margin-top:1px}
+.dbc-bar-wrap{padding:0 13px 10px}
+.dbc-bar{height:7px;background:#f0ece4;border-radius:4px;overflow:hidden;margin-bottom:7px}
+.dbc-bar-fill{height:100%;border-radius:4px;transition:width 0.5s}
+.dbc-target-row{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.dbc-target-inp{border:1px solid #e5e1d8;border-radius:7px;padding:5px 8px;font-size:11px;font-family:'Heebo',sans-serif;width:90px;outline:none;direction:rtl}
+.dbc-target-inp:focus{border-color:#e8628a}
+.dbc-set-btn{background:#e8eef8;border:none;border-radius:7px;padding:5px 10px;font-size:11px;font-weight:700;color:#1a2f6e;cursor:pointer;font-family:'Heebo',sans-serif}
+.dbc-exps{border-top:1px solid #f0ece4}
+.dbc-exp-row{display:flex;align-items:center;gap:8px;padding:7px 13px;border-bottom:1px solid #f5f3ef;font-size:11px}
+.dbc-exp-row:last-child{border:none}
+.status-ok{color:#2e7d52}.status-over{color:#c62828}
 /* LOADING */
 .loading{text-align:center;padding:40px;color:#9ca3af;font-size:14px}
 .loading-spinner{width:32px;height:32px;border:3px solid #f0ece4;border-top-color:#e8628a;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px}
@@ -296,36 +282,57 @@ body{font-family:'Heebo',sans-serif;background:#f5f3ef;color:#1a1a2e;direction:r
 
 <!-- BUDGET -->
 <div class="pnl" id="pnl-bg">
-  <div class="sec" style="margin-top:2px">סיכום תקציב</div>
-  <div class="bs2">
-    <div class="bsc"><div class="bsn" id="total-spent">₪0</div><div class="bsl">סה"כ בשקלים</div></div>
+
+  <!-- RATE INFO -->
+  <div style="background:#e8eef8;border-radius:10px;padding:9px 12px;margin-bottom:11px;font-size:11px;color:#1a2f6e;line-height:1.7;margin-top:2px">
+    <strong>שערי המרה לשקל:</strong> &nbsp;💴 100¥ = ₪2 &nbsp;·&nbsp; 💵 $1 = ₪3
+  </div>
+
+  <!-- SUMMARY ROW -->
+  <div class="bg-summary-row">
+    <div class="bsc"><div class="bsn" id="total-spent">₪0</div><div class="bsl">סה"כ הוצאות</div></div>
     <div class="bsc"><div class="bsn" id="exp-count">0</div><div class="bsl">רשומות</div></div>
   </div>
-  <div style="background:#e8eef8;border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:11px;color:#1a2f6e;line-height:1.8">
-    <strong>שערי המרה לשקל:</strong><br>
-    💴 100 ¥ יין = ₪2 &nbsp;·&nbsp; 💵 $1 דולר = ₪3
-  </div>
+
+  <!-- ADD EXPENSE -->
   <div class="sec">הוסף הוצאה</div>
   <div class="card card-b">
-    <input class="exp-inp" id="exp-desc" placeholder="תיאור (למשל: ארוחת ערב ביקיניקו)">
-    <div class="exp-row2">
-      <input class="exp-sel" id="exp-amt" placeholder="סכום" type="number" style="max-width:100px">
-      <select class="exp-sel" id="exp-input-cur" style="max-width:90px">
+    <input class="exp-inp" id="exp-desc" placeholder="תיאור (למשל: ארוחת ערב, כרטיס TeamLab...)">
+    <div class="exp-row2" style="margin-bottom:7px">
+      <input class="exp-sel" id="exp-amt" placeholder="סכום" type="number" style="max-width:85px">
+      <select class="exp-sel" id="exp-input-cur">
         <option value="ILS">₪ שקל</option>
         <option value="JPY">¥ יין</option>
         <option value="USD">$ דולר</option>
       </select>
-      <select class="exp-sel" id="exp-cat"><option value="hotel">🏨 מלון</option><option value="food">🍜 אוכל</option><option value="attractions">🎡 אתרים</option><option value="transport">🚄 תחבורה</option><option value="flights">✈️ טיסות</option><option value="shopping">🛍️ שופינג</option><option value="other">📦 אחר</option></select>
     </div>
-    <div class="exp-row2">
-      <select class="exp-sel" id="exp-day" style="flex:1"></select>
+    <div class="exp-row2" style="margin-bottom:7px">
+      <select class="exp-sel" id="exp-cat">
+        <option value="food">🍜 אוכל</option>
+        <option value="attractions">🎡 אתרים</option>
+        <option value="transport">🚄 תחבורה</option>
+        <option value="hotel">🏨 מלון</option>
+        <option value="flights">✈️ טיסות</option>
+        <option value="shopping">🛍️ שופינג</option>
+        <option value="other">📦 אחר</option>
+      </select>
+      <select class="exp-sel" id="exp-day"></select>
     </div>
-    <div id="exp-preview" style="font-size:11px;color:#9ca3af;margin-bottom:8px;min-height:16px"></div>
+    <div id="exp-preview" style="font-size:11px;font-weight:700;color:#2e7d52;margin-bottom:8px;min-height:16px"></div>
     <button class="add-btn" id="add-exp-btn">+ הוסף הוצאה</button>
   </div>
-  <div class="sec">לפי קטגוריה</div><div class="cat-g" id="cat-grid"></div>
-  <div class="sec">לפי יום</div>
-  <div class="card card-b"><div id="day-totals-list"><div style="text-align:center;color:#9ca3af;font-size:12px;padding:8px">עדיין אין הוצאות</div></div></div>
+
+  <!-- BY CATEGORY -->
+  <div class="sec">לפי קטגוריה</div>
+  <div class="cat-g" id="cat-grid"></div>
+
+  <!-- BY DAY -->
+  <div class="sec">הוצאות לפי יום</div>
+  <div class="card card-b" id="day-breakdown">
+    <div style="text-align:center;color:#9ca3af;font-size:12px;padding:8px">עדיין אין הוצאות</div>
+  </div>
+
+  <!-- ALL EXPENSES -->
   <div class="sec">כל ההוצאות</div>
   <div class="card card-b"><div id="exp-list"><div style="text-align:center;color:#9ca3af;font-size:12px;padding:8px">הוסף את ההוצאה הראשונה!</div></div></div>
 </div>
@@ -588,7 +595,11 @@ function startListeners() {
   });
   db.ref('expenses').on('value', snap => {
     expenses = snap.val() || [];
-    if (dataLoaded) renderBudget();
+    if (dataLoaded) { renderBudget(); updateMainSummaryBar(); }
+  });
+  db.ref('dayTargets').on('value', snap => {
+    dayTargets = snap.val() || {};
+    if (dataLoaded) { updateMainSummaryBar(); renderDailyCards(); }
   });
 
   // Mark as loaded after first data arrives
@@ -601,12 +612,14 @@ function startListeners() {
     db.ref('days').once('value'),
     db.ref('rests').once('value'),
     db.ref('hotels').once('value'),
-    db.ref('expenses').once('value')
-  ]).then(([dSnap, rSnap, hSnap, eSnap]) => {
+    db.ref('expenses').once('value'),
+    db.ref('dayTargets').once('value')
+  ]).then(([dSnap, rSnap, hSnap, eSnap, dtSnap]) => {
     DAYS = dSnap.val() || INITIAL_DAYS;
     RESTS = rSnap.val() || INITIAL_RESTS;
     hotels = hSnap.val() || [];
     expenses = eSnap.val() || [];
+    dayTargets = dtSnap.val() || {};
     dataLoaded = true;
     buildDays();
     buildFilters();
@@ -614,7 +627,14 @@ function startListeners() {
     buildTransTab();
     renderHotels();
     renderBudget();
+    updateMainSummaryBar();
+    renderDailyCards();
     populateDaySelects();
+    // populate daily day select too
+    const dailySel = document.getElementById('daily-exp-day');
+    if (dailySel) {
+      dailySel.innerHTML = DAYS.filter(Boolean).map(d => `<option value="${d.d}">${d.d} – ${d.title}</option>`).join('');
+    }
     document.getElementById('ov-hotels').textContent = hotels.length;
   });
 }
@@ -845,18 +865,25 @@ function addRestToDay() {
 }
 
 /* ===================== BUDGET ===================== */
+function toILS(amount, currency) {
+  const rates = {JPY:0.02, USD:3, ILS:1};
+  return amount * (rates[currency] || 1);
+}
+function fmtILS(v) { return '₪' + Math.round(v).toLocaleString(); }
+
 function addExpense() {
   const desc = document.getElementById('exp-desc').value.trim();
   const amt = parseFloat(document.getElementById('exp-amt').value);
-  const inputCur = document.getElementById('exp-input-cur').value;
+  const cur = document.getElementById('exp-input-cur').value;
   const cat = document.getElementById('exp-cat').value;
   const day = document.getElementById('exp-day').value;
   if (!desc || !amt || amt <= 0) { alert('אנא מלא תיאור וסכום'); return; }
   const catObj = CATS.find(c => c.id === cat) || CATS[0];
-  const amtILS = toILS(amt, inputCur); // convert to ILS for storage
+  const amtILS = toILS(amt, cur);
   const updated = [...expenses, {
-    id: nextId++, desc, amt: amtILS,
-    origAmt: amt, origCur: inputCur,
+    id: nextId++, desc,
+    amt: amtILS,
+    origAmt: amt, origCur: cur,
     cat, day, e: catObj.e
   }];
   saveToFirebase('expenses', updated);
@@ -873,101 +900,81 @@ function deleteExpense(id) {
 
 function renderBudget() {
   const valid = expenses.filter(Boolean);
-  const totalILS = valid.reduce((s,e) => s + (e.amt||0), 0);
+  const totalILS = valid.reduce((s,e) => s+(e.amt||0), 0);
+
+  // Summary
   document.getElementById('total-spent').textContent = fmtILS(totalILS);
   document.getElementById('exp-count').textContent = valid.length;
+
+  // By category
   document.getElementById('cat-grid').innerHTML = CATS.map(cat => {
-    const t = valid.filter(e => e.cat===cat.id).reduce((s,e) => s+(e.amt||0), 0);
+    const t = valid.filter(e=>e.cat===cat.id).reduce((s,e)=>s+(e.amt||0),0);
     return `<div class="cat-c${t>0?' act':''}"><span class="cat-e">${cat.e}</span><div class="cat-n">${cat.n}</div><div class="cat-t">${t>0?fmtILS(t):'—'}</div></div>`;
   }).join('');
+
+  // By day breakdown
   const dayMap = {};
-  valid.forEach(e => { dayMap[e.day] = (dayMap[e.day]||0) + (e.amt||0); });
-  const keys = Object.keys(dayMap);
-  if (!keys.length) { document.getElementById('day-totals-list').innerHTML = '<div style="text-align:center;color:#9ca3af;font-size:12px;padding:8px">עדיין אין הוצאות</div>'; }
-  else {
-    const mx = Math.max(...keys.map(k => dayMap[k]));
-    document.getElementById('day-totals-list').innerHTML = keys.map(k => {
-      const pct = mx>0 ? Math.round(dayMap[k]/mx*100) : 0;
-      return `<div class="dt-row"><div style="flex:1"><div style="font-size:11px;color:#374151">${k}</div><div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div></div><div style="font-weight:800;color:#e8628a;font-size:12px;margin-right:8px">${fmtILS(dayMap[k])}</div></div>`;
-    }).join('');
+  valid.forEach(e => { dayMap[e.day]=(dayMap[e.day]||0)+(e.amt||0); });
+  const dayKeys = Object.keys(dayMap).sort();
+  const maxSpent = dayKeys.length ? Math.max(...dayKeys.map(k=>dayMap[k])) : 1;
+
+  if (!dayKeys.length) {
+    document.getElementById('day-breakdown').innerHTML = '<div style="text-align:center;color:#9ca3af;font-size:12px;padding:8px">עדיין אין הוצאות</div>';
+  } else {
+    document.getElementById('day-breakdown').innerHTML = dayKeys.map(k => {
+      const pct = Math.round(dayMap[k]/maxSpent*100);
+      // find day title
+      const dayObj = DAYS.find(d=>d&&d.d===k);
+      const title = dayObj ? dayObj.title : k;
+      return `<div style="padding:8px 0;border-bottom:1px solid #f0ece4">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px">
+          <div>
+            <span style="font-size:12px;font-weight:700;color:#1a1a2e">${k}</span>
+            <span style="font-size:10px;color:#9ca3af;margin-right:5px">${title}</span>
+          </div>
+          <span style="font-size:13px;font-weight:800;color:#e8628a">${fmtILS(dayMap[k])}</span>
+        </div>
+        <div style="background:#f0ece4;border-radius:4px;height:6px;overflow:hidden">
+          <div style="height:100%;border-radius:4px;background:#e8628a;width:${pct}%;transition:width 0.5s"></div>
+        </div>
+      </div>`;
+    }).join('') + `<div style="display:flex;justify-content:space-between;padding:10px 0 2px;font-size:12px;font-weight:800;border-top:2px solid #e5e1d8;margin-top:4px"><span>סה"כ</span><span style="color:#e8628a">${fmtILS(totalILS)}</span></div>`;
   }
-  if (!valid.length) { document.getElementById('exp-list').innerHTML = '<div style="text-align:center;color:#9ca3af;font-size:12px;padding:8px">הוסף את ההוצאה הראשונה!</div>'; return; }
+
+  // All expenses list
+  if (!valid.length) {
+    document.getElementById('exp-list').innerHTML = '<div style="text-align:center;color:#9ca3af;font-size:12px;padding:8px">הוסף את ההוצאה הראשונה!</div>';
+    return;
+  }
   document.getElementById('exp-list').innerHTML = valid.slice().reverse().map(ex => {
-    const catObj = CATS.find(c => c.id===ex.cat)||CATS[0];
-    // Show original amount + converted
-    const origStr = ex.origCur && ex.origCur !== 'ILS'
-      ? ` <span style="color:#9ca3af;font-size:10px">(${CUR_SYM[ex.origCur]}${ex.origAmt?.toLocaleString()})</span>`
-      : '';
-    return `<div class="er2"><span style="font-size:15px;width:22px;text-align:center">${ex.e}</span><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:#1a1a2e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${ex.desc}</div><div style="font-size:10px;color:#9ca3af">${catObj.n} · ${ex.day}</div></div><span style="font-size:12px;font-weight:800;color:#1a1a2e;flex-shrink:0">${fmtILS(ex.amt||0)}${origStr}</span><button class="exp-del" onclick="deleteExpense(${ex.id})">✕</button></div>`;
+    const catObj = CATS.find(c=>c.id===ex.cat)||CATS[0];
+    const origStr = ex.origCur && ex.origCur!=='ILS'
+      ? ` <span style="font-size:10px;color:#9ca3af">(${ex.origCur==='JPY'?'¥':'$'}${Number(ex.origAmt).toLocaleString()})</span>` : '';
+    return `<div class="er2">
+      <span style="font-size:15px;width:22px;text-align:center">${ex.e}</span>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12px;font-weight:700;color:#1a1a2e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${ex.desc}</div>
+        <div style="font-size:10px;color:#9ca3af">${catObj.n} · ${ex.day}</div>
+      </div>
+      <span style="font-size:12px;font-weight:800;color:#1a1a2e;flex-shrink:0;margin-left:4px">${fmtILS(ex.amt||0)}${origStr}</span>
+      <button class="exp-del" onclick="deleteExpense(${ex.id})">✕</button>
+    </div>`;
   }).join('');
 }
 
-/* ===================== SELECTS ===================== */
-function populateDaySelects() {
-  const base = '<option value="general">כללי</option>' + DAYS.filter(Boolean).map(d => `<option value="${d.d}">${d.d} – ${d.title}</option>`).join('');
-  ['exp-day','nr-day'].forEach(id => { const el=document.getElementById(id); if(el) el.innerHTML=base; });
-  const dayOnly = DAYS.filter(Boolean).map(d => `<option value="${d.d}">${d.d} – ${d.title}</option>`).join('');
-  ['np-day','rd-day','ht-checkin','ht-checkout'].forEach(id => { const el=document.getElementById(id); if(el) el.innerHTML=dayOnly; });
-}
-
-/* ===================== MODALS ===================== */
-function openModal(id) {
-  document.getElementById(id).classList.add('open');
-  if (id === 'modal-place') {
-    selectedPlaceSlot = 'morning'; selectedPlaceType = '⛩️';
-    document.querySelectorAll('#np-time-seg .time-opt').forEach(x => x.classList.remove('on'));
-    document.querySelector('#np-time-seg [data-slot="morning"]').classList.add('on');
-    document.querySelectorAll('#np-type-chips .type-chip').forEach(x => x.classList.remove('on'));
-    document.querySelector('#np-type-chips [data-type="⛩️"]').classList.add('on');
-  }
-}
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-
-// Close on overlay click
-document.querySelectorAll('.modal-overlay').forEach(o => {
-  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
-});
-
-/* ===================== TYPE CHIPS ===================== */
-document.querySelectorAll('#np-type-chips .type-chip').forEach(c => {
-  c.addEventListener('click', function() {
-    document.querySelectorAll('#np-type-chips .type-chip').forEach(x => x.classList.remove('on'));
-    this.classList.add('on');
-    selectedPlaceType = this.dataset.type;
-  });
-});
-
-/* ===================== TABS ===================== */
-document.querySelectorAll('.nt').forEach(t => {
-  t.addEventListener('click', function() {
-    document.querySelectorAll('.nt').forEach(x => x.classList.remove('on'));
-    document.querySelectorAll('.pnl').forEach(x => x.classList.remove('on'));
-    this.classList.add('on');
-    document.getElementById('pnl-' + this.dataset.tab).classList.add('on');
-  });
-});
-
-/* ===================== CURRENCY ===================== */
-// Live conversion preview
+// Live preview when typing amount
 function updateExpPreview() {
   const amt = parseFloat(document.getElementById('exp-amt').value);
   const cur = document.getElementById('exp-input-cur').value;
   const prev = document.getElementById('exp-preview');
-  if (!amt || amt <= 0 || cur === 'ILS') { prev.textContent = ''; return; }
-  const ils = toILS(amt, cur);
-  const sym = CUR_SYM[cur];
-  prev.textContent = `${sym}${amt.toLocaleString()} = ₪${Math.round(ils).toLocaleString()}`;
-  prev.style.color = '#2e7d52';
-  prev.style.fontWeight = '700';
+  if (!amt || amt<=0 || cur==='ILS') { prev.textContent=''; return; }
+  const sym = cur==='JPY'?'¥':'$';
+  prev.textContent = sym + amt.toLocaleString() + ' = ' + fmtILS(toILS(amt,cur));
 }
 document.getElementById('exp-amt').addEventListener('input', updateExpPreview);
 document.getElementById('exp-input-cur').addEventListener('change', updateExpPreview);
-
 document.getElementById('add-exp-btn').addEventListener('click', addExpense);
-document.getElementById('exp-amt').addEventListener('keydown', e => { if(e.key==='Enter') addExpense(); });
-
-/* ===================== COUNTDOWN ===================== */
-document.getElementById('cnt').textContent = Math.max(0, Math.ceil((new Date('2026-09-16') - new Date()) / 86400000)) || '🎌';
+document.getElementById('exp-amt').addEventListener('keydown', e=>{ if(e.key==='Enter') addExpense(); });
 
 /* ===================== START ===================== */
 initializeData();

@@ -296,24 +296,31 @@ body{font-family:'Heebo',sans-serif;background:#f5f3ef;color:#1a1a2e;direction:r
 
 <!-- BUDGET -->
 <div class="pnl" id="pnl-bg">
-  <div class="sec" style="margin-top:2px">מטבע</div>
-  <div class="cur-row">
-    <button class="cur-btn on" data-cur="JPY">¥ ין</button>
-    <button class="cur-btn" data-cur="USD">$ דולר</button>
-    <button class="cur-btn" data-cur="ILS">₪ שקל</button>
-  </div>
+  <div class="sec" style="margin-top:2px">סיכום תקציב</div>
   <div class="bs2">
-    <div class="bsc"><div class="bsn" id="total-spent">0</div><div class="bsl">סה"כ הוצאות</div></div>
+    <div class="bsc"><div class="bsn" id="total-spent">₪0</div><div class="bsl">סה"כ בשקלים</div></div>
     <div class="bsc"><div class="bsn" id="exp-count">0</div><div class="bsl">רשומות</div></div>
+  </div>
+  <div style="background:#e8eef8;border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:11px;color:#1a2f6e;line-height:1.8">
+    <strong>שערי המרה לשקל:</strong><br>
+    💴 100 ¥ יין = ₪2 &nbsp;·&nbsp; 💵 $1 דולר = ₪3
   </div>
   <div class="sec">הוסף הוצאה</div>
   <div class="card card-b">
     <input class="exp-inp" id="exp-desc" placeholder="תיאור (למשל: ארוחת ערב ביקיניקו)">
     <div class="exp-row2">
-      <input class="exp-sel" id="exp-amt" placeholder="סכום" type="number" style="max-width:110px">
+      <input class="exp-sel" id="exp-amt" placeholder="סכום" type="number" style="max-width:100px">
+      <select class="exp-sel" id="exp-input-cur" style="max-width:90px">
+        <option value="ILS">₪ שקל</option>
+        <option value="JPY">¥ יין</option>
+        <option value="USD">$ דולר</option>
+      </select>
       <select class="exp-sel" id="exp-cat"><option value="hotel">🏨 מלון</option><option value="food">🍜 אוכל</option><option value="attractions">🎡 אתרים</option><option value="transport">🚄 תחבורה</option><option value="flights">✈️ טיסות</option><option value="shopping">🛍️ שופינג</option><option value="other">📦 אחר</option></select>
-      <select class="exp-sel" id="exp-day"></select>
     </div>
+    <div class="exp-row2">
+      <select class="exp-sel" id="exp-day" style="flex:1"></select>
+    </div>
+    <div id="exp-preview" style="font-size:11px;color:#9ca3af;margin-bottom:8px;min-height:16px"></div>
     <button class="add-btn" id="add-exp-btn">+ הוסף הוצאה</button>
   </div>
   <div class="sec">לפי קטגוריה</div><div class="cat-g" id="cat-grid"></div>
@@ -510,15 +517,16 @@ const TRANS = [
 const CATS = [{id:'hotel',e:'🏨',n:'מלון'},{id:'food',e:'🍜',n:'אוכל'},{id:'attractions',e:'🎡',n:'אתרים'},{id:'transport',e:'🚄',n:'תחבורה'},{id:'flights',e:'✈️',n:'טיסות'},{id:'shopping',e:'🛍️',n:'שופינג'},{id:'other',e:'📦',n:'אחר'}];
 const TYPE_STYLE = {tokyo:'background:linear-gradient(135deg,#e8eef8,#c5d3ef);color:#1a2f6e',hakone:'background:linear-gradient(135deg,#e6f4ed,#b8dfc9);color:#1b5e3a',alps:'background:linear-gradient(135deg,#fdf3d8,#f0d48a);color:#8d6519',kyoto:'background:linear-gradient(135deg,#fce4ec,#f4a7bf);color:#c2185b',osaka:'background:linear-gradient(135deg,#fce4ec,#f4a7bf);color:#8b1a3a',park:'background:linear-gradient(135deg,#1a1a2e,#2d2d44);color:#fff'};
 const TYPE_LABEL = {tokyo:'טוקיו',hakone:'האקונה',alps:'האלפים',kyoto:'קיוטו',osaka:'אוסקה',park:'פארק'};
-const RATES = {JPY:1,USD:0.0067,ILS:0.025};
+const TO_ILS = {JPY:0.02, USD:3, ILS:1};
 const CUR_SYM = {JPY:'¥',USD:'$',ILS:'₪'};
+const RATES = {JPY:1,USD:1,ILS:1};
 
 /* ===================== STATE ===================== */
 let DAYS = [];
 let RESTS = [];
 let hotels = [];
 let expenses = [];
-let activeCur = 'JPY';
+let activeCur = 'ILS'; // always display in ILS
 let priceFilter = 'all', locFilter = 'all', dayFilter = 'all';
 let selectedPlaceSlot = 'morning';
 let selectedPlaceType = '⛩️';
@@ -620,7 +628,13 @@ function getHotelForNight(dayStr) {
   const idx = dateToIdx(dayStr);
   return hotels.find(h => h && idx >= dateToIdx(h.checkin) && idx < dateToIdx(h.checkout)) || null;
 }
-function fmtAmt(a) { return CUR_SYM[activeCur] + Math.round(a * RATES[activeCur]).toLocaleString(); }
+function toILS(amount, currency) {
+  return amount * TO_ILS[currency || 'ILS'];
+}
+function fmtILS(shekel) {
+  return '₪' + Math.round(shekel).toLocaleString();
+}
+function fmtAmt(a) { return fmtILS(a); } // stored amounts are already in ILS
 
 /* ===================== BUILD DAYS ===================== */
 function buildTB(icon, lbl, items) {
@@ -834,14 +848,21 @@ function addRestToDay() {
 function addExpense() {
   const desc = document.getElementById('exp-desc').value.trim();
   const amt = parseFloat(document.getElementById('exp-amt').value);
+  const inputCur = document.getElementById('exp-input-cur').value;
   const cat = document.getElementById('exp-cat').value;
   const day = document.getElementById('exp-day').value;
   if (!desc || !amt || amt <= 0) { alert('אנא מלא תיאור וסכום'); return; }
   const catObj = CATS.find(c => c.id === cat) || CATS[0];
-  const updated = [...expenses, { id: nextId++, desc, amt, cat, day, e: catObj.e }];
+  const amtILS = toILS(amt, inputCur); // convert to ILS for storage
+  const updated = [...expenses, {
+    id: nextId++, desc, amt: amtILS,
+    origAmt: amt, origCur: inputCur,
+    cat, day, e: catObj.e
+  }];
   saveToFirebase('expenses', updated);
   document.getElementById('exp-desc').value = '';
   document.getElementById('exp-amt').value = '';
+  document.getElementById('exp-preview').textContent = '';
   showToast('✅ הוצאה נשמרה!');
 }
 
@@ -852,28 +873,32 @@ function deleteExpense(id) {
 
 function renderBudget() {
   const valid = expenses.filter(Boolean);
-  const total = valid.reduce((s,e) => s+e.amt, 0);
-  document.getElementById('total-spent').textContent = fmtAmt(total);
+  const totalILS = valid.reduce((s,e) => s + (e.amt||0), 0);
+  document.getElementById('total-spent').textContent = fmtILS(totalILS);
   document.getElementById('exp-count').textContent = valid.length;
   document.getElementById('cat-grid').innerHTML = CATS.map(cat => {
-    const t = valid.filter(e => e.cat===cat.id).reduce((s,e) => s+e.amt, 0);
-    return `<div class="cat-c${t>0?' act':''}"><span class="cat-e">${cat.e}</span><div class="cat-n">${cat.n}</div><div class="cat-t">${t>0?fmtAmt(t):'—'}</div></div>`;
+    const t = valid.filter(e => e.cat===cat.id).reduce((s,e) => s+(e.amt||0), 0);
+    return `<div class="cat-c${t>0?' act':''}"><span class="cat-e">${cat.e}</span><div class="cat-n">${cat.n}</div><div class="cat-t">${t>0?fmtILS(t):'—'}</div></div>`;
   }).join('');
   const dayMap = {};
-  valid.forEach(e => { dayMap[e.day] = (dayMap[e.day]||0) + e.amt; });
+  valid.forEach(e => { dayMap[e.day] = (dayMap[e.day]||0) + (e.amt||0); });
   const keys = Object.keys(dayMap);
   if (!keys.length) { document.getElementById('day-totals-list').innerHTML = '<div style="text-align:center;color:#9ca3af;font-size:12px;padding:8px">עדיין אין הוצאות</div>'; }
   else {
     const mx = Math.max(...keys.map(k => dayMap[k]));
     document.getElementById('day-totals-list').innerHTML = keys.map(k => {
       const pct = mx>0 ? Math.round(dayMap[k]/mx*100) : 0;
-      return `<div class="dt-row"><div style="flex:1"><div style="font-size:11px;color:#374151">${k}</div><div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div></div><div style="font-weight:800;color:#e8628a;font-size:12px;margin-right:8px">${fmtAmt(dayMap[k])}</div></div>`;
+      return `<div class="dt-row"><div style="flex:1"><div style="font-size:11px;color:#374151">${k}</div><div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div></div><div style="font-weight:800;color:#e8628a;font-size:12px;margin-right:8px">${fmtILS(dayMap[k])}</div></div>`;
     }).join('');
   }
   if (!valid.length) { document.getElementById('exp-list').innerHTML = '<div style="text-align:center;color:#9ca3af;font-size:12px;padding:8px">הוסף את ההוצאה הראשונה!</div>'; return; }
   document.getElementById('exp-list').innerHTML = valid.slice().reverse().map(ex => {
     const catObj = CATS.find(c => c.id===ex.cat)||CATS[0];
-    return `<div class="er2"><span style="font-size:15px;width:22px;text-align:center">${ex.e}</span><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:#1a1a2e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${ex.desc}</div><div style="font-size:10px;color:#9ca3af">${catObj.n} · ${ex.day}</div></div><span style="font-size:12px;font-weight:800;color:#1a1a2e;flex-shrink:0">${fmtAmt(ex.amt)}</span><button class="exp-del" onclick="deleteExpense(${ex.id})">✕</button></div>`;
+    // Show original amount + converted
+    const origStr = ex.origCur && ex.origCur !== 'ILS'
+      ? ` <span style="color:#9ca3af;font-size:10px">(${CUR_SYM[ex.origCur]}${ex.origAmt?.toLocaleString()})</span>`
+      : '';
+    return `<div class="er2"><span style="font-size:15px;width:22px;text-align:center">${ex.e}</span><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:#1a1a2e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${ex.desc}</div><div style="font-size:10px;color:#9ca3af">${catObj.n} · ${ex.day}</div></div><span style="font-size:12px;font-weight:800;color:#1a1a2e;flex-shrink:0">${fmtILS(ex.amt||0)}${origStr}</span><button class="exp-del" onclick="deleteExpense(${ex.id})">✕</button></div>`;
   }).join('');
 }
 
@@ -923,12 +948,20 @@ document.querySelectorAll('.nt').forEach(t => {
 });
 
 /* ===================== CURRENCY ===================== */
-document.querySelectorAll('.cur-btn').forEach(b => {
-  b.addEventListener('click', function() {
-    document.querySelectorAll('.cur-btn').forEach(x => x.classList.remove('on'));
-    this.classList.add('on'); activeCur = this.dataset.cur; renderBudget();
-  });
-});
+// Live conversion preview
+function updateExpPreview() {
+  const amt = parseFloat(document.getElementById('exp-amt').value);
+  const cur = document.getElementById('exp-input-cur').value;
+  const prev = document.getElementById('exp-preview');
+  if (!amt || amt <= 0 || cur === 'ILS') { prev.textContent = ''; return; }
+  const ils = toILS(amt, cur);
+  const sym = CUR_SYM[cur];
+  prev.textContent = `${sym}${amt.toLocaleString()} = ₪${Math.round(ils).toLocaleString()}`;
+  prev.style.color = '#2e7d52';
+  prev.style.fontWeight = '700';
+}
+document.getElementById('exp-amt').addEventListener('input', updateExpPreview);
+document.getElementById('exp-input-cur').addEventListener('change', updateExpPreview);
 
 document.getElementById('add-exp-btn').addEventListener('click', addExpense);
 document.getElementById('exp-amt').addEventListener('keydown', e => { if(e.key==='Enter') addExpense(); });

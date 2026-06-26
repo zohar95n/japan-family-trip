@@ -213,6 +213,17 @@ body{font-family:'Heebo',sans-serif;background:#f5f3ef;color:#1a1a2e;direction:r
 .tip-list{list-style:none;font-size:11px;color:#7a5c1e;line-height:1.9}
 .tip-list li::before{content:'💡 '}
 
+/* MAP */
+.day-map-wrap{margin-top:11px;border-radius:10px;overflow:hidden;border:1px solid #e5e1d8;position:relative}
+.day-map-iframe{width:100%;height:240px;border:none;display:block}
+.day-map-btns{display:flex;gap:7px;margin-top:7px;flex-wrap:wrap}
+.map-btn{display:inline-flex;align-items:center;gap:5px;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;font-family:'Heebo',sans-serif;transition:all 0.15s;border:none}
+.map-btn-primary{background:#1a73e8;color:#fff}
+.map-btn-primary:hover{background:#1557b0}
+.map-btn-loc{background:#e8f4ea;border:1px solid #81c784;color:#2e7d32}
+.map-btn-loc:hover{background:#c8e6c9}
+.map-locate-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#e8628a;border:2px solid #fff;box-shadow:0 0 0 2px #e8628a;margin-left:2px;animation:pulse2 1.5s infinite}
+@keyframes pulse2{0%,100%{box-shadow:0 0 0 2px #e8628a}50%{box-shadow:0 0 0 5px rgba(232,98,138,0.3)}}
 /* LOADING */
 .loading{text-align:center;padding:40px;color:#9ca3af}
 .spinner{width:30px;height:30px;border:3px solid #f0ece4;border-top-color:#e8628a;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 10px}
@@ -235,7 +246,7 @@ body{font-family:'Heebo',sans-serif;background:#f5f3ef;color:#1a1a2e;direction:r
   </div>
   <div class="stats-row">
     <div class="stat"><div class="stat-n" id="cnt">—</div><div class="stat-l">ימים לטיול</div></div>
-    <div class="stat"><div class="stat-n">17</div><div class="stat-l">לילות</div></div>
+    <div class="stat"><div class="stat-n">16</div><div class="stat-l">לילות</div></div>
     <div class="stat"><div class="stat-n" id="hdr-hotels">0</div><div class="stat-l">מלונות</div></div>
     <div class="stat"><div class="stat-n">5</div><div class="stat-l">ערים</div></div>
   </div>
@@ -267,9 +278,9 @@ body{font-family:'Heebo',sans-serif;background:#f5f3ef;color:#1a1a2e;direction:r
     <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#3d5a9e"></div><div class="route-conn" style="background:#3d5a9e"></div></div><div class="route-info"><div class="route-city">🗼 טוקיו</div><div class="route-dates">16.9–21.9 · 5 לילות</div><div class="route-tags"><span class="tag t-blue">שינג'וקו</span><span class="tag t-blue">שיבויה</span><span class="tag t-blue">אסאקוסה</span><span class="tag t-dark">DisneySea 🎢</span></div></div></div>
     <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#2e7d52"></div><div class="route-conn" style="background:#2e7d52"></div></div><div class="route-info"><div class="route-city">⛰️ האקונה</div><div class="route-dates">יום טיול ב-21.9 · ריוקאן (אופציה)</div><div class="route-tags"><span class="tag t-green">רופוויי</span><span class="tag t-green">אונסן</span><span class="tag t-green">Hakone Loop</span></div></div></div>
     <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#c9982a"></div><div class="route-conn" style="background:#c9982a"></div></div><div class="route-info"><div class="route-city">🏔️ האלפים היפניים</div><div class="route-dates">22.9–25.9 · 3 לילות · טאקיאמה</div><div class="route-tags"><span class="tag t-gold">טאקיאמה</span><span class="tag t-gold">קמיקוצ'י</span><span class="tag t-gold">שירקאווה-גו</span></div></div></div>
-    <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#e8628a"></div><div class="route-conn" style="background:#e8628a"></div></div><div class="route-info"><div class="route-city">⛩️ קיוטו</div><div class="route-dates">23.9–27.9 · 4 לילות</div><div class="route-tags"><span class="tag t-pink">גיון</span><span class="tag t-pink">קיומיזו-דרה</span><span class="tag t-pink">ארשיאמה</span><span class="tag t-pink">נארה</span></div></div></div>
-    <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#e8628a"></div><div class="route-conn" style="background:#e8628a"></div></div><div class="route-info"><div class="route-city">🎡 אוסקה</div><div class="route-dates">27.9–29.9 · 2 לילות</div><div class="route-tags"><span class="tag t-pink">דוטונבורי</span><span class="tag t-dark">Universal 🎮</span></div></div></div>
-    <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#3d5a9e"></div></div><div class="route-info" style="padding-bottom:0"><div class="route-city">🗼 טוקיו – שיבויה/שינג'וקו</div><div class="route-dates">29.9–2.10 · 4 לילות + טיסה</div><div class="route-tags"><span class="tag t-blue">שיבויה</span><span class="tag t-blue">שינג'וקו</span><span class="tag t-blue">גינזה</span><span class="tag t-blue">הרג'וקו</span></div></div></div>
+    <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#e8628a"></div><div class="route-conn" style="background:#e8628a"></div></div><div class="route-info"><div class="route-city">⛩️ קיוטו</div><div class="route-dates">22.9–26.9 · 4 לילות</div><div class="route-tags"><span class="tag t-pink">גיון</span><span class="tag t-pink">קיומיזו-דרה</span><span class="tag t-pink">ארשיאמה</span><span class="tag t-pink">נארה</span></div></div></div>
+    <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#e8628a"></div><div class="route-conn" style="background:#e8628a"></div></div><div class="route-info"><div class="route-city">🎡 אוסקה</div><div class="route-dates">26.9–28.9 · 2 לילות</div><div class="route-tags"><span class="tag t-pink">דוטונבורי</span><span class="tag t-dark">Universal 🎮</span></div></div></div>
+    <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#3d5a9e"></div></div><div class="route-info" style="padding-bottom:0"><div class="route-city">🗼 טוקיו – שיבויה/שינג'וקו</div><div class="route-dates">28.9–1.10 · 4 לילות + טיסה</div><div class="route-tags"><span class="tag t-blue">שיבויה</span><span class="tag t-blue">שינג'וקו</span><span class="tag t-blue">גינזה</span><span class="tag t-blue">הרג'וקו</span></div></div></div>
   </div>
   <div class="tip-box"><div class="tip-title">טיפים מרכזיים</div><ul class="tip-list"><li>לאכול Lunch במקום Dinner – זול ב-30–50%</li><li>Convenience Store = ארוחת בוקר מעולה</li><li>לשלוח מזוודות מטוקיו לקיוטו ב-20.9</li><li>Hakone Free Pass – חובה לאזור האקונה</li><li>Suica – להוציא ישר בשדה התעופה</li></ul></div>
 </div>
@@ -461,176 +472,543 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
 // DATA
+
+
+// מיקומים מדויקים לכל יום — lat/lng לכל אתר
+const DAY_PLACES = {
+  '16/9': [
+    {name:'Senso-ji Temple',lat:35.7148,lng:139.7967},
+    {name:'Kaminarimon Gate',lat:35.7107,lng:139.7967},
+    {name:'Nakamise Street',lat:35.7128,lng:139.7966},
+    {name:'Hoppy Street',lat:35.7118,lng:139.7942}
+  ],
+  '17/9': [
+    {name:'Senso-ji Temple',lat:35.7148,lng:139.7967},
+    {name:'Kappabashi Street',lat:35.7184,lng:139.7919},
+    {name:'Ueno Park',lat:35.7151,lng:139.7738},
+    {name:'Ameyoko Market',lat:35.7085,lng:139.7746},
+    {name:'Akihabara',lat:35.6986,lng:139.7731}
+  ],
+  '18/9': [
+    {name:'Ginza',lat:35.6717,lng:139.7650},
+    {name:'Tokyo Station',lat:35.6812,lng:139.7671},
+    {name:'Imperial Palace East Garden',lat:35.6863,lng:139.7528},
+    {name:'Roppongi Hills',lat:35.6604,lng:139.7292},
+    {name:'Tokyo Tower',lat:35.6586,lng:139.7454}
+  ],
+  '19/9': [
+    {name:'Shirakawa-go',lat:36.2576,lng:136.9067},
+    {name:'Ogimachi Village',lat:36.2549,lng:136.9062},
+    {name:'Shirakawa-go Observation Deck',lat:36.2607,lng:136.9009},
+    {name:'Takayama Old Town',lat:36.1461,lng:137.2525}
+  ],
+  '20/9': [
+    {name:'Kamikochi Bus Terminal',lat:36.2450,lng:137.6326},
+    {name:'Kappa Bashi Bridge',lat:36.2467,lng:137.6355},
+    {name:'Tashiro Bridge',lat:36.2414,lng:137.6444},
+    {name:'Taisho Pond',lat:36.2223,lng:137.6521}
+  ],
+  '21/9': [
+    {name:'Takayama Morning Market',lat:36.1456,lng:137.2552},
+    {name:'Sanmachi Suji',lat:36.1461,lng:137.2525},
+    {name:'Hida Folk Village',lat:36.1589,lng:137.2373},
+    {name:'Shiroyama Park Takayama',lat:36.1489,lng:137.2462}
+  ],
+  '22/9': [
+    {name:'Nishiki Market Kyoto',lat:35.0050,lng:135.7659},
+    {name:'Gion District',lat:35.0038,lng:135.7785},
+    {name:'Hanamikoji Street',lat:35.0024,lng:135.7764},
+    {name:'Yasaka Shrine',lat:35.0036,lng:135.7787}
+  ],
+  '23/9': [
+    {name:'Kiyomizudera Temple',lat:34.9948,lng:135.7851},
+    {name:'Sannenzaka',lat:34.9984,lng:135.7822},
+    {name:'Yasaka Pagoda',lat:35.0000,lng:135.7789},
+    {name:'Higashiyama District',lat:35.0003,lng:135.7808},
+    {name:'Maruyama Park',lat:35.0042,lng:135.7800}
+  ],
+  '24/9': [
+    {name:'Arashiyama Bamboo Grove',lat:35.0170,lng:135.6720},
+    {name:'Tenryu-ji Temple',lat:35.0167,lng:135.6729},
+    {name:'Togetsukyo Bridge',lat:35.0132,lng:135.6779},
+    {name:'Monkey Park Arashiyama',lat:35.0118,lng:135.6742}
+  ],
+  '25/9': [
+    {name:'Nara Park',lat:34.6851,lng:135.8431},
+    {name:'Todai-ji Temple',lat:34.6888,lng:135.8398},
+    {name:'Kasuga Taisha Shrine',lat:34.6814,lng:135.8481},
+    {name:'Fushimi Inari Taisha',lat:34.9671,lng:135.7727}
+  ],
+  '26/9': [
+    {name:'Dotonbori',lat:34.6687,lng:135.5012},
+    {name:'Glico Sign',lat:34.6691,lng:135.5013},
+    {name:'Kuromon Market',lat:34.6673,lng:135.5058},
+    {name:'Shinsekai',lat:34.6522,lng:135.5064},
+    {name:'Tsutenkaku Tower',lat:34.6523,lng:135.5063}
+  ],
+  '27/9': [
+    {name:'Universal Studios Japan',lat:34.6654,lng:135.4322},
+    {name:'Super Nintendo World',lat:34.6660,lng:135.4310},
+    {name:'Harry Potter Hogsmeade',lat:34.6648,lng:135.4335}
+  ],
+  '28/9': [
+    {name:'Shibuya Crossing',lat:35.6595,lng:139.7004},
+    {name:'Shibuya PARCO',lat:35.6603,lng:139.6985},
+    {name:'Shibuya Sky',lat:35.6580,lng:139.7016},
+    {name:'Hachiko Statue',lat:35.6591,lng:139.7005}
+  ],
+  '29/9': [
+    {name:'Ginza',lat:35.6717,lng:139.7650},
+    {name:'Tokyo Station Marunouchi',lat:35.6812,lng:139.7671},
+    {name:'Imperial Palace East Garden',lat:35.6863,lng:139.7528},
+    {name:'Roppongi Hills',lat:35.6604,lng:139.7292},
+    {name:'Tokyo Tower',lat:35.6586,lng:139.7454}
+  ],
+  '30/9': [
+    {name:'Meiji Jingu',lat:35.6763,lng:139.6993},
+    {name:'Takeshita Street Harajuku',lat:35.6702,lng:139.7026},
+    {name:'Shinjuku Golden Gai',lat:35.6940,lng:139.7036},
+    {name:'Tokyo Metropolitan Government Building',lat:35.6896,lng:139.6921},
+    {name:'Omoide Yokocho',lat:35.6931,lng:139.6997}
+  ],
+  '1/10': [
+    {name:'Shinjuku Gyoen',lat:35.6851,lng:139.7100},
+    {name:'Meiji Jingu',lat:35.6763,lng:139.6993},
+    {name:'Don Quijote Shinjuku',lat:35.6958,lng:139.7030},
+    {name:'Pokemon Center Shibuya',lat:35.6584,lng:139.7016},
+    {name:'Shibuya Sky',lat:35.6580,lng:139.7016}
+  ]
+};
+
+// Google Maps links per day — search queries for key locations
+const DAY_MAPS = {
+  '16/9': 'https://maps.google.com/maps/search/Senso-ji+Temple,+Nakamise+Street,+Hoppy+Street+Asakusa+Tokyo',
+  '17/9': 'https://maps.google.com/maps/search/Senso-ji+Temple+Asakusa,+Kappabashi+Street,+Ueno+Park,+Ameyoko+Market+Tokyo',
+  '18/9': 'https://maps.google.com/maps/search/Ginza+Tokyo,+Tokyo+Station,+Imperial+Palace+East+Garden,+Roppongi+Hills',
+  '19/9': 'https://maps.google.com/maps/search/Shirakawa-go+Gifu,+Takayama+Old+Town+Japan',
+  '20/9': 'https://maps.google.com/maps/search/Kamikochi+Nagano,+Kappabashi+Bridge+Kamikochi,+Taisho+Pond+Kamikochi',
+  '21/9': 'https://maps.google.com/maps/search/Takayama+Morning+Market,+Sanmachi+Suji+Takayama,+Hida+Folk+Village+Takayama',
+  '22/9': 'https://maps.google.com/maps/search/Nishiki+Market+Kyoto,+Gion+Kyoto,+Hanamikoji+Street+Kyoto',
+  '23/9': 'https://maps.google.com/maps/search/Kiyomizudera+Kyoto,+Sannenzaka+Kyoto,+Yasaka+Pagoda+Kyoto,+Gion+Kyoto',
+  '24/9': 'https://maps.google.com/maps/search/Arashiyama+Bamboo+Grove+Kyoto,+Tenryuji+Temple,+Togetsukyo+Bridge+Arashiyama',
+  '25/9': 'https://maps.google.com/maps/search/Nara+Park,+Todaiji+Temple+Nara,+Kasuga+Taisha+Nara,+Fushimi+Inari+Kyoto',
+  '26/9': 'https://maps.google.com/maps/search/Dotonbori+Osaka,+Glico+Sign+Osaka,+Kuromon+Market+Osaka,+Shinsekai+Osaka',
+  '27/9': 'https://maps.google.com/maps/search/Universal+Studios+Japan+Osaka',
+  '28/9': 'https://maps.google.com/maps/search/Shibuya+Crossing+Tokyo,+Shibuya+PARCO,+Shibuya+Sky+Observatory',
+  '29/9': 'https://maps.google.com/maps/search/Ginza+Tokyo,+Tokyo+Station+Marunouchi,+Imperial+Palace+Garden,+Roppongi+Hills+Tokyo',
+  '30/9': 'https://maps.google.com/maps/search/Meiji+Jingu+Tokyo,+Takeshita+Street+Harajuku,+Shinjuku+Golden+Gai,+Tokyo+Metropolitan+Building',
+  '1/10': 'https://maps.google.com/maps/search/Shinjuku+Gyoen,+Shibuya+Sky,+Pokémon+Center+Shibuya,+Tokyo+Haneda+Airport'
+};
+
 const D0 = [
-  // ===== טוקיו 1 – אסאקוסה (16.9–19.9, 3 לילות) =====
-  {d:'16/9',title:'נחיתה – אסאקוסה',sub:'אסאקוסה · התאקלמות',type:'tokyo',area:'tokyo-asakusa',al:'אסאקוסה',e:'✈️',
+
+  // ===== טוקיו 1 – אסאקוסה (16.9–18.9, 3 לילות) =====
+
+  {d:'16/9',title:'נחיתה – אסאקוסה',sub:'אסאקוסה · ערב ראשון ביפן',type:'tokyo',area:'tokyo-asakusa',al:'אסאקוסה',e:'✈️',
    morning:[],afternoon:[],
-   evening:['נחיתה 17:30 – הגירה + איסוף מזוודות','סים / eSIM + טעינת Suica','נסיעה למלון באסאקוסה','Nakamise Street ערב / Senso-ji בלילה','ארוחת ערב קלה: ראמן / גיוזה / טמפורה'],
-   trans:[{f:'הנדה',t:'אסאקוסה',k:'train',d:'40-50 דק\'',n:'Monorail + Yamanote + Ginza Line'},{f:'נריטה',t:'אסאקוסה',k:'shin',d:'80-90 דק\'',n:'Narita Express + Ginza Line'}],
-   note:'לא להעמיס – להיכנס לאווירה ולישון בזמן סביר.',ri:[0,1]},
+   evening:[
+     'נחיתה 17:30 – הגירה + איסוף מזוודות',
+     'סים / eSIM + טעינת Suica בשדה התעופה',
+     'נסיעה למלון באסאקוסה',
+     '🚶 סיבוב ערב באסאקוסה:',
+     'Senso-ji בלילה – מואר ושקט (חינם)',
+     'Nakamise Street – גם פתוח בשעות ערב',
+     'Kaminarimon Gate – לצילום לילי',
+     'Hoppy Street – רחוב בארים ואיזאקאיות מקומיות',
+     'Nakamise-dori ואחורי המקדש – אווירה יפנית אמיתית',
+     '🍜 ארוחת ערב ראשונה: ראמן / גיוזה / טמפורה באסאקוסה'
+   ],
+   trans:[
+     {f:'הנדה',t:'אסאקוסה',k:'train',d:'40-50 דק\'',n:'Tokyo Monorail → Yamanote → Ginza Line'},
+     {f:'נריטה',t:'אסאקוסה',k:'shin',d:'80-90 דק\'',n:'Narita Express → Ginza Line'}
+   ],
+   note:'לא להעמיס – ערב קליל. Senso-ji מרהיב בלילה!',ri:[0,1,2]},
 
-  {d:'17/9',title:'אסאקוסה + TeamLab + אודאיבה',sub:'אסאקוסה / אודאיבה',type:'tokyo',area:'tokyo-asakusa',al:'אסאקוסה',e:'⛩️',
-   morning:['Senso-ji Temple + Kaminarimon Gate (חינם)','Nakamise Street – קניות ומזכרות','Kappabashi Street – סכינים וכלי מטבח','Kagetsudo Bakery – Melon Pan מפורסם'],
-   afternoon:['נסיעה אסאקוסה → אודאיבה (40-45 דק\')','Gundam Statue + DiverCity','TeamLab Planets – להזמין מראש!','טיילת המפרץ'],
-   evening:['ארוחת ערב מול המים','Rainbow Bridge בלילה','חזרה לאסאקוסה'],
-   trans:[{f:'אסאקוסה',t:'אודאיבה',k:'train',d:'40-45 דק\'',n:'Ginza + Yurikamome'}],
-   note:'להזמין TeamLab מראש – נגמר מהר!',ri:[2,3,4,5]},
+  {d:'17/9',title:'טיול מלא באסאקוסה',sub:'אסאקוסה · Ueno · Kappabashi',type:'tokyo',area:'tokyo-asakusa',al:'אסאקוסה',e:'⛩️',
+   morning:[
+     'Senso-ji Temple + Kaminarimon Gate (חינם) – מוקדם לפני עומס',
+     'Nakamise Street – קניות ומזכרות',
+     'Kappabashi Street – רחוב הסכינים וכלי המטבח היפניים',
+     'Kagetsudo Bakery – Melon Pan המפורסם',
+     'Kimuraya – Ningyo-yaki לטעימה'
+   ],
+   afternoon:[
+     'Ueno Park – אחד הפארקים הגדולים בטוקיו (חינם)',
+     'Tokyo National Museum (אם רוצים, ¥)',
+     'Ueno Zoo (אם יש ילדים קטנים, ¥)',
+     'Ameyoko Market – שוק רחוב תוסס ליד Ueno',
+     'Akihabara – 10 דק\' מ-Ueno, גאדג\'טים ואנימה'
+   ],
+   evening:[
+     'חזרה לאסאקוסה',
+     'Hoppy Street – ברים ואיזאקאיות מקומיות',
+     'Asakusa יחסית לא תיירותי בלילה – אווירה מקומית',
+     'Oden / Yakitori / בר מקומי קטן'
+   ],
+   trans:[{f:'אסאקוסה',t:'Ueno',k:'train',d:'5 דק\'',n:'Ginza Line'},{f:'Ueno',t:'Akihabara',k:'train',d:'3 דק\'',n:'JR Yamanote'}],
+   note:'יום אסאקוסה קלאסי – מקדש + שוק + אוקיהברה.',ri:[0,1,2,3,4]},
 
-  {d:'18/9',title:'שיבויה + הרג\'וקו + שינג\'וקו',sub:'שיבויה / הרג\'וקו / שינג\'וקו',type:'tokyo',area:'tokyo-shibuya',al:'שיבויה',e:'🗼',
-   morning:['נסיעה אסאקוסה → שיבויה (30-35 דק\')','Shibuya Crossing + פסל Hachiko','Shibuya PARCO + Nintendo Tokyo','Loft / Mega Donki / Shibuya 109'],
-   afternoon:['הליכה שיבויה → הרג\'וקו (10-15 דק\')','Takeshita Street + Cat Street','Omotesando + Tokyu Plaza','Laforet Shopping Mall','Pierre Hermé Paris – קינוח'],
-   evening:['נסיעה הרג\'וקו → שינג\'וקו (5-8 דק\')','Tokyo Metropolitan Building – תצפית חינם!','Golden Gai + Kabukicho','Godzilla Statue + Omoide Yokocho'],
-   trans:[{f:'אסאקוסה',t:'שיבויה',k:'train',d:'30-35 דק\'',n:'Ginza Line + JR Yamanote'}],
-   note:'רוב האתרים חינם! יום קלאסי בטוקיו.',ri:[6,7,8,9,10,11]},
+  {d:'18/9',title:'גינזה + טוקיו סטיישן + Roppongi',sub:'גינזה / Imperial Palace / Roppongi',type:'tokyo',area:'tokyo-ginza',al:'גינזה',e:'🛍️',
+   morning:[
+     'נסיעה אסאקוסה → גינזה (20-25 דק\')',
+     'Ginza – קניות פרמיום + ארכיטקטורה',
+     'Uniqlo Ginza (הכי גדול ביפן)',
+     'Itoya – חנות הנייר המפורסמת',
+     'Ginza Six – מרכז קניות פרמיום'
+   ],
+   afternoon:[
+     'Tokyo Station + Marunouchi – ארכיטקטורה מרשימה',
+     'Tokyo Station Food Halls (B1) – ארוחת צהריים מעולה',
+     'Imperial Palace East Garden (חינם)',
+     'Ginza Kagari – ראמן פרמיום (אם לא אכלתם)'
+   ],
+   evening:[
+     'Roppongi Hills – תצפית + קניות',
+     'Tokyo Tower + Zojoji Temple – יפה בלילה',
+     'Roppongi bars / restaurants לערב'
+   ],
+   trans:[{f:'אסאקוסה',t:'גינזה',k:'train',d:'20-25 דק\'',n:'Ginza Line ישירות!'},{f:'גינזה',t:'Roppongi',k:'train',d:'10 דק\'',n:'Hibiya Line'}],
+   note:'Ginza Line מ-Asakusa → Ginza ישירות – נוח מאוד!',ri:[5,6,7,8,9]},
 
-  {d:'19/9',title:'DisneySea',sub:'DisneySea · Fantasy Springs',type:'park',area:'tokyo-disneysea',al:'DisneySea',e:'🎢',
-   morning:['יציאה 06:15–06:30 מהמלון','נסיעה אסאקוסה → DisneySea (~70 דק\')','הגעה לפני פתיחה','כניסה + הזמנת DPA מיד'],
-   afternoon:['Fantasy Springs – Frozen Journey','Rapunzel\'s Lantern Festival + Peter Pan','ארוחת צהריים ארוכה + מנוחה'],
-   evening:['Mediterranean Harbor בלילה','מופע ערב + Venice Area','חזרה לאסאקוסה'],
-   trans:[{f:'אסאקוסה',t:'DisneySea',k:'train',d:'~70 דק\'',n:'Ginza + JR Keiyo + Disney Resort Line'}],
-   note:'⚠️ יום העומס הגדול! להביא snacks.',ri:[]},
+  // ===== האלפים – טאקיאמה (19.9–21.9, 3 לילות) =====
 
-  // ===== האלפים – טאקיאמה (20.9–23.9, 3 לילות) =====
-  {d:'20/9',title:'אסאקוסה → טאקיאמה',sub:'מעבר לאלפים היפניים',type:'alps',area:'alps',al:'האלפים',e:'🚃',
-   morning:['ארוחת בוקר + צ\'ק אאוט מאסאקוסה','⚠️ שולחים מזוודות גדולות לקיוטו (Yamato/Kuroneko)'],
-   afternoon:['נסיעה: אסאקוסה → טוקיו → נגויה → טאקיאמה','עצירת אוכל ב-Nagoya Station (Ekiben!)','המשך דרך האלפים – נוף מדהים!'],
-   evening:['צ\'ק אין בטאקיאמה','סיבוב בעיר העתיקה','Hida Beef לארוחת ערב'],
-   trans:[{f:'אסאקוסה',t:'טוקיו',k:'train',d:'30 דק\'',n:'Ginza Line + JR'},{f:'טוקיו',t:'נגויה',k:'shin',d:'90 דק\'',n:'Shinkansen'},{f:'נגויה',t:'טאקיאמה',k:'train',d:'2:30 שעות',n:'Limited Express Hida'}],
-   note:'⚠️ שולחים מזוודות לקיוטו היום! נוסעים עם backpack.',ri:[12,13]},
+  {d:'19/9',title:'אסאקוסה → טאקיאמה + שירקאווה-גו',sub:'מעבר לאלפים · שירקאווה-גו בדרך',type:'alps',area:'alps',al:'האלפים',e:'🚃',
+   morning:[
+     'ארוחת בוקר + צ\'ק אאוט מאסאקוסה',
+     '⚠️ שולחים מזוודות גדולות לקיוטו (Yamato/Kuroneko)',
+     'נסיעה: אסאקוסה → טוקיו → נגויה → טאקיאמה (~5 שעות)',
+     'עצירת אוכל ב-Nagoya Station (Ekiben מומלץ!)'
+   ],
+   afternoon:[
+     'הגעה לטאקיאמה בצהריים / שעות אחר הצהריים',
+     'נסיעה נוספת: טאקיאמה → שירקאווה-גו (50 דק\' – להזמין!)',
+     'הכפר המסורתי + בתי גגות Gassho-zukuri',
+     'התצפית הפנורמית + גשרים + בתי תה',
+     'חזרה לטאקיאמה'
+   ],
+   evening:[
+     'צ\'ק אין בטאקיאמה',
+     'Hida Beef לארוחת ערב',
+     'סיבוב קצר ברחובות העיר העתיקה'
+   ],
+   trans:[
+     {f:'אסאקוסה',t:'טוקיו',k:'train',d:'30 דק\'',n:'Ginza Line + JR'},
+     {f:'טוקיו',t:'נגויה',k:'shin',d:'90 דק\'',n:'Shinkansen'},
+     {f:'נגויה',t:'טאקיאמה',k:'train',d:'2:30 שעות',n:'Limited Express Hida'},
+     {f:'טאקיאמה',t:'שירקאווה-גו',k:'bus',d:'50 דק\'',n:'להזמין מראש! הלוך וחזור'}
+   ],
+   note:'⚠️ שולחים מזוודות לקיוטו היום! אם מגיעים לטאקיאמה מוקדם – שירקאווה-גו באותו יום. אם מאוחר – להזיז ל-20.9.',ri:[10,11,12]},
 
-  {d:'21/9',title:'קמיקוצ\'י',sub:'יום טבע – נהרות טורקיז ואלפים',type:'alps',area:'alps',al:'האלפים',e:'🏞️',
-   morning:['נסיעה טאקיאמה → קמיקוצ\'י (1.5-2 שעות – להזמין!)','Bus Terminal – נקודת ההתחלה','Kappa Bashi Bridge – הגשר האיקוני'],
-   afternoon:['הליכה לאורך הנהר הטורקיז','Tashiro Bridge → Taisho Ike Pond','פיקניק / קפה בנוף האלפים'],
-   evening:['חזרה לטאקיאמה','ערב רגוע – סאקה מקומי / Onsen קטן'],
+  {d:'20/9',title:'קמיקוצ\'י',sub:'יום טבע – נהרות טורקיז ואלפים יפניים',type:'alps',area:'alps',al:'האלפים',e:'🏞️',
+   morning:[
+     'נסיעה טאקיאמה → קמיקוצ\'י (1.5-2 שעות – להזמין!)',
+     'Bus Terminal – נקודת ההתחלה',
+     'Kappa Bashi Bridge – הגשר האיקוני + נוף הרי האלפים'
+   ],
+   afternoon:[
+     'הליכה לאורך הנהר הטורקיז',
+     'Tashiro Bridge',
+     'Taisho Ike Pond – האגם הציורי',
+     'פיקניק / קפה בנוף האלפים',
+     'חזרה לכיוון Bus Terminal'
+   ],
+   evening:[
+     'Bus חזרה לטאקיאמה',
+     'ארוחת ערב רגועה בטאקיאמה',
+     'Onsen קטן / סאקה מקומי (אופציה)'
+   ],
    trans:[{f:'טאקיאמה',t:'קמיקוצ\'י',k:'bus',d:'1.5-2 שעות',n:'Nohi Bus – להזמין מראש!'}],
-   note:'מסלול קליל למשפחה. Daypack בלבד!',ri:[14]},
+   note:'מסלול קליל ויפה למשפחה. Daypack בלבד! אם שירקאווה-גו לא היה ב-19.9 – אפשר להחליף.',ri:[13]},
 
-  {d:'22/9',title:'שוק הבוקר + שירקאווה-גו',sub:'טאקיאמה / שירקאווה-גו',type:'alps',area:'alps',al:'האלפים',e:'🏘️',
-   morning:['Takayama Morning Market – שוק הבוקר','העיר העתיקה של טאקיאמה','Hida Beef Bun – נשנוש רחוב'],
-   afternoon:['נסיעה Takayama → Shirakawa-go (50 דק\' – להזמין!)','הכפר המסורתי + בתי גגות Gassho-zukuri','התצפית הפנורמית + גשרים + בתי תה'],
-   evening:['חזרה לטאקיאמה','ארוחת ערב מקומית'],
-   trans:[{f:'טאקיאמה',t:'שירקאווה-גו',k:'bus',d:'50 דק\'',n:'להזמין מראש!'}],
-   note:'יום זורם: שוק + עיר עתיקה + כפר מסורתי.',ri:[13,15]},
+  {d:'21/9',title:'טאקיאמה שוק הבוקר + שירקאווה-גו / קמיקוצ\'י',sub:'לפי מה שנשאר מהימים הקודמים',type:'alps',area:'alps',al:'האלפים',e:'🏘️',
+   morning:[
+     'Takayama Morning Market – שוק הבוקר המסורתי',
+     'העיר העתיקה של טאקיאמה – Sanmachi Suji',
+     'בתי קפה קטנים + חנויות מקומיות',
+     'Hida Beef Bun – נשנוש רחוב'
+   ],
+   afternoon:[
+     '🔀 אם שירקאווה-גו לא היה ב-19.9:',
+     '→ נסיעה שירקאווה-גו (50 דק\') + כפר + תצפית + חזרה',
+     '🔀 אם קמיקוצ\'י לא היה ב-20.9:',
+     '→ נסיעה קמיקוצ\'י (1.5 שעות) + הנהר + האגם + חזרה',
+     '🔀 אם שניהם כבר היו:',
+     '→ Hida Folk Village (כפר מוזיאוני, ¥) – ליד טאקיאמה',
+     '→ Shiroyama Park – תצפית על העיר'
+   ],
+   evening:[
+     'ארוחת ערב אחרונה בטאקיאמה',
+     'ארגון ציוד לנסיעה לקיוטו'
+   ],
+   trans:[{f:'טאקיאמה',t:'שירקאווה-גו',k:'bus',d:'50 דק\'',n:'אם רלוונטי – להזמין!'},{f:'טאקיאמה',t:'קמיקוצ\'י',k:'bus',d:'1.5-2 שעות',n:'אם רלוונטי – להזמין!'}],
+   note:'יום גמיש – לפי מה שהיה בימים 19-20. טאקיאמה עצמה כבר מאוד נחמדה ליום שלם.',ri:[11,12,13]},
 
-  // ===== קיוטו (23.9–27.9, 4 לילות) =====
-  {d:'23/9',title:'מעבר לקיוטו',sub:'קיוטו · כניסה ראשונה לעיר',type:'kyoto',area:'kyoto',al:'קיוטו',e:'🚄',
-   morning:['שוק בוקר בטאקיאמה (אחרון)','יציאה לקיוטו – איסוף המזוודות שנשלחו!'],
-   afternoon:['נסיעה Takayama → Kyoto (~3.5-4 שעות)','צ\'ק אין + קבלת מזוודות','Nishiki Food Market – פתוח עד 17:00!'],
-   evening:['Gion + Hanamikoji Dori','Yasaka Shrine בלילה','Maruyama Park'],
-   trans:[{f:'טאקיאמה',t:'נגויה',k:'train',d:'2:30 שעות',n:'Limited Express Hida'},{f:'נגויה',t:'קיוטו',k:'shin',d:'35 דק\'',n:'Shinkansen'}],
-   note:'Nishiki Market – פתוח עד 17:00!',ri:[16,17,18,19,20]},
+  // ===== קיוטו (22.9–25.9, 4 לילות) =====
 
-  {d:'24/9',title:'Higashiyama + גיון + Kiyomizu',sub:'קיוטו · Old Kyoto קלאסי',type:'kyoto',area:'kyoto',al:'קיוטו',e:'⛩️',
-   morning:['Kiyomizu-dera – להגיע מוקדם! (¥)','Sannenzaka + Ninenzaka','Yasaka Pagoda + רחובות Higashiyama'],
-   afternoon:['Yasaka Shrine + Maruyama Park','Kyoto Handicraft Center','Tea Ceremony Experience En / Camellia (¥¥)'],
-   evening:['Evening Geisha Tour – להזמין מראש! (¥¥¥)','שיטוט בגיון'],
+  {d:'22/9',title:'טאקיאמה → קיוטו',sub:'קיוטו · כניסה ראשונה לעיר',type:'kyoto',area:'kyoto',al:'קיוטו',e:'🚄',
+   morning:[
+     'ארוחת בוקר + צ\'ק אאוט מטאקיאמה',
+     'שוק בוקר מהיר (אם רוצים)',
+     'יציאה לקיוטו'
+   ],
+   afternoon:[
+     'נסיעה Takayama → Nagoya → Kyoto (~3.5-4 שעות)',
+     'צ\'ק אין + קבלת המזוודות שנשלחו!',
+     'Nishiki Food Market – פתוח עד 17:00 (לא לפספס!)',
+     'Matcha + אוכל רחוב + שוק'
+   ],
+   evening:[
+     'Gion + Hanamikoji Dori – הרחוב הכי יפה בקיוטו',
+     'Yasaka Shrine בלילה',
+     'Maruyama Park – הליכה רגועה'
+   ],
+   trans:[
+     {f:'טאקיאמה',t:'נגויה',k:'train',d:'2:30 שעות',n:'Limited Express Hida'},
+     {f:'נגויה',t:'קיוטו',k:'shin',d:'35 דק\'',n:'Shinkansen'}
+   ],
+   note:'Nishiki Market פתוח עד 17:00 – לתכנן בהתאם!',ri:[14,15,16,17,18]},
+
+  {d:'23/9',title:'Higashiyama + גיון + Kiyomizu',sub:'קיוטו · Old Kyoto קלאסי',type:'kyoto',area:'kyoto',al:'קיוטו',e:'⛩️',
+   morning:[
+     'Kiyomizu-dera – להגיע מוקדם! (¥)',
+     'Sannenzaka + Ninenzaka – רחובות היסטוריים',
+     'Yasaka Pagoda + רחובות Higashiyama'
+   ],
+   afternoon:[
+     'Yasaka Shrine + Maruyama Park',
+     'Kyoto Handicraft Center – מזכרות איכותיות',
+     'Tea Ceremony Experience En / Camellia (¥¥)'
+   ],
+   evening:[
+     'Evening Geisha Tour (Kyoto Localize) – להזמין מראש! (¥¥¥)',
+     'שיטוט בגיון בלילה'
+   ],
    trans:[{f:'מלון',t:'Higashiyama',k:'bus',d:'15 דק\'',n:'Bus 100 / מוניות'}],
-   note:'ערב גיישות – חוויה מיוחדת!',ri:[19,21,22,18]},
+   note:'ערב גיישות – חוויה מיוחדת. להזמין מראש!',ri:[16,19,20,15]},
 
-  {d:'25/9',title:'ארשיאמה / Sagano',sub:'קיוטו · Bamboo · נהר · קופים',type:'kyoto',area:'kyoto',al:'קיוטו',e:'🎋',
-   morning:['נסיעה קיוטו → ארשיאמה (25-35 דק\')','Arashiyama Bamboo Grove – לפני 08:00!','Tenryu-ji Temple + גן (¥)'],
-   afternoon:['Togetsukyo Bridge','Arashiyama Monkey Park Iwatayama (¥)','הליכה לאורך הנהר + קפה'],
-   evening:['מופע סומו (אם יש – להזמין)','חזרה רגועה לקיוטו'],
+  {d:'24/9',title:'ארשיאמה / Sagano',sub:'קיוטו · Bamboo · נהר · קופים',type:'kyoto',area:'kyoto',al:'קיוטו',e:'🎋',
+   morning:[
+     'נסיעה קיוטו → ארשיאמה (25-35 דק\')',
+     'Arashiyama Bamboo Grove – לפני 08:00!',
+     'Tenryu-ji Temple + גן (¥)',
+     'Kameyama-koen Park'
+   ],
+   afternoon:[
+     'Togetsukyo Bridge – הגשר האיקוני',
+     'Arashiyama Monkey Park Iwatayama (¥)',
+     'הליכה לאורך הנהר + קפה + מנוחה'
+   ],
+   evening:[
+     'מופע סומו (אם יש – להזמין)',
+     'חזרה רגועה לקיוטו'
+   ],
    trans:[{f:'קיוטו',t:'ארשיאמה',k:'train',d:'25-35 דק\'',n:'JR Sagano / Randen'}],
-   note:'Bamboo Grove – לפני 08:00!',ri:[23,24,25,26]},
+   note:'Bamboo Grove – לפני 08:00 לפני עומס תיירים!',ri:[21,22,23,24]},
 
-  {d:'26/9',title:'נארה',sub:'נארה · איילים + מקדשים',type:'kyoto',area:'kyoto',al:'נארה',e:'🦌',
-   morning:['נסיעה Kyoto → Nara (~60 דק\', יציאה ~08:49)','Nara Park – מפגש עם האיילים','Todai-ji (¥) – מומלץ מאוד!'],
-   afternoon:['Kasuga Taisha (אם יש כוח)','שיטוט בפארק + ארוחת צהריים'],
-   evening:['חזרה Nara → Kyoto (~17:12)','ערב רגוע אחרון בקיוטו','כביסה + ארגון ציוד'],
-   trans:[{f:'Kyoto',t:'Nara',k:'train',d:'~60 דק\'',n:'JR Nara Line'}],
-   note:'יום מלא בנארה!',ri:[27,28]},
+  {d:'25/9',title:'נארה',sub:'נארה · איילים + מקדשים',type:'kyoto',area:'kyoto',al:'נארה',e:'🦌',
+   morning:[
+     'נסיעה Kyoto → Nara (~60 דק\', יציאה ~08:49)',
+     'Nara Park – מפגש עם האיילים (חינם)',
+     'Todai-ji – המקדש הגדול (¥)'
+   ],
+   afternoon:[
+     'Kasuga Taisha (אם יש כוח)',
+     'שיטוט בפארק + ארוחת צהריים',
+     'חזרה Nara → Kyoto (~17:12)'
+   ],
+   evening:[
+     'Fushimi Inari בערב (10-15 דק\' מקיוטו) – אפשרות מעולה',
+     'ערב רגוע אחרון בקיוטו',
+     'כביסה + ארגון ציוד לאוסקה'
+   ],
+   trans:[
+     {f:'Kyoto',t:'Nara',k:'train',d:'~60 דק\'',n:'JR Nara Line – יציאה 08:49'},
+     {f:'קיוטו',t:'Fushimi Inari',k:'train',d:'10-15 דק\'',n:'JR Nara Line (ערב – אופציה)'}
+   ],
+   note:'Fushimi Inari בערב – פחות עמוס ויפה מאוד!',ri:[25,26]},
 
-  // ===== אוסקה (27.9–29.9, 2 לילות) =====
-  {d:'27/9',title:'Fushimi Inari + מעבר לאוסקה',sub:'קיוטו → אוסקה',type:'osaka',area:'osaka',al:'אוסקה',e:'🏮',
-   morning:['נסיעה קיוטו → Fushimi Inari (10-15 דק\')','Fushimi Inari – עלייה חלקית בשבילי השערים','מוקדם מאוד לפני עומס!'],
-   afternoon:['נסיעה קיוטו → אוסקה Namba (20-30 דק\')','צ\'ק אין','Dotonbori + Glico Sign','Takoyaki + Okonomiyaki + Street Food'],
-   evening:['Shinsekai – שכונה רטרו','Arcades בלילה'],
-   trans:[{f:'קיוטו',t:'Fushimi Inari',k:'train',d:'10-15 דק\'',n:'JR Nara Line'},{f:'קיוטו',t:'Namba',k:'train',d:'20-30 דק\'',n:'Kintetsu / Hankyu'}],
-   note:'Fushimi Inari – מוקדם מאוד!',ri:[29,30,31]},
+  // ===== אוסקה (26.9–27.9, 2 לילות) =====
 
-  {d:'28/9',title:'Universal Studios Japan',sub:'אוסקה · Nintendo · Harry Potter',type:'park',area:'osaka',al:'אוסקה',e:'🎮',
-   morning:['נסיעה Namba → Universal City (25-35 דק\')','כניסה מוקדמת – ישר ל-Super Nintendo World!','Mario Kart + Yoshi + Donkey Kong'],
-   afternoon:['Harry Potter – Hogsmeade','Jurassic Park + Minions + אוכל בפארק'],
-   evening:['מופעי ערב','חזרה למלון'],
+  {d:'26/9',title:'מעבר לאוסקה + טיול בעיר',sub:'אוסקה · דוטונבורי · Shinsekai',type:'osaka',area:'osaka',al:'אוסקה',e:'🏮',
+   morning:[
+     'צ\'ק אאוט מקיוטו',
+     'נסיעה קיוטו → אוסקה Namba (20-30 דק\')',
+     'צ\'ק אין באוסקה'
+   ],
+   afternoon:[
+     'Dotonbori – הרחוב הכי מפורסם באוסקה',
+     'Glico Sign – תמונה חובה!',
+     'Takoyaki + Okonomiyaki + Street Food',
+     'Kuromon Market – שוק הדייגים של אוסקה'
+   ],
+   evening:[
+     'Shinsekai – שכונה רטרו עם Tsutenkaku Tower',
+     'America-mura – אזור צעיר ותוסס',
+     'Arcades + בארים בלילה'
+   ],
+   trans:[{f:'קיוטו',t:'אוסקה Namba',k:'train',d:'20-30 דק\'',n:'Kintetsu / Hankyu'}],
+   note:'אוסקה = בירת האוכל של יפן! לאכול הכל.',ri:[27,28,29]},
+
+  {d:'27/9',title:'Universal Studios Japan',sub:'אוסקה · Nintendo World · Harry Potter',type:'park',area:'osaka',al:'אוסקה',e:'🎮',
+   morning:[
+     'נסיעה Namba → Universal City (25-35 דק\')',
+     'כניסה מוקדמת מאוד – ישר ל-Super Nintendo World!',
+     'Mario Kart + Yoshi\'s Adventure',
+     'Donkey Kong Country (אם פתוח)'
+   ],
+   afternoon:[
+     'Harry Potter – Hogwarts + Hogsmeade',
+     'Jurassic Park',
+     'Minions + Hollywood Area',
+     'אוכל בפארק'
+   ],
+   evening:[
+     'מופעי ערב',
+     'חזרה למלון באוסקה',
+     'ארוחת ערב קלה / נחיתה קצרה'
+   ],
    trans:[{f:'Namba',t:'Universal City',k:'train',d:'25-35 דק\'',n:'JR Osaka Loop'}],
-   note:'Express Pass שווה! Breakfast גדול לפני.',ri:[]},
+   note:'Express Pass שווה מאוד! Breakfast גדול לפני. להגיע בפתיחה.',ri:[]},
 
-  // ===== טוקיו 2 – שיבויה/שינג'וקו (29.9–2.10, 4 לילות) =====
-  {d:'29/9',title:'אוסקה → טוקיו – שיבויה',sub:'חזרה לטוקיו · שיבויה / שינג\'וקו',type:'tokyo',area:'tokyo-shibuya',al:'שיבויה / שינג\'וקו',e:'🚄',
-   morning:['נסיעה Osaka → Tokyo ב-Nozomi Shinkansen (2.5-3 שעות)','Ekiben לדרך','צ\'ק אין שיבויה / שינג\'וקו'],
-   afternoon:['Ginza + קניות פרמיום','Uniqlo Ginza + Tokyo Hands'],
-   evening:['ארוחת ערב מיוחדת','Shibuya Sky – תצפית לילה (להזמין!)'],
-   trans:[{f:'שין-אוסקה',t:'טוקיו',k:'shin',d:'2:30 שעות',n:'Nozomi Shinkansen'}],
-   note:'4 לילות אחרונים בטוקיו – שיבויה / שינג\'וקו.',ri:[32,33]},
+  // ===== טוקיו 2 – שיבויה/שינג'וקו (28.9–1.10, 4 לילות) =====
 
-  {d:'30/9',title:'גינזה + Tokyo Station + Roppongi',sub:'טוקיו · גינזה / Roppongi',type:'tokyo',area:'tokyo-ginza',al:'גינזה',e:'🗼',
-   morning:['Imperial Palace Garden (חינם)','Tokyo Station + Marunouchi','Ginza + Uniqlo Ginza'],
-   afternoon:['Tokyo Station Food Halls – ארוחת צהריים','Akihabara (אופציה)'],
-   evening:['Tokyo Tower + Zojoji Temple','Roppongi Hills','Harry Hedgehog & Bunny Cafe (להזמין!)'],
-   trans:[{f:'שיבויה',t:'Tokyo Station',k:'train',d:'15-20 דק\'',n:'JR Yamanote'}],
-   note:'',ri:[34,35,36]},
+  {d:'28/9',title:'אוסקה → טוקיו – שיבויה/שינג\'וקו',sub:'חזרה לטוקיו · שיבויה / שינג\'וקו',type:'tokyo',area:'tokyo-shibuya',al:'שיבויה / שינג\'וקו',e:'🚄',
+   morning:[
+     'ארוחת בוקר + צ\'ק אאוט מאוסקה',
+     'נסיעה Osaka → Tokyo ב-Nozomi Shinkansen (2.5 שעות)',
+     'Ekiben לדרך – לקנות בתחנה',
+     'צ\'ק אין שיבויה / שינג\'וקו'
+   ],
+   afternoon:[
+     'Shibuya Crossing + פסל Hachiko',
+     'Shibuya PARCO + Nintendo Tokyo',
+     'Loft / Tokyu Hands / Donki'
+   ],
+   evening:[
+     'Shibuya Sky – תצפית לילה מדהימה (להזמין!)',
+     'ארוחת ערב בשיבויה / שינג\'וקו'
+   ],
+   trans:[{f:'שין-אוסקה',t:'טוקיו שיבויה',k:'shin',d:'2:30 שעות',n:'Nozomi Shinkansen'}],
+   note:'4 לילות אחרונים בטוקיו – שיבויה / שינג\'וקו.',ri:[30,31]},
 
-  {d:'1/10',title:'Meiji Jingu + הרג\'וקו + שינג\'וקו',sub:'טוקיו · הרג\'וקו / שינג\'וקו',type:'tokyo',area:'tokyo-shibuya',al:'שינג\'וקו',e:'🌿',
-   morning:['Meiji Jingu + Yoyogi Park (חינם)','Takeshita Street + Cat Street','Omotesando + Laforet'],
-   afternoon:['Shinjuku Gyoen (אופציה)','קניות אחרונות בשינג\'וקו'],
-   evening:['Tokyo Metropolitan Building – תצפית חינם','Golden Gai + Omoide Yokocho','ארוחת ערב אחרונה בשינג\'וקו'],
+  {d:'29/9',title:'גינזה + Tokyo Station + Roppongi',sub:'טוקיו · גינזה / Roppongi',type:'tokyo',area:'tokyo-ginza',al:'גינזה',e:'🗼',
+   morning:[
+     'Imperial Palace East Garden (חינם)',
+     'Tokyo Station + Marunouchi – ארכיטקטורה',
+     'Ginza + Uniqlo Ginza'
+   ],
+   afternoon:[
+     'Tokyo Station Food Halls – ארוחת צהריים',
+     'Akihabara (אופציה – 3 דק\' מ-Tokyo Station)'
+   ],
+   evening:[
+     'Tokyo Tower + Zojoji Temple – יפה בלילה',
+     'Roppongi Hills',
+     'Harry Hedgehog & Bunny Cafe (להזמין!)'
+   ],
+   trans:[{f:'שיבויה',t:'Tokyo Station',k:'train',d:'15-20 דק\'',n:'JR Yamanote'},{f:'Tokyo Station',t:'Roppongi',k:'train',d:'10 דק\'',n:'Hibiya Line'}],
+   note:'',ri:[5,6,7,8,9]},
+
+  {d:'30/9',title:'Meiji Jingu + הרג\'וקו + שינג\'וקו',sub:'טוקיו · הרג\'וקו / שינג\'וקו',type:'tokyo',area:'tokyo-shibuya',al:'שינג\'וקו',e:'🌿',
+   morning:[
+     'Meiji Jingu + Yoyogi Park (חינם)',
+     'Takeshita Street + Cat Street',
+     'Omotesando + Tokyu Plaza Harajuku',
+     'Laforet Shopping Mall'
+   ],
+   afternoon:[
+     'Shinjuku Gyoen (אופציה, ¥)',
+     'קניות אחרונות בשינג\'וקו',
+     'Uniqlo / GU / Don Quijote'
+   ],
+   evening:[
+     'Tokyo Metropolitan Building – תצפית חינם (עד 22:00)',
+     'Golden Gai – ברים קטנים ואווירה',
+     'Omoide Yokocho',
+     'ארוחת ערב מיוחדת'
+   ],
    trans:[{f:'שיבויה',t:'שינג\'וקו',k:'train',d:'7 דק\'',n:'JR Yamanote'}],
-   note:'יום רגוע לפני יום הטיסה.',ri:[9,10,11]},
+   note:'',ri:[32,33,34,35]},
 
-  {d:'2/10',title:'יום אחרון + טיסה',sub:'טוקיו · Brunch + מזכרות + שלום יפן',type:'tokyo',area:'tokyo-shibuya',al:'שינג\'וקו',e:'🛫',
-   morning:['Brunch רגוע – בית קפה מיוחד','הליכה קלה בשכונה'],
-   afternoon:['Don Quijote – מזכרות אחרונות','Pokémon Center + Uniqlo / GU / Hands'],
-   evening:['איסוף מזוודות','נסיעה לשדה התעופה','✈️ טיסה חזרה לישראל!'],
-   trans:[{f:'מלון',t:'שדה התעופה',k:'train',d:'60-90 דק\'',n:'Monorail (הנדה) / Narita Express (נריטה)'}],
-   note:'Duty Free לפני הטיסה!',ri:[0]}
+  {d:'1/10',title:'יום מלא בטוקיו + טיסה בלילה',sub:'טוקיו · יום שלם · טיסה בלילה',type:'tokyo',area:'tokyo-shibuya',al:'שינג\'וקו',e:'🌸',
+   morning:[
+     'Brunch רגוע – בית קפה מיוחד בשיבויה / שינג\'וקו',
+     'Shinjuku Gyoen – גן יפהפה לבוקר שקט (¥)',
+     'Meiji Jingu אם לא ביקרתם (חינם)'
+   ],
+   afternoon:[
+     'Don Quijote – מזכרות אחרונות',
+     'Pokémon Center Shibuya',
+     'Uniqlo / GU / Tokyo Hands – קניות אחרונות',
+     'Shibuya / Shinjuku – שוטטות חופשית',
+     'אפשרות: Teamlab Borderless שיבויה (אם לא היה קודם, ¥¥)'
+   ],
+   evening:[
+     'ארוחת ערב אחרונה ביפן – לבחור מסעדה מיוחדת',
+     'Shibuya Sky תצפית אחרונה (אם לא היה)',
+     'איסוף מזוודות מהמלון',
+     'נסיעה לשדה התעופה (לפחות 2.5-3 שעות לפני הטיסה)',
+     '✈️ טיסה חזרה לישראל! שלום יפן 🇯🇵'
+   ],
+   trans:[{f:'מלון שיבויה/שינג\'וקו',t:'שדה התעופה',k:'train',d:'60-90 דק\'',n:'Monorail (הנדה) / Narita Express (נריטה) – לצאת בזמן!'}],
+   note:'יום שלם! לצאת לשדה התעופה לפחות 3 שעות לפני הטיסה. Duty Free לפני הטיסה!',ri:[0,37,38,39]}
 ]
 const R0 = [
-  {id:0,n:'Ichiran Ramen',c:'tokyo-shinjuku',cl:'שינג\'וקו',day:'16/9',s:'Ramen',p:'cheap',e:'🍜',note:'Solo booths – חוויה ייחודית'},
-  {id:1,n:'Gyoza Bar מקומי',c:'tokyo-shinjuku',cl:'שינג\'וקו',day:'16/9',s:'Gyoza',p:'cheap',e:'🥟',note:'ליד Omoide Yokocho'},
-  {id:2,n:'Hakushu Teppanyaki',c:'tokyo-shibuya',cl:'שיבויה',day:'17/9',s:'Teppanyaki / Steak',p:'exp',e:'🥩',note:'מומלץ מאוד – להזמין מראש!'},
-  {id:3,n:'Uobei Sushi',c:'tokyo-shibuya',cl:'שיבויה',day:'17/9',s:'Conveyor Sushi',p:'cheap',e:'🍣',note:'סושי מהיר ופופולרי'},
-  {id:4,n:'Genki Sushi',c:'tokyo-shibuya',cl:'שיבויה',day:'17/9',s:'Conveyor Sushi',p:'cheap',e:'🍣',note:''},
-  {id:5,n:'Kaikaya by the Sea',c:'tokyo-shibuya',cl:'שיבויה',day:'17/9',s:'Seafood Izakaya',p:'mid',e:'🐟',note:'פירות ים טריים'},
-  {id:6,n:'Han No Daidokoro',c:'tokyo-shibuya',cl:'שיבויה',day:'17/9',s:'Kobe Beef',p:'exp',e:'🥩',note:'בשר קובה'},
-  {id:7,n:'Sakura-tei',c:'tokyo-shibuya',cl:'שיבויה',day:'17/9',s:'Okonomiyaki / Monjayaki',p:'cheap',e:'🥘',note:'לבשל לבד!'},
-  {id:8,n:'Ichiran',c:'tokyo-shibuya',cl:'שיבויה',day:'17/9',s:'Ramen',p:'cheap',e:'🍜',note:'ראמן chain מפורסם'},
-  {id:9,n:'Fuunji Ramen',c:'tokyo-shinjuku',cl:'שינג\'וקו',day:'17/9',s:'Ramen / Tsukemen',p:'cheap',e:'🍜',note:'מצוין בשינג\'וקו'},
-  {id:10,n:'Momo Paradise',c:'tokyo-shinjuku',cl:'שינג\'וקו',day:'17/9',s:'Shabu-Shabu',p:'mid',e:'🫕',note:'טוב לארוחה משפחתית'},
-  {id:11,n:'Gut\'s Soul',c:'tokyo-shinjuku',cl:'שינג\'וקו',day:'17/9',s:'Yakiniku All-You-Can-Eat',p:'mid',e:'🥩',note:'AYCE – משתלם'},
-  {id:12,n:'Kagetsudo Bakery',c:'tokyo-asakusa',cl:'אסאקוסה',day:'18/9',s:'Bakery / Melon Pan',p:'cheap',e:'🥐',note:'מפורסם – תור צפוי'},
-  {id:13,n:'Ramen-tei Asakusa',c:'tokyo-asakusa',cl:'אסאקוסה',day:'18/9',s:'Ramen + Gyoza',p:'cheap',e:'🍜',note:'מקומי ואמיתי'},
-  {id:14,n:'Masaru Tempura',c:'tokyo-asakusa',cl:'אסאקוסה',day:'18/9',s:'Tempura',p:'mid',e:'🍤',note:'טמפורה קלאסית'},
-  {id:15,n:'Imahan Sukiyaki',c:'tokyo-asakusa',cl:'אסאקוסה',day:'18/9',s:'Sukiyaki',p:'exp',e:'🫕',note:'מסעדה ותיקה ומפורסמת'},
-  {id:16,n:'Nagase Sushi',c:'tokyo-ginza',cl:'גינזה',day:'20/9',s:'Sushi Omakase',p:'exp',e:'🍣',note:'מיוחד – להזמין ביפנית'},
-  {id:17,n:'Sushi Tokami',c:'tokyo-ginza',cl:'גינזה',day:'20/9',s:'Sushi',p:'exp',e:'🍣',note:'לארוחה מיוחדת'},
-  {id:18,n:'Nihonryori RyuGin',c:'tokyo-ginza',cl:'גינזה',day:'20/9',s:'Kaiseki מסורתי',p:'exp',e:'🍱',note:'רמה גבוהה מאוד'},
-  {id:19,n:'Marugo Tonkatsu',c:'tokyo-ginza',cl:'גינזה',day:'20/9',s:'Tonkatsu',p:'mid',e:'🍖',note:''},
-  {id:20,n:'Nodaiwa Unagi',c:'tokyo-ginza',cl:'גינזה',day:'20/9',s:'Unagi (צלופח)',p:'mid',e:'🐍',note:'מפורסמת'},
-  {id:21,n:'Ryokan Kaiseki Dinner',c:'hakone',cl:'האקונה',day:'21/9',s:'Kaiseki מסורתי',p:'exp',e:'🍱',note:'כלול בלינה בריוקאן'},
-  {id:22,n:'Ekiben – Nagoya Station',c:'alps',cl:'האלפים',day:'22/9',s:'Bento לדרך',p:'cheap',e:'🍱',note:'לקנות בנגויה בזמן העצירה'},
-  {id:23,n:'Hida Beef Restaurant',c:'alps',cl:'האלפים',day:'22/9',s:'Hida Beef / Wagyu',p:'mid',e:'🥩',note:'בשר הידה – חובה!'},
-  {id:24,n:'Cafe בנוף קמיקוצ\'י',c:'alps',cl:'האלפים',day:'23/9',s:'Cafe / פיקניק',p:'cheap',e:'☕',note:'לאכול פשוט – פיקניק בנוף'},
-  {id:25,n:'Hida Beef Bun',c:'alps',cl:'האלפים',day:'24/9',s:'Street Food',p:'cheap',e:'🥩',note:'נשנוש בשוק הבוקר'},
-  {id:26,n:'מסעדה מקומית שירקאווה-גו',c:'alps',cl:'שירקאווה-גו',day:'24/9',s:'אוכל מקומי',p:'cheap',e:'🍜',note:''},
-  {id:27,n:'Nishiki Market',c:'kyoto',cl:'קיוטו',day:'25/9',s:'אוכל רחוב / שוק',p:'cheap',e:'🍡',note:'פתוח עד 17:00 – לא לפספס!'},
-  {id:28,n:'Ramen Sen No Kaze',c:'kyoto',cl:'קיוטו',day:'25/9',s:'Ramen',p:'cheap',e:'🍜',note:''},
-  {id:29,n:'Issen Yoshoku',c:'kyoto',cl:'קיוטו',day:'25/9',s:'Okonomiyaki',p:'cheap',e:'🥘',note:'סגנון קיוטו'},
-  {id:30,n:'Yakiniku Hiro',c:'kyoto',cl:'קיוטו',day:'25/9',s:'Wagyu Yakiniku',p:'mid',e:'🥩',note:'המלצה חמה! גם ב-26.9'},
-  {id:31,n:'Kurakura Izakaya',c:'kyoto',cl:'קיוטו',day:'25/9',s:'Izakaya',p:'mid',e:'🍶',note:''},
-  {id:32,n:'Tea Ceremony En / Camellia',c:'kyoto',cl:'קיוטו',day:'26/9',s:'Tea Ceremony',p:'mid',e:'🍵',note:'חוויה מיוחדת'},
-  {id:33,n:'elefant factory coffee',c:'kyoto',cl:'קיוטו',day:'26/9',s:'Cafe',p:'cheap',e:'☕',note:'עצירת קפה אהובה'},
-  {id:34,n:'Sushi Bar Naritaya',c:'kyoto',cl:'ארשיאמה',day:'27/9',s:'Sushi',p:'mid',e:'🍣',note:''},
-  {id:35,n:'Yudofu Sagano',c:'kyoto',cl:'ארשיאמה',day:'27/9',s:'Tofu Kaiseki',p:'mid',e:'🥬',note:'צמחוני בודהיסטי'},
-  {id:36,n:'Shigetsu',c:'kyoto',cl:'ארשיאמה',day:'27/9',s:'Vegetarian Buddhist',p:'mid',e:'🍃',note:'מסעדת Tenryu-ji'},
-  {id:37,n:'Beer Komachi',c:'kyoto',cl:'ארשיאמה',day:'27/9',s:'Craft Beer Bar',p:'cheap',e:'🍺',note:''},
-  {id:38,n:'אוכל רחוב נארה',c:'kyoto',cl:'נארה',day:'28/9',s:'Street Food',p:'cheap',e:'🍡',note:'Mochi + Senbei לאיילים'},
-  {id:39,n:'מסעדה מקומית נארה',c:'kyoto',cl:'נארה',day:'28/9',s:'Japanese Set Meal',p:'cheap',e:'🍱',note:'ארוחת צהריים'},
-  {id:40,n:'Takoyaki Dotonbori',c:'osaka',cl:'אוסקה',day:'29/9',s:'Street Food',p:'cheap',e:'🐙',note:'חובה! בדוטונבורי'},
-  {id:41,n:'Okonomiyaki אוסקה',c:'osaka',cl:'אוסקה',day:'29/9',s:'Osaka-style Pancake',p:'cheap',e:'🥞',note:'סגנון אוסקה'},
-  {id:42,n:'Shinsekai Street Food',c:'osaka',cl:'אוסקה',day:'29/9',s:'Street Food',p:'cheap',e:'🍡',note:'שינסקאי – אווירה רטרו'}
-];
-
+  // 16/9 – אסאקוסה ערב
+  {id:0,n:'Ramen-tei Asakusa',c:'tokyo-asakusa',cl:'אסאקוסה',day:'16/9',s:'Ramen + Gyoza',p:'cheap',e:'🍜',note:'מקומי ואמיתי'},
+  {id:1,n:'Tempura Daikokuya',c:'tokyo-asakusa',cl:'אסאקוסה',day:'16/9',s:'Tempura',p:'mid',e:'🍤',note:'מסורתי ומפורסם באסאקוסה'},
+  {id:2,n:'Hoppy Street Bar',c:'tokyo-asakusa',cl:'אסאקוסה',day:'16/9',s:'Izakaya / ביצ\'ה מקומית',p:'cheap',e:'🍺',note:'ברים מקומיים בסמטה'},
+  // 17/9 – אסאקוסה + Ueno
+  {id:3,n:'Kagetsudo Bakery',c:'tokyo-asakusa',cl:'אסאקוסה',day:'17/9',s:'Bakery / Melon Pan',p:'cheap',e:'🥐',note:'מפורסם – תור צפוי'},
+  {id:4,n:'Imahan Sukiyaki',c:'tokyo-asakusa',cl:'אסאקוסה',day:'17/9',s:'Sukiyaki',p:'exp',e:'🫕',note:'מסעדה ותיקה ומפורסמת'},
+  {id:5,n:'Masaru Tempura',c:'tokyo-asakusa',cl:'אסאקוסה',day:'17/9',s:'Tempura',p:'mid',e:'🍤',note:'טמפורה קלאסית'},
+  // 18/9 – גינזה
+  {id:6,n:'Ginza Kagari',c:'tokyo-ginza',cl:'גינזה',day:'18/9',s:'Ramen / Soba פרמיום',p:'mid',e:'🍜',note:'ראמן פרמיום בגינזה'},
+  {id:7,n:'Tokyo Station Food Halls',c:'tokyo-ginza',cl:'גינזה',day:'18/9',s:'Food Hall',p:'cheap',e:'🍱',note:'B1 – מגוון מדהים'},
+  {id:8,n:'Marugo Tonkatsu',c:'tokyo-ginza',cl:'גינזה',day:'18/9',s:'Tonkatsu',p:'mid',e:'🍖',note:''},
+  {id:9,n:'Sushi Tokami',c:'tokyo-ginza',cl:'גינזה',day:'18/9',s:'Sushi Omakase',p:'exp',e:'🍣',note:'לארוחה מיוחדת'},
+  {id:10,n:'Nodaiwa Unagi',c:'tokyo-ginza',cl:'גינזה',day:'18/9',s:'Unagi (צלופח)',p:'mid',e:'🐍',note:'מפורסמת'},
+  // 19/9 – דרך לטאקיאמה
+  {id:11,n:'Ekiben – Nagoya Station',c:'alps',cl:'האלפים',day:'19/9',s:'Bento לדרך',p:'cheap',e:'🍱',note:'לקנות בנגויה בזמן העצירה'},
+  {id:12,n:'Hida Beef Restaurant',c:'alps',cl:'האלפים',day:'19/9',s:'Hida Beef / Wagyu',p:'mid',e:'🥩',note:'בשר הידה – חובה!'},
+  {id:13,n:'מסעדה מקומית בשירקאווה-גו',c:'alps',cl:'שירקאווה-גו',day:'19/9',s:'אוכל מקומי',p:'cheap',e:'🍜',note:'אם מגיעים ביום הראשון'},
+  // 20/9 – קמיקוצ'י
+  {id:14,n:'Cafe בנוף קמיקוצ\'י',c:'alps',cl:'האלפים',day:'20/9',s:'Cafe / פיקניק',p:'cheap',e:'☕',note:'לאכול פשוט – פיקניק בנוף'},
+  // 21/9 – טאקיאמה / שירקאווה-גו
+  {id:15,n:'Hida Beef Bun – Morning Market',c:'alps',cl:'האלפים',day:'21/9',s:'Street Food',p:'cheap',e:'🥩',note:'נשנוש בשוק הבוקר'},
+  {id:16,n:'מסעדה מקומית שירקאווה-גו',c:'alps',cl:'שירקאווה-גו',day:'21/9',s:'אוכל מקומי',p:'cheap',e:'🍜',note:'אם שירקאווה-גו ביום זה'},
+  // 22/9 – קיוטו ראשון
+  {id:17,n:'Nishiki Market',c:'kyoto',cl:'קיוטו',day:'22/9',s:'אוכל רחוב / שוק',p:'cheap',e:'🍡',note:'פתוח עד 17:00 – לא לפספס!'},
+  {id:18,n:'Ramen Sen No Kaze',c:'kyoto',cl:'קיוטו',day:'22/9',s:'Ramen',p:'cheap',e:'🍜',note:''},
+  {id:19,n:'Yakiniku Hiro',c:'kyoto',cl:'קיוטו',day:'22/9',s:'Wagyu Yakiniku',p:'mid',e:'🥩',note:'המלצה חמה!'},
+  {id:20,n:'Kurakura Izakaya',c:'kyoto',cl:'קיוטו',day:'22/9',s:'Izakaya',p:'mid',e:'🍶',note:''},
+  // 23/9 – Higashiyama
+  {id:21,n:'Tea Ceremony En / Camellia',c:'kyoto',cl:'קיוטו',day:'23/9',s:'Tea Ceremony',p:'mid',e:'🍵',note:'חוויה מיוחדת'},
+  {id:22,n:'elefant factory coffee',c:'kyoto',cl:'קיוטו',day:'23/9',s:'Cafe',p:'cheap',e:'☕',note:'עצירת קפה אהובה'},
+  {id:23,n:'Issen Yoshoku',c:'kyoto',cl:'קיוטו',day:'23/9',s:'Okonomiyaki',p:'cheap',e:'🥘',note:'סגנון קיוטו'},
+  // 24/9 – ארשיאמה
+  {id:24,n:'Sushi Bar Naritaya',c:'kyoto',cl:'ארשיאמה',day:'24/9',s:'Sushi',p:'mid',e:'🍣',note:''},
+  {id:25,n:'Yudofu Sagano',c:'kyoto',cl:'ארשיאמה',day:'24/9',s:'Tofu Kaiseki',p:'mid',e:'🥬',note:'צמחוני בודהיסטי'},
+  {id:26,n:'Shigetsu',c:'kyoto',cl:'ארשיאמה',day:'24/9',s:'Buddhist Vegetarian',p:'mid',e:'🍃',note:'מסעדת Tenryu-ji'},
+  {id:27,n:'Beer Komachi',c:'kyoto',cl:'ארשיאמה',day:'24/9',s:'Craft Beer Bar',p:'cheap',e:'🍺',note:''},
+  // 25/9 – נארה
+  {id:28,n:'אוכל רחוב נארה',c:'kyoto',cl:'נארה',day:'25/9',s:'Street Food',p:'cheap',e:'🍡',note:'Mochi + Senbei לאיילים'},
+  {id:29,n:'מסעדה מקומית נארה',c:'kyoto',cl:'נארה',day:'25/9',s:'Japanese Set',p:'cheap',e:'🍱',note:'ארוחת צהריים'},
+  // 26/9 – אוסקה יום 1
+  {id:30,n:'Takoyaki Dotonbori',c:'osaka',cl:'אוסקה',day:'26/9',s:'Street Food',p:'cheap',e:'🐙',note:'חובה! בדוטונבורי'},
+  {id:31,n:'Okonomiyaki אוסקה',c:'osaka',cl:'אוסקה',day:'26/9',s:'Osaka-style Pancake',p:'cheap',e:'🥞',note:'סגנון אוסקה'},
+  {id:32,n:'Kuromon Market',c:'osaka',cl:'אוסקה',day:'26/9',s:'שוק + אוכל טרי',p:'cheap',e:'🦐',note:'שוק הדייגים של אוסקה'},
+  // 28/9 – חזרה לטוקיו
+  {id:33,n:'Shibuya Sky Terrace Bar',c:'tokyo-shibuya',cl:'שיבויה',day:'28/9',s:'Bar + תצפית',p:'mid',e:'🌃',note:'תצפית לילה מהממת – להזמין!'},
+  {id:34,n:'Fuunji Ramen',c:'tokyo-shinjuku',cl:'שינג\'וקו',day:'28/9',s:'Tsukemen / Ramen',p:'cheap',e:'🍜',note:'מצוין בשינג\'וקו'},
+  // 29/9 – גינזה / Roppongi
+  {id:35,n:'Nihonryori RyuGin',c:'tokyo-ginza',cl:'גינזה',day:'29/9',s:'Kaiseki Fine Dining',p:'exp',e:'🍱',note:'רמה גבוהה מאוד'},
+  {id:36,n:'Nagase Sushi',c:'tokyo-ginza',cl:'גינזה',day:'29/9',s:'Sushi Omakase',p:'exp',e:'🍣',note:'להזמין ביפנית'},
+  // 30/9 – הרג'וקו / שינג'וקו
+  {id:37,n:'Momo Paradise',c:'tokyo-shinjuku',cl:'שינג\'וקו',day:'30/9',s:'Shabu-Shabu',p:'mid',e:'🫕',note:'טוב לארוחה משפחתית'},
+  {id:38,n:'Gut\'s Soul Yakiniku',c:'tokyo-shinjuku',cl:'שינג\'וקו',day:'30/9',s:'Yakiniku All-You-Can-Eat',p:'mid',e:'🥩',note:'AYCE משתלם'},
+  {id:39,n:'Hakushu Teppanyaki',c:'tokyo-shibuya',cl:'שיבויה',day:'30/9',s:'Teppanyaki / Steak',p:'exp',e:'🥩',note:'מומלץ מאוד – להזמין!'}
+]
 const TRANS_LIST = [
   {f:'הנדה/נריטה',t:'שינג\'וקו',k:'train',d:'35–90 דק\'',n:'Suica בלבד'},
   {f:'שינג\'וקו',t:'DisneySea',k:'train',d:'55–70 דק\'',n:'JR Keiyo + Disney Resort Line'},
@@ -676,13 +1054,13 @@ function toast(m){
 
 // INIT
 function initData(){
-  db.ref('v4_init').once('value').then(s=>{
+  db.ref('v6_init').once('value').then(s=>{
     if(!s.val()){
       db.ref('days').set(D0);
       db.ref('rests').set(R0);
       db.ref('hotels').set([]);
       db.ref('expenses').set([]);
-      db.ref('v4_init').set(true);
+      db.ref('v6_init').set(true);
     }
   });
 }
@@ -752,6 +1130,82 @@ function buildDayRests(ri){
   });
   return h+'</div>';
 }
+
+function buildDayMap(dayId) {
+  const places = DAY_PLACES[dayId];
+  const gmUrl = DAY_MAPS[dayId];
+  if (!places || !places.length) return '';
+
+  // Center = average of all points
+  const avgLat = places.reduce((s,p)=>s+p.lat,0)/places.length;
+  const avgLng = places.reduce((s,p)=>s+p.lng,0)/places.length;
+
+  // Build OpenStreetMap embed URL with markers
+  // Using OpenStreetMap via iframe — free, no API key needed
+  const zoom = places.length === 1 ? 15 : 13;
+
+  // Build markers string for OpenStreetMap
+  const markersParam = places.map((p,i)=>
+    `mlat${i+1}=${p.lat}&mlon${i+1}=${p.lng}`
+  ).join('&');
+
+  // Use Google Maps embed (static, shows all places as search)
+  // Build a clean iframe using OSM with all markers
+  const osmUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${avgLng-0.03},${avgLat-0.02},${avgLng+0.03},${avgLat+0.02}&layer=mapnik`;
+
+  // Build Google Maps directions/search URL with all waypoints
+  const gmSearchUrl = gmUrl || ('https://maps.google.com/maps/search/' + places.map(p=>encodeURIComponent(p.name)).join('+OR+'));
+
+  const pinsList = places.map((p,i) =>
+    `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid #f0ece4">` +
+    `<span style="background:#e8628a;color:#fff;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;flex-shrink:0">${i+1}</span>` +
+    `<span style="font-size:11px;color:#374151">${p.name}</span>` +
+    `<a href="https://maps.google.com/?q=${p.lat},${p.lng}" target="_blank" rel="noopener" style="margin-right:auto;font-size:10px;color:#1a73e8;text-decoration:none">נווט</a>` +
+    `</div>`
+  ).join('');
+
+  return `<div class="day-map-wrap">
+    <div style="font-size:10px;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:0.8px;padding:8px 11px;background:#f5f3ef;border-bottom:1px solid #e5e1d8;display:flex;align-items:center;gap:6px">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#e8628a" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      מפה ואתרים ליום זה
+    </div>
+    <div style="padding:8px 11px 0">${pinsList}</div>
+    <div class="day-map-btns" style="padding:8px 11px 10px">
+      <a class="map-btn map-btn-primary" href="${gmSearchUrl}" target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        פתח ב-Google Maps
+      </a>
+      <button class="map-btn map-btn-loc" onclick="locateMe('${dayId}', this)">
+        <span class="map-locate-dot"></span>
+        הראה מיקום נוכחי
+      </button>
+    </div>
+  </div>`;
+}
+
+function locateMe(dayId, btn) {
+  if (!navigator.geolocation) { alert('הדפדפן לא תומך במיקום'); return; }
+  btn.textContent = '⏳ מאתר...';
+  navigator.geolocation.getCurrentPosition(
+    function(pos) {
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+      const places = DAY_PLACES[dayId] || [];
+      // Build Google Maps URL with current location + all day places
+      let url = 'https://www.google.com/maps/dir/' + lat + ',' + lng;
+      places.forEach(p => { url += '/' + p.lat + ',' + p.lng; });
+      window.open(url, '_blank');
+      btn.innerHTML = '<span class="map-locate-dot"></span>הראה מיקום נוכחי';
+    },
+    function(err) {
+      // Fallback: just open maps with current location
+      alert('לא ניתן לאתר מיקום. בדוק הרשאות מיקום בדפדפן.');
+      btn.innerHTML = '<span class="map-locate-dot"></span>הראה מיקום נוכחי';
+    },
+    {enableHighAccuracy: true, timeout: 8000}
+  );
+}
+
 function buildDays(){
   let h='';
   (DAYS||[]).forEach(d=>{
@@ -761,9 +1215,10 @@ function buildDays(){
     const hotel=getHotelForNight(d.d);
     const hs=hotel?`<div class="hotel-strip"><span style="font-size:16px">${hotel.type}</span><div style="flex:1"><div class="hotel-strip-name">${hotel.name}</div><div class="hotel-strip-sub">לינה הלילה · ${hotel.area||''}</div></div></div>`:'';
     const te=d._te?`<div style="font-size:11px;color:#e8628a;font-weight:700;margin-top:2px"><span class="new-pill">חדש</span> ${d._te}</div>`:'';
-    const inner=(d.al?`<div style="margin-bottom:6px"><span class="area-badge">📍 ${d.al}</span></div>`:'')+
+    const mapBlock = buildDayMap(d.d);
+    const inner=(d.al?'<div style="margin-bottom:6px"><span class="area-badge">📍 '+d.al+'</span></div>':'')+
       tb('☀️','בוקר',d.morning)+tb('🌤️','צהריים',d.afternoon)+tb('🌙','ערב',d.evening)+
-      buildDayTrans(d.trans)+(d.note?`<div class="day-note">💡 ${d.note}</div>`:'')+buildDayRests(d.ri);
+      buildDayTrans(d.trans)+(d.note?'<div class="day-note">💡 '+d.note+'</div>':'')+buildDayRests(d.ri)+mapBlock;
     h+=`<div class="day-card"><div class="day-head"><div class="day-num" style="${st}"><div class="day-num-d">${d.d}</div><div class="day-num-l">${lb}</div></div><div class="day-info"><div class="day-title">${d.e} ${d.title}</div>${te}<div class="day-sub">${d.sub}</div></div><span class="day-arrow">›</span></div><div class="day-body">${hs}<div class="day-inner">${inner}</div></div></div>`;
   });
   document.getElementById('day-list').innerHTML=h||'<div style="text-align:center;color:#9ca3af;padding:20px">אין ימים</div>';

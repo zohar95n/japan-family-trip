@@ -269,15 +269,14 @@ body{font-family:'Heebo',sans-serif;background:#f5f3ef;color:#1a1a2e;direction:r
 <!-- OVERVIEW -->
 <div class="panel on" id="pnl-ov">
   <div class="ov-stats">
-    <div class="ov-stat"><div class="ov-num">17</div><div class="ov-lbl">ימי טיול</div></div>
+    <div class="ov-stat"><div class="ov-num">16</div><div class="ov-lbl">ימי טיול</div></div>
     <div class="ov-stat"><div class="ov-num">5</div><div class="ov-lbl">ערים</div></div>
     <div class="ov-stat"><div class="ov-num" id="ov-rests">43</div><div class="ov-lbl">מסעדות</div></div>
   </div>
   <div class="sec">מסלול הטיול</div>
   <div class="card card-b">
-    <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#3d5a9e"></div><div class="route-conn" style="background:#3d5a9e"></div></div><div class="route-info"><div class="route-city">🗼 טוקיו</div><div class="route-dates">16.9–21.9 · 5 לילות</div><div class="route-tags"><span class="tag t-blue">שינג'וקו</span><span class="tag t-blue">שיבויה</span><span class="tag t-blue">אסאקוסה</span><span class="tag t-dark">DisneySea 🎢</span></div></div></div>
-    <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#2e7d52"></div><div class="route-conn" style="background:#2e7d52"></div></div><div class="route-info"><div class="route-city">⛰️ האקונה</div><div class="route-dates">יום טיול ב-21.9 · ריוקאן (אופציה)</div><div class="route-tags"><span class="tag t-green">רופוויי</span><span class="tag t-green">אונסן</span><span class="tag t-green">Hakone Loop</span></div></div></div>
-    <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#c9982a"></div><div class="route-conn" style="background:#c9982a"></div></div><div class="route-info"><div class="route-city">🏔️ האלפים היפניים</div><div class="route-dates">22.9–25.9 · 3 לילות · טאקיאמה</div><div class="route-tags"><span class="tag t-gold">טאקיאמה</span><span class="tag t-gold">קמיקוצ'י</span><span class="tag t-gold">שירקאווה-גו</span></div></div></div>
+    <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#3d5a9e"></div><div class="route-conn" style="background:#3d5a9e"></div></div><div class="route-info"><div class="route-city">⛩️ טוקיו – אסאקוסה</div><div class="route-dates">16.9–19.9 · 3 לילות</div><div class="route-tags"><span class="tag t-blue">אסאקוסה</span><span class="tag t-blue">גינזה</span><span class="tag t-blue">Ueno</span><span class="tag t-blue">שיבויה</span></div></div></div>
+    <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#c9982a"></div><div class="route-conn" style="background:#c9982a"></div></div><div class="route-info"><div class="route-city">🏔️ האלפים – טאקיאמה</div><div class="route-dates">19.9–22.9 · 3 לילות</div><div class="route-tags"><span class="tag t-gold">טאקיאמה</span><span class="tag t-gold">קמיקוצ'י</span><span class="tag t-gold">שירקאווה-גו</span></div></div></div>
     <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#e8628a"></div><div class="route-conn" style="background:#e8628a"></div></div><div class="route-info"><div class="route-city">⛩️ קיוטו</div><div class="route-dates">22.9–26.9 · 4 לילות</div><div class="route-tags"><span class="tag t-pink">גיון</span><span class="tag t-pink">קיומיזו-דרה</span><span class="tag t-pink">ארשיאמה</span><span class="tag t-pink">נארה</span></div></div></div>
     <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#e8628a"></div><div class="route-conn" style="background:#e8628a"></div></div><div class="route-info"><div class="route-city">🎡 אוסקה</div><div class="route-dates">26.9–28.9 · 2 לילות</div><div class="route-tags"><span class="tag t-pink">דוטונבורי</span><span class="tag t-dark">Universal 🎮</span></div></div></div>
     <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#3d5a9e"></div></div><div class="route-info" style="padding-bottom:0"><div class="route-city">🗼 טוקיו – שיבויה/שינג'וקו</div><div class="route-dates">28.9–1.10 · 4 לילות + טיסה</div><div class="route-tags"><span class="tag t-blue">שיבויה</span><span class="tag t-blue">שינג'וקו</span><span class="tag t-blue">גינזה</span><span class="tag t-blue">הרג'וקו</span></div></div></div>
@@ -1054,13 +1053,13 @@ function toast(m){
 
 // INIT
 function initData(){
-  db.ref('v6_init').once('value').then(s=>{
+  db.ref('v7_init').once('value').then(s=>{
     if(!s.val()){
       db.ref('days').set(D0);
       db.ref('rests').set(R0);
       db.ref('hotels').set([]);
       db.ref('expenses').set([]);
-      db.ref('v6_init').set(true);
+      db.ref('v7_init').set(true);
     }
   });
 }

@@ -2,393 +2,482 @@
 <html dir="rtl" lang="he">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌸 טיול משפחתי ליפן 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>🌸 יפן 2026 – משפחת זוהר</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Heebo',sans-serif;background:#f5f3ef;color:#1a1a2e;direction:rtl;font-size:14px}
+:root{
+  --pink:#e8628a;--pink-light:#fce4ec;--pink-dark:#c2185b;
+  --navy:#1a1a2e;--navy2:#16213e;
+  --gold:#f59e0b;--gold-light:#fef3c7;
+  --green:#10b981;--green-light:#d1fae5;
+  --blue:#3b82f6;--blue-light:#dbeafe;
+  --gray:#6b7280;--gray2:#9ca3af;--gray3:#e5e7eb;--gray4:#f9fafb;
+  --white:#ffffff;--bg:#f8f7f5;
+  --radius:16px;--radius-sm:10px;
+  --shadow:0 2px 12px rgba(0,0,0,0.08);
+  --shadow-lg:0 8px 32px rgba(0,0,0,0.12);
+}
+body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--navy);direction:rtl;min-height:100vh;font-size:14px;-webkit-font-smoothing:antialiased}
 
 /* TOAST */
-#toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;padding:10px 20px;border-radius:25px;font-size:13px;font-weight:700;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap}
+#toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 20px;border-radius:30px;font-size:12px;font-weight:700;z-index:9999;opacity:0;transition:opacity 0.25s;pointer-events:none;white-space:nowrap;box-shadow:var(--shadow-lg)}
 #toast.show{opacity:1}
 
-/* HEADER */
-.hdr{background:#1a1a2e;padding:14px 16px 0}
-.hdr-inner{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
-.badge{background:rgba(232,98,138,0.25);border:1px solid rgba(232,98,138,0.5);color:#f9a8c9;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:1px}
-.hdr-title{color:#fff;font-size:19px;font-weight:800;margin-top:5px}
-.hdr-sub{color:rgba(255,255,255,0.45);font-size:11px;margin-top:2px}
-.stats-row{background:rgba(255,255,255,0.06);border-top:1px solid rgba(255,255,255,0.1);padding:9px 16px;display:flex;justify-content:space-around}
-.stat{text-align:center}
-.stat-n{color:#f9a8c9;font-size:19px;font-weight:800;line-height:1}
-.stat-l{color:rgba(255,255,255,0.4);font-size:9px;margin-top:1px}
-.sync-bar{background:#1a1a2e;border-top:1px solid rgba(255,255,255,0.08);padding:3px 16px;display:flex;align-items:center;gap:6px}
-.sync-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;flex-shrink:0}
-.sync-dot.syncing{background:#facc15;animation:pulse 1s infinite}
-.sync-dot.off{background:#f87171}
-.sync-txt{font-size:10px;color:rgba(255,255,255,0.4)}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+/* ===== HERO HEADER ===== */
+.hero{background:linear-gradient(135deg,#1a1a2e 0%,#0f3460 50%,#533483 100%);position:relative;overflow:hidden;padding:0}
+.hero-bg{position:absolute;inset:0;opacity:0.06;background-image:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='1'%3E%3Cpath d='M40 0C29 0 20 9 20 20s9 20 20 20 20-9 20-20S51 0 40 0zm0 36c-8.8 0-16-7.2-16-16S31.2 4 40 4s16 7.2 16 16-7.2 16-16 16z'/%3E%3C/g%3E%3C/svg%3E")}
+.hero-content{position:relative;padding:20px 18px 0}
+.hero-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
+.hero-left{flex:1}
+.trip-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(232,98,138,0.2);border:1px solid rgba(232,98,138,0.4);color:#f9a8c9;padding:4px 12px;border-radius:30px;font-size:10px;font-weight:700;letter-spacing:1.5px;margin-bottom:8px}
+.hero-title{color:#fff;font-size:26px;font-weight:900;line-height:1.1;margin-bottom:4px}
+.hero-title span{color:#f9a8c9}
+.hero-sub{color:rgba(255,255,255,0.5);font-size:12px;font-weight:400}
+.hero-emoji{font-size:52px;line-height:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3))}
 
-/* NAV */
-.nav{background:#fff;border-bottom:1px solid #e5e1d8;display:flex;overflow-x:auto;scrollbar-width:none;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
+/* COUNTDOWN ROW */
+.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:rgba(255,255,255,0.05);border-top:1px solid rgba(255,255,255,0.08);margin-top:4px}
+.cd-item{padding:12px 8px;text-align:center;border-left:1px solid rgba(255,255,255,0.06)}
+.cd-item:last-child{border-left:none}
+.cd-num{color:#f9a8c9;font-size:22px;font-weight:900;line-height:1;display:block}
+.cd-lbl{color:rgba(255,255,255,0.4);font-size:9px;margin-top:2px;display:block;font-weight:500}
+
+/* SYNC */
+.sync-row{background:rgba(0,0,0,0.2);padding:5px 18px;display:flex;align-items:center;gap:7px;border-top:1px solid rgba(255,255,255,0.06)}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:#10b981;flex-shrink:0}
+.sync-dot.sync{background:#f59e0b;animation:blink 1s infinite}
+.sync-dot.off{background:#ef4444}
+.sync-txt{font-size:10px;color:rgba(255,255,255,0.4);font-weight:500}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* ===== NAVIGATION ===== */
+.nav-wrap{background:#fff;position:sticky;top:0;z-index:100;box-shadow:0 1px 0 var(--gray3),var(--shadow)}
+.nav{display:flex;overflow-x:auto;scrollbar-width:none;padding:0 4px}
 .nav::-webkit-scrollbar{display:none}
-.nav-btn{flex:1;min-width:52px;padding:10px 4px 8px;font-size:10px;font-weight:600;color:#9ca3af;border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all 0.15s;font-family:'Heebo',sans-serif;text-align:center}
-.nav-btn.on{color:#e8628a;border-bottom-color:#e8628a;font-weight:800}
+.nav-btn{flex:none;padding:13px 16px 11px;font-size:11px;font-weight:600;color:var(--gray2);border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all 0.2s;font-family:'Heebo',sans-serif;display:flex;flex-direction:column;align-items:center;gap:3px;position:relative}
+.nav-btn .nav-ico{font-size:16px;line-height:1}
+.nav-btn.on{color:var(--pink);border-bottom-color:var(--pink);font-weight:700}
+.nav-btn:hover:not(.on){color:var(--navy);border-bottom-color:var(--gray3)}
 
-/* PANELS */
-.panel{display:none;padding:12px;max-width:680px;margin:0 auto}
+/* ===== PANELS ===== */
+.panel{display:none;padding:0 0 80px}
 .panel.on{display:block}
+.section-pad{padding:16px 16px 0}
+.max-w{max-width:680px;margin:0 auto}
 
-/* CARDS */
-.card{background:#fff;border-radius:13px;border:1px solid #e5e1d8;margin-bottom:10px;overflow:hidden}
-.card-b{padding:13px}
-.sec{font-size:10px;font-weight:800;color:#9ca3af;text-transform:uppercase;letter-spacing:1.2px;margin:14px 0 8px}
-.sec:first-child{margin-top:2px}
+/* ===== SECTION HEADERS ===== */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin:20px 0 10px}
+.sec-title{font-size:11px;font-weight:800;color:var(--gray);text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:6px}
+.sec-title::before{content:'';width:3px;height:14px;background:var(--pink);border-radius:2px;display:inline-block}
 
-/* TAGS */
-.tag{font-size:10px;padding:3px 8px;border-radius:20px;font-weight:600;display:inline-block}
-.t-blue{background:#e8eef8;color:#1a2f6e}
-.t-green{background:#e6f4ed;color:#1b5e3a}
-.t-gold{background:#fdf3d8;color:#8d6519}
-.t-pink{background:#fce4ec;color:#c2185b}
-.t-dark{background:#1a1a2e;color:#fff}
+/* ===== OVERVIEW STATS ===== */
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:16px}
+.stat-card{background:#fff;border-radius:var(--radius);padding:14px 10px;text-align:center;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.04)}
+.stat-num{font-size:28px;font-weight:900;color:var(--pink);line-height:1;display:block}
+.stat-lbl{font-size:10px;color:var(--gray2);margin-top:3px;font-weight:500}
 
-/* DAY CARDS */
-.day-card{background:#fff;border:1px solid #e5e1d8;border-radius:13px;margin-bottom:8px;overflow:hidden;transition:border-color 0.15s}
-.day-card:hover{border-color:#e8628a}
-.day-head{padding:12px 13px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
-.day-num{width:52px;height:52px;border-radius:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;font-weight:800}
-.day-num-d{font-size:14px;line-height:1}
-.day-num-l{font-size:8px;opacity:0.75;margin-top:1px}
+/* ===== ROUTE TIMELINE ===== */
+.route-card{background:#fff;margin:0 16px;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border:1px solid rgba(0,0,0,0.04)}
+.route-row{display:flex;gap:0;padding:0}
+.route-left{width:50px;display:flex;flex-direction:column;align-items:center;padding:16px 0;flex-shrink:0}
+.route-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;border:2px solid #fff;box-shadow:0 0 0 2px currentColor}
+.route-line{width:2px;flex:1;min-height:20px;margin:4px 0;opacity:0.3}
+.route-body{flex:1;padding:14px 14px 14px 0;border-bottom:1px solid var(--gray3)}
+.route-row:last-child .route-body{border-bottom:none}
+.route-city{font-weight:800;font-size:14px;color:var(--navy)}
+.route-dates{font-size:11px;color:var(--gray2);margin-top:2px;font-weight:400}
+.route-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+
+/* ===== TAGS ===== */
+.tag{display:inline-block;font-size:10px;padding:3px 9px;border-radius:30px;font-weight:600}
+.t-navy{background:#e8eef8;color:#1a2f6e}
+.t-green{background:#d1fae5;color:#065f46}
+.t-gold{background:#fef3c7;color:#92400e}
+.t-pink{background:#fce4ec;color:#9d1343}
+.t-dark{background:var(--navy);color:#fff}
+.t-purple{background:#ede9fe;color:#5b21b6}
+
+/* ===== TIP BOX ===== */
+.tip-box{background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid rgba(245,158,11,0.3);border-radius:var(--radius);padding:14px 16px;margin:16px}
+.tip-title{font-size:10px;font-weight:800;color:#92400e;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.tip-list{list-style:none;font-size:12px;color:#78350f;line-height:2}
+.tip-list li{display:flex;align-items:flex-start;gap:6px}
+.tip-list li::before{content:'💡';flex-shrink:0}
+
+/* ===== DAY CARDS – Wanderlog style ===== */
+.day-card{background:#fff;margin:0 16px 12px;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border:1px solid rgba(0,0,0,0.04);transition:box-shadow 0.2s}
+.day-card:hover{box-shadow:var(--shadow-lg)}
+
+/* Day header — colorful strip */
+.day-hdr{display:flex;align-items:stretch;cursor:pointer;user-select:none;position:relative}
+.day-color-bar{width:5px;flex-shrink:0}
+.day-hdr-inner{flex:1;padding:14px 14px 14px 12px;display:flex;align-items:center;gap:12px}
+.day-badge{min-width:48px;height:48px;border-radius:var(--radius-sm);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;font-weight:900}
+.day-badge-date{font-size:15px;line-height:1}
+.day-badge-lbl{font-size:8px;margin-top:1px;opacity:0.8;font-weight:600}
 .day-info{flex:1;min-width:0}
-.day-title{font-weight:700;font-size:13px;color:#1a1a2e;line-height:1.3}
-.day-sub{font-size:11px;color:#9ca3af;margin-top:1px}
-.day-arrow{color:#d1d5db;font-size:15px;transition:transform 0.15s;flex-shrink:0}
-.day-card.open .day-arrow{transform:rotate(90deg);color:#e8628a}
-.day-body{display:none;background:#faf9f7;border-top:1px solid #f0ece4}
+.day-title{font-weight:800;font-size:14px;color:var(--navy);line-height:1.2}
+.day-sub{font-size:11px;color:var(--gray2);margin-top:2px;font-weight:400}
+.day-meta{display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap}
+.day-meta-chip{display:flex;align-items:center;gap:3px;font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px}
+.day-arrow{color:var(--gray3);font-size:16px;transition:transform 0.2s;flex-shrink:0;align-self:center}
+.day-card.open .day-arrow{transform:rotate(90deg);color:var(--pink)}
+
+/* Day body */
+.day-body{display:none;border-top:1px solid var(--gray3)}
 .day-card.open .day-body{display:block}
-.day-inner{padding:12px 13px 13px}
 
-/* HOTEL STRIP */
-.hotel-strip{background:#1a1a2e;padding:9px 13px;display:flex;align-items:center;gap:8px}
-.hotel-strip-name{color:#f9a8c9;font-size:12px;font-weight:800}
-.hotel-strip-sub{color:rgba(255,255,255,0.5);font-size:10px;margin-top:1px}
+/* Hotel strip inside day */
+.hotel-night-strip{background:linear-gradient(135deg,var(--navy),#0f3460);padding:10px 16px;display:flex;align-items:center;gap:10px}
+.hotel-night-name{color:#f9a8c9;font-size:12px;font-weight:700}
+.hotel-night-sub{color:rgba(255,255,255,0.45);font-size:10px;margin-top:1px}
 
-/* TIME BLOCKS */
-.time-block{margin-top:10px}
-.time-head{display:flex;align-items:center;gap:6px;margin-bottom:7px}
-.time-label{font-size:10px;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:0.8px}
-.time-line{flex:1;height:1px;background:#e5e1d8}
-.act-item{display:flex;gap:7px;margin-bottom:6px;align-items:flex-start}
-.act-dot{width:6px;height:6px;border-radius:50%;background:#e8628a;margin-top:5px;flex-shrink:0}
-.act-txt{font-size:12px;color:#374151;flex:1;line-height:1.5}
-.act-new .act-dot{box-shadow:0 0 0 3px rgba(232,98,138,0.2)}
-.act-new .act-txt{font-weight:700;color:#1a1a2e}
-.new-pill{font-size:9px;font-weight:800;background:#fce4ec;color:#c2185b;padding:2px 6px;border-radius:20px;margin-left:4px;vertical-align:middle}
+/* Timeline inside day */
+.day-timeline{padding:14px 16px}
+.timeline-section{margin-bottom:14px}
+.timeline-section:last-child{margin-bottom:0}
+.timeline-hdr{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.timeline-icon{font-size:14px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.timeline-lbl{font-size:11px;font-weight:800;color:var(--gray);text-transform:uppercase;letter-spacing:0.8px}
+.timeline-line{flex:1;height:1px;background:var(--gray3)}
 
-/* TRANSPORT IN DAY */
-.trans-block{background:#e8eef8;border-radius:9px;padding:9px 11px;margin-top:9px}
-.trans-head{font-size:10px;font-weight:800;color:#1a2f6e;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px}
-.trans-row{margin-bottom:5px}
-.trans-row:last-child{margin-bottom:0}
-.trans-seg{display:flex;align-items:center;gap:6px}
-.trans-from,.trans-to{font-size:11px;font-weight:700;color:#1a2f6e}
-.trans-arr{color:#e8628a;font-size:12px}
-.trans-tags{display:flex;gap:4px;margin-top:3px;flex-wrap:wrap}
-.tt{font-size:10px;padding:2px 7px;border-radius:8px;font-weight:700}
-.tt-shin{background:#ffe0e6;color:#c62828}
-.tt-bus{background:#e3f2fd;color:#1565c0}
-.tt-train{background:#e8eef8;color:#1a2f6e}
-.tt-note{background:#f5f3ef;color:#6b7280;border:1px solid #e5e1d8}
-.day-note{background:#fdf3d8;border-radius:7px;padding:7px 11px;font-size:11px;color:#8d6519;margin-top:8px}
+/* Activity items */
+.act-list{padding-right:8px}
+.act-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;position:relative;padding-right:4px}
+.act-item:last-child{margin-bottom:0}
+.act-dot-wrap{display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding-top:4px}
+.act-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.act-connector{width:1px;flex:1;min-height:10px;margin-top:3px;opacity:0.3}
+.act-content{flex:1;min-width:0}
+.act-name{font-size:13px;font-weight:600;color:var(--navy);line-height:1.4}
+.act-name.visited{text-decoration:line-through;color:var(--gray2)}
+.act-note{font-size:11px;color:var(--gray2);margin-top:2px}
+.act-actions{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap}
+.act-btn{display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:700;border:none;cursor:pointer;font-family:'Heebo',sans-serif;transition:all 0.15s}
+.act-btn-visit{background:#d1fae5;color:#065f46}
+.act-btn-visit.done{background:#065f46;color:#fff}
+.act-btn-edit{background:#e0e7ff;color:#3730a3}
+.act-btn-del{background:#fee2e2;color:#991b1b}
+.act-new-tag{font-size:9px;font-weight:800;background:var(--pink-light);color:var(--pink-dark);padding:2px 6px;border-radius:20px;margin-right:4px;vertical-align:middle}
 
-/* REST IN DAY */
-.day-rests{margin-top:11px}
-.day-rest-lbl{font-size:10px;font-weight:800;color:#e8628a;letter-spacing:0.8px;margin-bottom:5px}
-.mini-rest{background:#fff;border:1px solid #e5e1d8;border-radius:9px;padding:7px 9px;margin-bottom:4px;display:flex;align-items:center;gap:7px}
+/* Add item row */
+.add-act-row{display:flex;gap:7px;padding:10px 16px;border-top:1px solid var(--gray3);background:var(--gray4)}
+.add-act-inp{flex:1;border:1px solid var(--gray3);border-radius:8px;padding:7px 11px;font-size:12px;font-family:'Heebo',sans-serif;direction:rtl;outline:none;background:#fff}
+.add-act-inp:focus{border-color:var(--pink)}
+.add-act-sel{border:1px solid var(--gray3);border-radius:8px;padding:7px 8px;font-size:12px;font-family:'Heebo',sans-serif;direction:rtl;outline:none;background:#fff;cursor:pointer}
+.add-act-btn{background:var(--pink);color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Heebo',sans-serif;white-space:nowrap}
 
-/* AREA BADGE */
-.area-badge{display:inline-block;background:#1a1a2e;color:#f9a8c9;font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;margin-bottom:6px}
+/* Transport in day */
+.day-transport{background:#eff6ff;border-radius:var(--radius-sm);margin:0 16px 14px;padding:10px 12px}
+.day-transport-title{font-size:10px;font-weight:800;color:#1e40af;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.trans-seg{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.trans-seg:last-child{margin-bottom:0}
+.trans-from,.trans-to{font-size:11px;font-weight:700;color:#1e3a8a}
+.trans-arr{color:var(--pink);font-size:12px}
+.trans-chips{display:flex;gap:4px;margin-top:3px;flex-wrap:wrap}
+.tc{font-size:10px;padding:2px 7px;border-radius:8px;font-weight:700}
+.tc-shin{background:#ffe4e6;color:#9f1239}
+.tc-bus{background:#dbeafe;color:#1e3a8a}
+.tc-train{background:#eff6ff;color:#1e40af}
+.tc-note{background:#f1f5f9;color:#475569;border:1px solid #e2e8f0}
 
-/* ADD BUTTONS */
-.add-row{display:flex;gap:7px;margin-bottom:10px}
-.add-btn-dashed{flex:1;padding:9px;border-radius:10px;border:1.5px dashed #e8628a;background:#fce4ec;color:#c2185b;font-size:12px;font-weight:700;cursor:pointer;font-family:'Heebo',sans-serif;text-align:center;transition:all 0.15s}
-.add-btn-dashed:hover{background:#f4b8cc;border-style:solid}
+/* Day note */
+.day-note-strip{background:linear-gradient(135deg,#fffbeb,#fef3c7);border-radius:var(--radius-sm);margin:0 16px 14px;padding:9px 12px;font-size:11px;color:#78350f;border:1px solid rgba(245,158,11,0.2);display:flex;align-items:flex-start;gap:6px}
 
-/* FILTERS */
-.filters{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;margin-bottom:8px;padding-bottom:2px;flex-wrap:wrap}
-.filters::-webkit-scrollbar{display:none}
-.fb{padding:5px 11px;border-radius:20px;border:1.5px solid #e5e1d8;background:#fff;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.15s;font-family:'Heebo',sans-serif;color:#6b7280}
-.fb.on{background:#e8628a;border-color:#e8628a;color:#fff;box-shadow:0 2px 6px rgba(232,98,138,0.25)}
-.fb:hover:not(.on){border-color:#e8628a;color:#e8628a}
+/* Restaurants in day */
+.day-rests-sec{padding:0 16px 14px}
+.day-rests-title{font-size:10px;font-weight:800;color:var(--pink);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.mini-rest-card{background:#fff;border:1px solid var(--gray3);border-radius:var(--radius-sm);padding:9px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.mini-rest-ico{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.mini-rest-name{font-size:12px;font-weight:700;color:var(--navy)}
+.mini-rest-sub{font-size:10px;color:var(--gray2);margin-top:1px}
 
-/* RESTAURANT CARD */
-.rest-card{background:#fff;border:1px solid #e5e1d8;border-radius:12px;padding:11px;margin-bottom:7px;display:flex;align-items:center;gap:10px}
-.rest-ico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.rest-name{font-weight:700;font-size:13px;color:#1a1a2e}
-.rest-meta{font-size:10px;color:#9ca3af;margin-top:1px}
-.price-g{color:#2e7d52}.price-y{color:#c9982a}.price-r{color:#c62828}
+/* MAP section in day */
+.day-map-sec{margin:0 16px 14px}
+.day-map-title{font-size:10px;font-weight:800;color:#065f46;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.places-list{background:#fff;border:1px solid var(--gray3);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:8px}
+.place-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--gray3)}
+.place-row:last-child{border-bottom:none}
+.place-num{background:var(--pink);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+.place-name{font-size:12px;color:var(--navy);font-weight:500;flex:1}
+.place-nav{font-size:10px;font-weight:700;color:var(--blue);text-decoration:none;white-space:nowrap}
+.place-nav:hover{color:#1d4ed8}
+.map-btns-row{display:flex;gap:7px;flex-wrap:wrap}
+.map-btn-main{display:inline-flex;align-items:center;gap:5px;background:#1a73e8;color:#fff;border:none;border-radius:8px;padding:7px 13px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;font-family:'Heebo',sans-serif;transition:background 0.15s}
+.map-btn-main:hover{background:#1557b0}
+.map-btn-loc{display:inline-flex;align-items:center;gap:5px;background:#d1fae5;border:1px solid #6ee7b7;color:#065f46;border-radius:8px;padding:7px 13px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Heebo',sans-serif;transition:all 0.15s}
+.map-btn-loc:hover{background:#a7f3d0}
+.loc-pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--pink);animation:pulse3 1.5s infinite}
+@keyframes pulse3{0%,100%{box-shadow:0 0 0 0 rgba(232,98,138,0.4)}70%{box-shadow:0 0 0 6px rgba(232,98,138,0)}}
 
-/* TRANSPORT TAB */
-.tr-card{background:#fff;border:1px solid #e5e1d8;border-radius:11px;padding:11px;margin-bottom:6px}
-.tr-route{display:flex;align-items:center;gap:6px;margin-bottom:6px}
-.tr-from,.tr-to{font-weight:700;font-size:12px}
-.tr-arr{color:#e8628a;font-size:13px;flex:1;text-align:center}
+/* ===== FILTERS ===== */
+.filter-row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:12px 16px 8px;flex-wrap:wrap}
+.filter-row::-webkit-scrollbar{display:none}
+.fb{padding:6px 14px;border-radius:30px;border:1.5px solid var(--gray3);background:#fff;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.15s;font-family:'Heebo',sans-serif;color:var(--gray)}
+.fb.on{background:var(--pink);border-color:var(--pink);color:#fff;box-shadow:0 2px 8px rgba(232,98,138,0.3)}
+.fb:hover:not(.on){border-color:var(--pink);color:var(--pink)}
 
-/* HOTELS */
-.hotel-card{background:#fff;border:1px solid #e5e1d8;border-radius:13px;margin-bottom:9px;overflow:hidden}
-.hotel-top{background:#1a1a2e;padding:12px 14px;display:flex;align-items:center;gap:10px}
-.hotel-ico{font-size:22px}
-.hotel-name{color:#fff;font-size:14px;font-weight:800}
+/* ===== RESTAURANT CARDS ===== */
+.rest-card{background:#fff;margin:0 16px 8px;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;align-items:stretch;border:1px solid rgba(0,0,0,0.04)}
+.rest-color-strip{width:4px;flex-shrink:0}
+.rest-inner{flex:1;padding:12px 14px;display:flex;align-items:center;gap:11px}
+.rest-ico{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.rest-name{font-size:13px;font-weight:800;color:var(--navy)}
+.rest-meta{font-size:10px;color:var(--gray2);margin-top:2px}
+.rest-price{font-size:14px;font-weight:900;flex-shrink:0}
+.pg{color:#10b981}.py{color:#f59e0b}.pr{color:#ef4444}
+
+/* ===== HOTEL CARDS ===== */
+.hotel-card{background:#fff;margin:0 16px 10px;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border:1px solid rgba(0,0,0,0.04)}
+.hotel-top{background:linear-gradient(135deg,var(--navy),#0f3460);padding:14px 16px;display:flex;align-items:center;gap:12px}
+.hotel-ico{font-size:24px}
+.hotel-name{color:#fff;font-size:15px;font-weight:800}
 .hotel-loc{color:#f9a8c9;font-size:11px;margin-top:2px}
-.hotel-dates{background:rgba(232,98,138,0.25);border:1px solid rgba(232,98,138,0.4);color:#f9a8c9;font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;flex-shrink:0}
-.hotel-body{padding:12px 14px}
-.hotel-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f5f3ef;font-size:12px}
+.hotel-dates-badge{background:rgba(232,98,138,0.2);border:1px solid rgba(232,98,138,0.4);color:#f9a8c9;font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;flex-shrink:0;margin-right:auto}
+.hotel-body{padding:12px 16px}
+.hotel-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--gray3);font-size:12px}
 .hotel-row:last-child{border:none}
-.hotel-row-l{color:#9ca3af}
+.hotel-row-l{color:var(--gray2)}
 .hotel-row-v{font-weight:700}
-.hotel-del{background:#fce4ec;border:1px solid #f4b8cc;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;color:#c2185b;cursor:pointer;font-family:'Heebo',sans-serif;margin-top:10px}
+.hotel-del{background:#fee2e2;border:1px solid #fca5a5;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;color:#991b1b;cursor:pointer;font-family:'Heebo',sans-serif;margin-top:10px}
 
-/* BUDGET */
-.budget-summary{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:11px}
-.bsc{background:#fff;border:1px solid #e5e1d8;border-radius:11px;padding:11px;text-align:center}
-.bsn{font-size:18px;font-weight:800;color:#e8628a;line-height:1}
-.bsl{font-size:10px;color:#9ca3af;margin-top:2px}
-.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:10px}
-.cat-card{background:#fff;border:1px solid #e5e1d8;border-radius:10px;padding:7px 4px;text-align:center}
-.cat-card.act{border-color:#e8628a;background:#fce4ec}
-.cat-ico{font-size:17px;display:block;margin-bottom:2px}
-.cat-name{font-size:10px;font-weight:700;color:#374151}
-.cat-total{font-size:11px;font-weight:800;color:#e8628a;margin-top:1px}
-.exp-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #f0ece4}
-.exp-row:last-child{border:none}
-.exp-del{background:none;border:none;cursor:pointer;color:#d1d5db;font-size:13px;padding:0 2px;flex-shrink:0}
-.exp-del:hover{color:#c62828}
-.day-bar-row{padding:8px 0;border-bottom:1px solid #f0ece4}
+/* ===== TRANSPORT TAB ===== */
+.trans-card{background:#fff;margin:0 16px 8px;border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;border:1px solid rgba(0,0,0,0.04)}
+.trans-route{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.trans-city{font-weight:800;font-size:13px;color:var(--navy)}
+.trans-arrow{color:var(--pink);font-size:14px;flex:1;text-align:center}
+
+/* ===== BUDGET ===== */
+.budget-hero{background:linear-gradient(135deg,var(--navy),#533483);margin:16px;border-radius:var(--radius);padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.budget-num{font-size:22px;font-weight:900;color:#fff;line-height:1}
+.budget-lbl{font-size:10px;color:rgba(255,255,255,0.5);margin-top:3px;font-weight:500}
+.budget-divider{width:1px;background:rgba(255,255,255,0.1);margin:0 4px}
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 16px 12px}
+.cat-card{background:#fff;border-radius:var(--radius-sm);padding:10px 6px;text-align:center;box-shadow:var(--shadow);border:1.5px solid var(--gray3);cursor:pointer;transition:all 0.15s}
+.cat-card.act{border-color:var(--pink);background:var(--pink-light)}
+.cat-ico{font-size:18px;display:block;margin-bottom:3px}
+.cat-name{font-size:10px;font-weight:700;color:var(--navy)}
+.cat-total{font-size:11px;font-weight:800;color:var(--pink);margin-top:2px}
+.exp-add-card{background:#fff;margin:0 16px 12px;border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;border:1px solid rgba(0,0,0,0.04)}
+.exp-inp{width:100%;border:1.5px solid var(--gray3);border-radius:10px;padding:9px 12px;font-size:12px;font-family:'Heebo',sans-serif;direction:rtl;outline:none;background:#fff;color:var(--navy);margin-bottom:8px}
+.exp-inp:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(232,98,138,0.1)}
+.exp-row{display:flex;gap:7px;margin-bottom:8px}
+.exp-sel{border:1.5px solid var(--gray3);border-radius:10px;padding:9px 10px;font-size:12px;font-family:'Heebo',sans-serif;direction:rtl;outline:none;background:#fff;color:var(--navy);cursor:pointer;flex:1}
+.exp-sel:focus{border-color:var(--pink)}
+.exp-preview{font-size:11px;font-weight:700;color:var(--green);margin-bottom:8px;min-height:16px}
+.add-btn-main{background:var(--pink);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Heebo',sans-serif;width:100%;transition:background 0.15s}
+.add-btn-main:hover{background:var(--pink-dark)}
+.exp-list-card{background:#fff;margin:0 16px;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border:1px solid rgba(0,0,0,0.04)}
+.exp-list-row{display:flex;align-items:center;gap:9px;padding:10px 14px;border-bottom:1px solid var(--gray3)}
+.exp-list-row:last-child{border:none}
+.exp-del-btn{background:none;border:none;cursor:pointer;color:var(--gray3);font-size:13px;flex-shrink:0}
+.exp-del-btn:hover{color:#ef4444}
+.day-bar-row{padding:9px 0;border-bottom:1px solid var(--gray3)}
 .day-bar-row:last-child{border:none}
-.bar-bg{background:#f0ece4;border-radius:4px;height:5px;overflow:hidden;margin-top:3px}
-.bar-fill{height:100%;border-radius:4px;background:#e8628a;transition:width 0.5s}
+.bar-bg{background:var(--gray3);border-radius:4px;height:5px;overflow:hidden;margin-top:4px}
+.bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--pink),#f59e0b);transition:width 0.6s}
 
-/* INPUTS */
-.inp{width:100%;border:1px solid #e5e1d8;border-radius:9px;padding:8px 11px;font-size:12px;font-family:'Heebo',sans-serif;direction:rtl;outline:none;background:#fff;color:#1a1a2e;margin-bottom:7px}
-.inp:focus{border-color:#e8628a}
-.sel{border:1px solid #e5e1d8;border-radius:9px;padding:8px 10px;font-size:12px;font-family:'Heebo',sans-serif;direction:rtl;outline:none;background:#fff;color:#1a1a2e;cursor:pointer}
-.sel:focus{border-color:#e8628a}
-.inp-row{display:flex;gap:6px;margin-bottom:7px}
-.add-btn{background:#e8628a;color:#fff;border:none;border-radius:9px;padding:10px 14px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Heebo',sans-serif;width:100%;transition:background 0.15s}
-.add-btn:hover{background:#d4516f}
+/* ===== ADD BUTTONS ===== */
+.add-row{display:flex;gap:8px;margin:12px 16px 4px}
+.add-dashed{flex:1;padding:10px;border-radius:var(--radius-sm);border:1.5px dashed var(--pink);background:var(--pink-light);color:var(--pink-dark);font-size:12px;font-weight:700;cursor:pointer;font-family:'Heebo',sans-serif;text-align:center;transition:all 0.15s}
+.add-dashed:hover{background:#f4b8cc;border-style:solid}
 
-/* MODALS */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;display:none;align-items:center;justify-content:center;padding:16px}
+/* ===== MODALS ===== */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;display:none;align-items:flex-end;justify-content:center;padding:0}
 .modal.open{display:flex}
-.modal-box{background:#fff;border-radius:16px;padding:18px;width:100%;max-width:420px;max-height:90vh;overflow-y:auto}
-.modal-title{font-size:14px;font-weight:800;color:#1a1a2e;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
-.modal-close{background:none;border:none;cursor:pointer;font-size:18px;color:#9ca3af;font-family:'Heebo',sans-serif;line-height:1}
-.field-label{font-size:10px;font-weight:800;color:#9ca3af;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px}
-.field{margin-bottom:10px}
-.time-seg{display:flex;border:1px solid #e5e1d8;border-radius:10px;overflow:hidden;margin-bottom:10px}
-.time-opt{flex:1;padding:8px 3px;text-align:center;font-size:11px;font-weight:700;color:#9ca3af;cursor:pointer;border:none;background:#fff;font-family:'Heebo',sans-serif;transition:all 0.15s;border-left:1px solid #e5e1d8;line-height:1.3}
-.time-opt:first-child{border-left:none}
-.time-opt.on{background:#e8628a;color:#fff}
+.modal-box{background:#fff;border-radius:var(--radius) var(--radius) 0 0;padding:20px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto;animation:slideUp 0.3s ease}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-handle{width:40px;height:4px;background:var(--gray3);border-radius:2px;margin:0 auto 16px}
+.modal-title{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.modal-close{background:none;border:none;cursor:pointer;font-size:20px;color:var(--gray2);line-height:1;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.modal-close:hover{background:var(--gray3)}
+.field-lbl{font-size:10px;font-weight:800;color:var(--gray2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px}
+.field-wrap{margin-bottom:12px}
 .type-chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
-.type-chip{padding:5px 10px;border-radius:20px;border:1.5px solid #e5e1d8;background:#fff;font-size:11px;font-weight:700;color:#6b7280;cursor:pointer;font-family:'Heebo',sans-serif;transition:all 0.15s}
-.type-chip.on{background:#1a1a2e;border-color:#1a1a2e;color:#fff}
+.type-chip{padding:5px 10px;border-radius:20px;border:1.5px solid var(--gray3);background:#fff;font-size:11px;font-weight:700;color:var(--gray);cursor:pointer;transition:all 0.15s}
+.type-chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.time-seg{display:flex;border:1.5px solid var(--gray3);border-radius:10px;overflow:hidden;margin-bottom:12px}
+.time-opt{flex:1;padding:9px 4px;text-align:center;font-size:11px;font-weight:700;color:var(--gray2);cursor:pointer;border:none;background:#fff;font-family:'Heebo',sans-serif;transition:all 0.15s;border-left:1px solid var(--gray3);line-height:1.3}
+.time-opt:first-child{border-left:none}
+.time-opt.on{background:var(--pink);color:#fff}
 
-/* OVERVIEW */
-.ov-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:11px}
-.ov-stat{background:#fff;border:1px solid #e5e1d8;border-radius:11px;padding:11px 7px;text-align:center}
-.ov-num{font-size:21px;font-weight:800;color:#e8628a;line-height:1}
-.ov-lbl{font-size:9px;color:#9ca3af;margin-top:2px}
-.route-item{display:flex;gap:9px;margin-bottom:0}
-.route-line{display:flex;flex-direction:column;align-items:center;width:26px;flex-shrink:0}
-.route-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px}
-.route-conn{width:2px;flex:1;min-height:24px;margin:3px 0}
-.route-info{flex:1;padding-bottom:11px}
-.route-city{font-weight:800;font-size:13px}
-.route-dates{font-size:10px;color:#9ca3af;margin-top:1px}
-.route-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px}
-.tip-box{background:#fdf3d8;border:1px solid rgba(201,152,42,0.3);border-radius:10px;padding:10px;margin-bottom:8px}
-.tip-title{font-size:10px;font-weight:800;color:#8d6519;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
-.tip-list{list-style:none;font-size:11px;color:#7a5c1e;line-height:1.9}
-.tip-list li::before{content:'💡 '}
-
-/* MAP */
-.day-map-wrap{margin-top:11px;border-radius:10px;overflow:hidden;border:1px solid #e5e1d8;position:relative}
-.day-map-iframe{width:100%;height:240px;border:none;display:block}
-.day-map-btns{display:flex;gap:7px;margin-top:7px;flex-wrap:wrap}
-.map-btn{display:inline-flex;align-items:center;gap:5px;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;font-family:'Heebo',sans-serif;transition:all 0.15s;border:none}
-.map-btn-primary{background:#1a73e8;color:#fff}
-.map-btn-primary:hover{background:#1557b0}
-.map-btn-loc{background:#e8f4ea;border:1px solid #81c784;color:#2e7d32}
-.map-btn-loc:hover{background:#c8e6c9}
-.map-locate-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#e8628a;border:2px solid #fff;box-shadow:0 0 0 2px #e8628a;margin-left:2px;animation:pulse2 1.5s infinite}
-@keyframes pulse2{0%,100%{box-shadow:0 0 0 2px #e8628a}50%{box-shadow:0 0 0 5px rgba(232,98,138,0.3)}}
 /* LOADING */
-.loading{text-align:center;padding:40px;color:#9ca3af}
-.spinner{width:30px;height:30px;border:3px solid #f0ece4;border-top-color:#e8628a;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 10px}
+.loading{text-align:center;padding:50px 20px;color:var(--gray2)}
+.spinner{width:32px;height:32px;border:3px solid var(--gray3);border-top-color:var(--pink);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* VISITED BADGE ON DAY */
+.visited-count{background:#d1fae5;color:#065f46;border-radius:20px;font-size:10px;font-weight:700;padding:2px 8px;display:inline-flex;align-items:center;gap:3px}
 </style>
 </head>
 <body>
-
 <div id="toast"></div>
 
-<!-- HEADER -->
-<div class="hdr">
-  <div class="hdr-inner">
-    <div>
-      <div class="badge">🇯🇵 JAPAN FAMILY TRIP</div>
-      <div class="hdr-title">טיול משפחתי ליפן ✈️</div>
-      <div class="hdr-sub">זוהר + משפחה · 16.9–2.10.2026 · 17 יום</div>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-top">
+      <div class="hero-left">
+        <div class="trip-pill">✈️ JAPAN FAMILY TRIP 2026</div>
+        <div class="hero-title">יפן <span>2026</span> 🌸</div>
+        <div class="hero-sub">זוהר + משפחה · 16.9 – 1.10.2026</div>
+      </div>
+      <div class="hero-emoji">🗾</div>
     </div>
-    <div style="font-size:36px;line-height:1">🌸</div>
   </div>
-  <div class="stats-row">
-    <div class="stat"><div class="stat-n" id="cnt">—</div><div class="stat-l">ימים לטיול</div></div>
-    <div class="stat"><div class="stat-n">16</div><div class="stat-l">לילות</div></div>
-    <div class="stat"><div class="stat-n" id="hdr-hotels">0</div><div class="stat-l">מלונות</div></div>
-    <div class="stat"><div class="stat-n">5</div><div class="stat-l">ערים</div></div>
+  <div class="countdown">
+    <div class="cd-item"><span class="cd-num" id="cnt">—</span><span class="cd-lbl">ימים</span></div>
+    <div class="cd-item"><span class="cd-num">16</span><span class="cd-lbl">לילות</span></div>
+    <div class="cd-item"><span class="cd-num" id="hdr-hotels">0</span><span class="cd-lbl">מלונות</span></div>
+    <div class="cd-item"><span class="cd-num">5</span><span class="cd-lbl">ערים</span></div>
   </div>
-  <div class="sync-bar">
+  <div class="sync-row">
     <div class="sync-dot" id="sync-dot"></div>
     <span class="sync-txt" id="sync-txt">מתחבר...</span>
   </div>
 </div>
 
 <!-- NAV -->
-<div class="nav">
-  <button class="nav-btn on" data-tab="ov">🗾 סקירה</button>
-  <button class="nav-btn" data-tab="dy">📅 יומי</button>
-  <button class="nav-btn" data-tab="rs">🍜 מסעדות</button>
-  <button class="nav-btn" data-tab="ht">🏨 מלונות</button>
-  <button class="nav-btn" data-tab="tr">🚄 תחבורה</button>
-  <button class="nav-btn" data-tab="bg">💴 תקציב</button>
+<div class="nav-wrap">
+  <div class="nav">
+    <button class="nav-btn on" data-tab="ov"><span class="nav-ico">🗾</span>סקירה</button>
+    <button class="nav-btn" data-tab="dy"><span class="nav-ico">📅</span>יומי</button>
+    <button class="nav-btn" data-tab="rs"><span class="nav-ico">🍜</span>מסעדות</button>
+    <button class="nav-btn" data-tab="ht"><span class="nav-ico">🏨</span>מלונות</button>
+    <button class="nav-btn" data-tab="tr"><span class="nav-ico">🚄</span>תחבורה</button>
+    <button class="nav-btn" data-tab="bg"><span class="nav-ico">💴</span>תקציב</button>
+  </div>
 </div>
 
 <!-- OVERVIEW -->
 <div class="panel on" id="pnl-ov">
-  <div class="ov-stats">
-    <div class="ov-stat"><div class="ov-num">16</div><div class="ov-lbl">ימי טיול</div></div>
-    <div class="ov-stat"><div class="ov-num">5</div><div class="ov-lbl">ערים</div></div>
-    <div class="ov-stat"><div class="ov-num" id="ov-rests">43</div><div class="ov-lbl">מסעדות</div></div>
+  <div class="stats-grid max-w">
+    <div class="stat-card"><span class="stat-num">16</span><span class="stat-lbl">ימי טיול</span></div>
+    <div class="stat-card"><span class="stat-num">5</span><span class="stat-lbl">ערים</span></div>
+    <div class="stat-card"><span class="stat-num" id="ov-rests">40</span><span class="stat-lbl">מסעדות</span></div>
   </div>
-  <div class="sec">מסלול הטיול</div>
-  <div class="card card-b">
-    <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#3d5a9e"></div><div class="route-conn" style="background:#3d5a9e"></div></div><div class="route-info"><div class="route-city">⛩️ טוקיו – אסאקוסה</div><div class="route-dates">16.9–19.9 · 3 לילות</div><div class="route-tags"><span class="tag t-blue">אסאקוסה</span><span class="tag t-blue">גינזה</span><span class="tag t-blue">Ueno</span><span class="tag t-blue">שיבויה</span></div></div></div>
-    <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#c9982a"></div><div class="route-conn" style="background:#c9982a"></div></div><div class="route-info"><div class="route-city">🏔️ האלפים – טאקיאמה</div><div class="route-dates">19.9–22.9 · 3 לילות</div><div class="route-tags"><span class="tag t-gold">טאקיאמה</span><span class="tag t-gold">קמיקוצ'י</span><span class="tag t-gold">שירקאווה-גו</span></div></div></div>
-    <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#e8628a"></div><div class="route-conn" style="background:#e8628a"></div></div><div class="route-info"><div class="route-city">⛩️ קיוטו</div><div class="route-dates">22.9–26.9 · 4 לילות</div><div class="route-tags"><span class="tag t-pink">גיון</span><span class="tag t-pink">קיומיזו-דרה</span><span class="tag t-pink">ארשיאמה</span><span class="tag t-pink">נארה</span></div></div></div>
-    <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#e8628a"></div><div class="route-conn" style="background:#e8628a"></div></div><div class="route-info"><div class="route-city">🎡 אוסקה</div><div class="route-dates">26.9–28.9 · 2 לילות</div><div class="route-tags"><span class="tag t-pink">דוטונבורי</span><span class="tag t-dark">Universal 🎮</span></div></div></div>
-    <div class="route-item"><div class="route-line"><div class="route-dot" style="background:#3d5a9e"></div></div><div class="route-info" style="padding-bottom:0"><div class="route-city">🗼 טוקיו – שיבויה/שינג'וקו</div><div class="route-dates">28.9–1.10 · 4 לילות + טיסה</div><div class="route-tags"><span class="tag t-blue">שיבויה</span><span class="tag t-blue">שינג'וקו</span><span class="tag t-blue">גינזה</span><span class="tag t-blue">הרג'וקו</span></div></div></div>
+  <div class="max-w">
+    <div class="section-pad"><div class="sec-hdr"><div class="sec-title">מסלול הטיול</div></div></div>
+    <div class="route-card" style="margin:0 16px">
+      <div class="route-row"><div class="route-left"><div class="route-dot" style="color:#3b82f6;background:#3b82f6"></div><div class="route-line" style="background:#3b82f6"></div></div><div class="route-body"><div class="route-city">⛩️ טוקיו – אסאקוסה</div><div class="route-dates">16.9–19.9 · 3 לילות</div><div class="route-tags"><span class="tag t-navy">אסאקוסה</span><span class="tag t-navy">גינזה</span><span class="tag t-navy">Ueno</span><span class="tag t-navy">שיבויה</span></div></div></div>
+      <div class="route-row"><div class="route-left"><div class="route-dot" style="color:#f59e0b;background:#f59e0b"></div><div class="route-line" style="background:#f59e0b"></div></div><div class="route-body"><div class="route-city">🏔️ האלפים – טאקיאמה</div><div class="route-dates">19.9–22.9 · 3 לילות</div><div class="route-tags"><span class="tag t-gold">טאקיאמה</span><span class="tag t-gold">קמיקוצ'י</span><span class="tag t-gold">שירקאווה-גו</span></div></div></div>
+      <div class="route-row"><div class="route-left"><div class="route-dot" style="color:#e8628a;background:#e8628a"></div><div class="route-line" style="background:#e8628a"></div></div><div class="route-body"><div class="route-city">⛩️ קיוטו</div><div class="route-dates">22.9–26.9 · 4 לילות</div><div class="route-tags"><span class="tag t-pink">גיון</span><span class="tag t-pink">קיומיזו</span><span class="tag t-pink">ארשיאמה</span><span class="tag t-pink">נארה</span></div></div></div>
+      <div class="route-row"><div class="route-left"><div class="route-dot" style="color:#8b5cf6;background:#8b5cf6"></div><div class="route-line" style="background:#8b5cf6"></div></div><div class="route-body"><div class="route-city">🎡 אוסקה</div><div class="route-dates">26.9–28.9 · 2 לילות</div><div class="route-tags"><span class="tag t-purple">דוטונבורי</span><span class="tag t-dark">Universal 🎮</span></div></div></div>
+      <div class="route-row"><div class="route-left"><div class="route-dot" style="color:#3b82f6;background:#3b82f6"></div></div><div class="route-body" style="border:none"><div class="route-city">🗼 טוקיו – שיבויה/שינג'וקו</div><div class="route-dates">28.9–1.10 · 4 לילות + טיסה</div><div class="route-tags"><span class="tag t-navy">שיבויה</span><span class="tag t-navy">שינג'וקו</span><span class="tag t-navy">גינזה</span><span class="tag t-navy">הרג'וקו</span></div></div></div>
+    </div>
+    <div class="tip-box">
+      <div class="tip-title">💡 טיפים מרכזיים</div>
+      <ul class="tip-list">
+        <li>לאכול Lunch במקום Dinner – זול ב-30–50%</li>
+        <li>Convenience Store = ארוחת בוקר מעולה</li>
+        <li>לשלוח מזוודות מאסאקוסה לקיוטו ב-19.9 (Yamato)</li>
+        <li>Hakone Free Pass – אם מתכננים האקונה</li>
+        <li>Suica – להוציא ישר בשדה התעופה</li>
+      </ul>
+    </div>
   </div>
-  <div class="tip-box"><div class="tip-title">טיפים מרכזיים</div><ul class="tip-list"><li>לאכול Lunch במקום Dinner – זול ב-30–50%</li><li>Convenience Store = ארוחת בוקר מעולה</li><li>לשלוח מזוודות מטוקיו לקיוטו ב-20.9</li><li>Hakone Free Pass – חובה לאזור האקונה</li><li>Suica – להוציא ישר בשדה התעופה</li></ul></div>
 </div>
 
 <!-- DAILY -->
 <div class="panel" id="pnl-dy">
-  <div class="add-row">
-    <button class="add-btn-dashed" onclick="openModal('modal-place')">+ הוסף אתר</button>
-    <button class="add-btn-dashed" onclick="openModal('modal-rest-day')">+ הוסף מסעדה</button>
+  <div class="max-w">
+    <div class="add-row">
+      <button class="add-dashed" onclick="openModal('modal-place')">+ הוסף אתר</button>
+      <button class="add-dashed" onclick="openModal('modal-rest-day')">+ הוסף מסעדה</button>
+    </div>
+    <div id="day-list"><div class="loading"><div class="spinner"></div>טוען...</div></div>
   </div>
-  <div id="day-list"><div class="loading"><div class="spinner"></div>טוען...</div></div>
 </div>
 
 <!-- RESTAURANTS -->
 <div class="panel" id="pnl-rs">
-  <div class="add-row"><button class="add-btn-dashed" style="flex:1" onclick="openModal('modal-rest')">+ הוסף מסעדה חדשה</button></div>
-  <div class="sec" style="margin-top:2px">לפי מחיר</div>
-  <div class="filters" id="fp"></div>
-  <div class="sec">לפי אזור</div>
-  <div class="filters" id="fl"></div>
-  <div class="sec">לפי יום</div>
-  <div class="filters" id="fd"></div>
-  <div id="rest-count" style="font-size:11px;color:#9ca3af;margin-bottom:7px"></div>
-  <div id="rest-list"><div class="loading"><div class="spinner"></div>טוען...</div></div>
+  <div class="max-w">
+    <div class="add-row"><button class="add-dashed" style="flex:1" onclick="openModal('modal-rest')">+ הוסף מסעדה חדשה</button></div>
+    <div class="section-pad"><div class="sec-hdr"><div class="sec-title">לפי מחיר</div></div></div>
+    <div class="filter-row" id="fp"></div>
+    <div class="section-pad"><div class="sec-hdr"><div class="sec-title">לפי אזור</div></div></div>
+    <div class="filter-row" id="fl"></div>
+    <div class="section-pad"><div class="sec-hdr"><div class="sec-title">לפי יום</div></div></div>
+    <div class="filter-row" id="fd"></div>
+    <div id="rest-count" style="font-size:11px;color:var(--gray2);padding:4px 16px 8px"></div>
+    <div id="rest-list"><div class="loading"><div class="spinner"></div>טוען...</div></div>
+  </div>
 </div>
 
 <!-- HOTELS -->
 <div class="panel" id="pnl-ht">
-  <div class="add-row"><button class="add-btn-dashed" style="flex:1" onclick="openModal('modal-hotel')">+ הוסף מלון / לינה</button></div>
-  <div id="hotel-list"><div style="text-align:center;color:#9ca3af;font-size:13px;padding:30px 0">עדיין לא הוספת מלונות.</div></div>
+  <div class="max-w">
+    <div class="add-row"><button class="add-dashed" style="flex:1" onclick="openModal('modal-hotel')">+ הוסף מלון / לינה</button></div>
+    <div id="hotel-list"><div style="text-align:center;color:var(--gray2);padding:40px 20px;font-size:13px">עדיין לא הוספת מלונות 🏨</div></div>
+  </div>
 </div>
 
 <!-- TRANSPORT -->
 <div class="panel" id="pnl-tr">
-  <div class="sec" style="margin-top:2px">כרטיסים חיוניים</div>
-  <div class="card card-b" style="display:flex;flex-direction:column;gap:0">
-    <div style="display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid #f0ece4"><span style="font-size:17px">💳</span><div style="flex:1"><div style="font-weight:700;font-size:12px">Suica</div><div style="font-size:10px;color:#9ca3af">להוציא ישר בשדה התעופה</div></div><span class="tag t-green">חובה</span></div>
-    <div style="display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid #f0ece4"><span style="font-size:17px">🗻</span><div style="flex:1"><div style="font-weight:700;font-size:12px">Hakone Free Pass</div><div style="font-size:10px;color:#9ca3af">רופוויי + אוניית פיראטים + אגם</div></div><span class="tag t-gold">מומלץ</span></div>
-    <div style="display:flex;align-items:center;gap:9px;padding:8px 0"><span style="font-size:17px">🚄</span><div style="flex:1"><div style="font-weight:700;font-size:12px">JR Pass מלא</div><div style="font-size:10px;color:#9ca3af">לא משתלם למסלול הזה</div></div><span class="tag t-pink">לא כדאי</span></div>
+  <div class="max-w">
+    <div class="section-pad"><div class="sec-hdr"><div class="sec-title">כרטיסים חיוניים</div></div></div>
+    <div style="background:#fff;margin:0 16px;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border:1px solid rgba(0,0,0,0.04)">
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--gray3)"><span style="font-size:18px">💳</span><div style="flex:1"><div style="font-weight:700;font-size:13px">Suica</div><div style="font-size:10px;color:var(--gray2)">להוציא ישר בשדה התעופה</div></div><span class="tag t-green" style="background:#d1fae5;color:#065f46">חובה</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--gray3)"><span style="font-size:18px">🗻</span><div style="flex:1"><div style="font-weight:700;font-size:13px">Hakone Free Pass</div><div style="font-size:10px;color:var(--gray2)">רופוויי + אוניית פיראטים + אגם</div></div><span class="tag t-gold">מומלץ</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 16px"><span style="font-size:18px">🚄</span><div style="flex:1"><div style="font-weight:700;font-size:13px">JR Pass מלא</div><div style="font-size:10px;color:var(--gray2)">לא משתלם למסלול הזה</div></div><span class="tag t-pink">לא כדאי</span></div>
+    </div>
+    <div class="section-pad" style="margin-top:8px"><div class="sec-hdr"><div class="sec-title">מסלולי התחבורה</div></div></div>
+    <div id="trans-list"></div>
+    <div class="section-pad"><div class="sec-hdr"><div class="sec-title">אסטרטגיית מזוודות</div></div></div>
+    <div style="background:linear-gradient(135deg,#fffbeb,#fef3c7);margin:0 16px 12px;border-radius:var(--radius);padding:14px 16px;border:1px solid rgba(245,158,11,0.3);font-size:12px;line-height:1.9;color:#78350f">ב-<strong>19.9 בבוקר</strong> שולחים מזוודות גדולות מאסאקוסה לקיוטו דרך <strong>Yamato / Kuroneko</strong>.<br>נוסעים עם backpack קטן בלבד לאלפים.</div>
   </div>
-  <div class="sec">מסלולי התחבורה</div>
-  <div id="trans-list"></div>
-  <div class="sec">אסטרטגיית מזוודות</div>
-  <div class="card card-b" style="font-size:12px;line-height:1.9;color:#374151">ב-<strong>20.9 בערב</strong> שולחים מזוודות גדולות מטוקיו לקיוטו דרך <strong>Yamato / Kuroneko</strong>.<br>לוקחים רק backpack קטן עם בגדים ל-3 ימים.</div>
 </div>
 
 <!-- BUDGET -->
 <div class="panel" id="pnl-bg">
-  <div style="background:#e8eef8;border-radius:10px;padding:9px 12px;margin-bottom:11px;font-size:11px;color:#1a2f6e;line-height:1.7;margin-top:2px">
-    <strong>שערי המרה לשקל:</strong> &nbsp;💴 100¥ = ₪2 &nbsp;·&nbsp; 💵 $1 = ₪3
-  </div>
-  <div class="budget-summary">
-    <div class="bsc"><div class="bsn" id="total-spent">₪0</div><div class="bsl">סה"כ הוצאות</div></div>
-    <div class="bsc"><div class="bsn" id="exp-count">0</div><div class="bsl">רשומות</div></div>
-  </div>
-  <div class="sec">הוסף הוצאה</div>
-  <div class="card card-b">
-    <input class="inp" id="exp-desc" placeholder="תיאור (למשל: ארוחת ערב, כרטיסי TeamLab...)">
-    <div class="inp-row">
-      <input class="sel" id="exp-amt" placeholder="סכום" type="number" style="max-width:90px">
-      <select class="sel" id="exp-cur">
-        <option value="ILS">₪ שקל</option>
-        <option value="JPY">¥ יין</option>
-        <option value="USD">$ דולר</option>
-      </select>
-      <select class="sel" id="exp-cat">
-        <option value="food">🍜 אוכל</option>
-        <option value="attractions">🎡 אתרים</option>
-        <option value="transport">🚄 תחבורה</option>
-        <option value="hotel">🏨 מלון</option>
-        <option value="flights">✈️ טיסות</option>
-        <option value="shopping">🛍️ שופינג</option>
-        <option value="other">📦 אחר</option>
-      </select>
+  <div class="max-w">
+    <div style="background:#eff6ff;margin:16px 16px 8px;border-radius:var(--radius-sm);padding:9px 14px;font-size:11px;color:#1e40af;font-weight:600;border:1px solid #bfdbfe">💱 שערי המרה: 100¥ = ₪2 &nbsp;·&nbsp; $1 = ₪3 &nbsp;·&nbsp; כל הסכומים מוצגים בשקלים</div>
+    <div class="budget-hero max-w">
+      <div><div class="budget-num" id="total-spent">₪0</div><div class="budget-lbl">סה"כ הוצאות</div></div>
+      <div style="text-align:left"><div class="budget-num" id="exp-count">0</div><div class="budget-lbl">רשומות</div></div>
     </div>
-    <select class="sel" id="exp-day" style="width:100%;margin-bottom:7px"></select>
-    <div id="exp-preview" style="font-size:11px;font-weight:700;color:#2e7d52;margin-bottom:8px;min-height:16px"></div>
-    <button class="add-btn" id="add-exp-btn">+ הוסף הוצאה</button>
+    <div class="section-pad"><div class="sec-hdr"><div class="sec-title">הוסף הוצאה</div></div></div>
+    <div class="exp-add-card">
+      <input class="exp-inp" id="exp-desc" placeholder="תיאור (למשל: ארוחת ערב, כרטיסים...)">
+      <div class="exp-row">
+        <input class="exp-sel" id="exp-amt" placeholder="סכום" type="number" style="max-width:90px">
+        <select class="exp-sel" id="exp-cur"><option value="ILS">₪ שקל</option><option value="JPY">¥ יין</option><option value="USD">$ דולר</option></select>
+        <select class="exp-sel" id="exp-cat"><option value="food">🍜 אוכל</option><option value="attractions">🎡 אתרים</option><option value="transport">🚄 תחבורה</option><option value="hotel">🏨 מלון</option><option value="flights">✈️ טיסות</option><option value="shopping">🛍️ שופינג</option><option value="other">📦 אחר</option></select>
+      </div>
+      <select class="exp-sel" id="exp-day" style="width:100%;margin-bottom:8px"></select>
+      <div class="exp-preview" id="exp-preview"></div>
+      <button class="add-btn-main" id="add-exp-btn">+ הוסף הוצאה</button>
+    </div>
+    <div class="section-pad"><div class="sec-hdr"><div class="sec-title">לפי קטגוריה</div></div></div>
+    <div class="cat-grid" id="cat-grid"></div>
+    <div class="section-pad"><div class="sec-hdr"><div class="sec-title">הוצאות לפי יום</div></div></div>
+    <div style="background:#fff;margin:0 16px 12px;border-radius:var(--radius);box-shadow:var(--shadow);padding:12px 16px;border:1px solid rgba(0,0,0,0.04)"><div id="day-breakdown"><div style="text-align:center;color:var(--gray2);font-size:12px;padding:8px">עדיין אין הוצאות</div></div></div>
+    <div class="section-pad"><div class="sec-hdr"><div class="sec-title">כל ההוצאות</div></div></div>
+    <div class="exp-list-card" style="margin-bottom:16px"><div id="exp-list"><div style="text-align:center;color:var(--gray2);font-size:12px;padding:16px">הוסף את ההוצאה הראשונה!</div></div></div>
   </div>
-  <div class="sec">לפי קטגוריה</div>
-  <div class="cat-grid" id="cat-grid"></div>
-  <div class="sec">הוצאות לפי יום</div>
-  <div class="card card-b"><div id="day-breakdown"><div style="text-align:center;color:#9ca3af;font-size:12px;padding:8px">עדיין אין הוצאות</div></div></div>
-  <div class="sec">כל ההוצאות</div>
-  <div class="card card-b"><div id="exp-list"><div style="text-align:center;color:#9ca3af;font-size:12px;padding:8px">הוסף את ההוצאה הראשונה!</div></div></div>
 </div>
 
 <!-- MODAL: ADD PLACE -->
 <div class="modal" id="modal-place">
   <div class="modal-box">
+    <div class="modal-handle"></div>
     <div class="modal-title">📍 הוסף אתר ליום <button class="modal-close" onclick="closeModal('modal-place')">✕</button></div>
-    <div class="field"><div class="field-label">יום</div><select class="sel" id="np-day" style="width:100%"></select></div>
-    <div class="field"><div class="field-label">שם האתר</div><input class="inp" id="np-name" placeholder="למשל: Shinjuku Gyoen, Nakamise Street..." style="margin-bottom:0"></div>
-    <div class="field"><div class="field-label">הערה (אופציונלי)</div><input class="inp" id="np-note" placeholder="למשל: חינם, להזמין מראש..." style="margin-bottom:0"></div>
-    <div class="field">
-      <div class="field-label">סוג האתר</div>
+    <div class="field-wrap"><div class="field-lbl">יום</div><select class="exp-sel" id="np-day" style="width:100%"></select></div>
+    <div class="field-wrap"><div class="field-lbl">שם האתר</div><input class="exp-inp" id="np-name" placeholder="למשל: Shinjuku Gyoen..." style="margin-bottom:0"></div>
+    <div class="field-wrap"><div class="field-lbl">הערה (אופציונלי)</div><input class="exp-inp" id="np-note" placeholder="חינם / להזמין מראש / ¥..." style="margin-bottom:0"></div>
+    <div class="field-wrap">
+      <div class="field-lbl">סוג</div>
       <div class="type-chips" id="np-chips">
-        <button class="type-chip on" data-t="⛩️">⛩️ מקדש</button>
-        <button class="type-chip" data-t="🏛️">🏛️ מוזיאון</button>
-        <button class="type-chip" data-t="🌿">🌿 טבע</button>
-        <button class="type-chip" data-t="🛍️">🛍️ שופינג</button>
-        <button class="type-chip" data-t="🎭">🎭 תרבות</button>
-        <button class="type-chip" data-t="🌉">🌉 תצפית</button>
-        <button class="type-chip" data-t="🎡">🎡 בידור</button>
-        <button class="type-chip" data-t="📍">📍 אחר</button>
+        <button class="type-chip on" data-t="⛩️">⛩️ מקדש</button><button class="type-chip" data-t="🏛️">🏛️ מוזיאון</button>
+        <button class="type-chip" data-t="🌿">🌿 טבע</button><button class="type-chip" data-t="🛍️">🛍️ שופינג</button>
+        <button class="type-chip" data-t="🎭">🎭 תרבות</button><button class="type-chip" data-t="🌉">🌉 תצפית</button>
+        <button class="type-chip" data-t="🎡">🎡 בידור</button><button class="type-chip" data-t="📍">📍 אחר</button>
       </div>
     </div>
-    <div class="field">
-      <div class="field-label">היכן להוסיף</div>
+    <div class="field-wrap">
+      <div class="field-lbl">היכן להוסיף</div>
       <div class="time-seg" id="np-slots">
         <button class="time-opt" data-s="title" onclick="pickSlot(this)">🏷️<br><span style="font-size:10px">כותרת</span></button>
         <button class="time-opt on" data-s="morning" onclick="pickSlot(this)">☀️<br><span style="font-size:10px">בוקר</span></button>
@@ -396,83 +485,85 @@ body{font-family:'Heebo',sans-serif;background:#f5f3ef;color:#1a1a2e;direction:r
         <button class="time-opt" data-s="evening" onclick="pickSlot(this)">🌙<br><span style="font-size:10px">ערב</span></button>
       </div>
     </div>
-    <button class="add-btn" onclick="addPlace()">+ הוסף לתוכנית</button>
+    <button class="add-btn-main" onclick="addPlace()">+ הוסף לתוכנית</button>
   </div>
 </div>
 
-<!-- MODAL: ADD REST TO DAY -->
+<!-- MODAL: REST TO DAY -->
 <div class="modal" id="modal-rest-day">
   <div class="modal-box">
+    <div class="modal-handle"></div>
     <div class="modal-title">🍜 הוסף מסעדה ליום <button class="modal-close" onclick="closeModal('modal-rest-day')">✕</button></div>
-    <select class="sel" id="rd-day" style="width:100%;margin-bottom:8px"></select>
-    <input class="inp" id="rd-name" placeholder="שם המסעדה">
-    <input class="inp" id="rd-style" placeholder="סגנון אוכל">
-    <div class="inp-row" style="margin-bottom:8px">
-      <select class="sel" id="rd-price"><option value="cheap">🟢 זול</option><option value="mid">🟡 בינוני</option><option value="exp">🔴 יקר</option></select>
-      <select class="sel" id="rd-emoji"><option value="🍜">🍜</option><option value="🍣">🍣</option><option value="🥩">🥩</option><option value="🥘">🥘</option><option value="🍱">🍱</option><option value="🍡">🍡</option><option value="☕">☕</option><option value="🍵">🍵</option><option value="🐙">🐙</option></select>
+    <select class="exp-sel" id="rd-day" style="width:100%;margin-bottom:8px"></select>
+    <input class="exp-inp" id="rd-name" placeholder="שם המסעדה">
+    <input class="exp-inp" id="rd-style" placeholder="סגנון אוכל">
+    <div class="exp-row" style="margin-bottom:8px">
+      <select class="exp-sel" id="rd-price"><option value="cheap">🟢 זול</option><option value="mid">🟡 בינוני</option><option value="exp">🔴 יקר</option></select>
+      <select class="exp-sel" id="rd-emoji"><option value="🍜">🍜</option><option value="🍣">🍣</option><option value="🥩">🥩</option><option value="🥘">🥘</option><option value="🍱">🍱</option><option value="🍡">🍡</option><option value="☕">☕</option><option value="🍵">🍵</option><option value="🐙">🐙</option></select>
     </div>
-    <button class="add-btn" onclick="addRestToDay()">+ הוסף ליום</button>
+    <button class="add-btn-main" onclick="addRestToDay()">+ הוסף ליום</button>
   </div>
 </div>
 
-<!-- MODAL: ADD REST -->
+<!-- MODAL: REST -->
 <div class="modal" id="modal-rest">
   <div class="modal-box">
+    <div class="modal-handle"></div>
     <div class="modal-title">🍜 הוסף מסעדה <button class="modal-close" onclick="closeModal('modal-rest')">✕</button></div>
-    <input class="inp" id="nr-name" placeholder="שם המסעדה">
-    <input class="inp" id="nr-style" placeholder="סגנון (Ramen, Sushi, Yakiniku...)">
-    <input class="inp" id="nr-note" placeholder="הערה (אופציונלי)">
-    <div class="inp-row" style="margin-bottom:6px">
-      <select class="sel" id="nr-price"><option value="cheap">🟢 זול</option><option value="mid">🟡 בינוני</option><option value="exp">🔴 יקר</option></select>
-      <select class="sel" id="nr-emoji"><option value="🍜">🍜</option><option value="🍣">🍣</option><option value="🥩">🥩</option><option value="🥘">🥘</option><option value="🍱">🍱</option><option value="🍡">🍡</option><option value="🐙">🐙</option><option value="☕">☕</option><option value="🍵">🍵</option><option value="🫕">🫕</option><option value="🐟">🐟</option><option value="🍺">🍺</option></select>
+    <input class="exp-inp" id="nr-name" placeholder="שם המסעדה">
+    <input class="exp-inp" id="nr-style" placeholder="סגנון">
+    <input class="exp-inp" id="nr-note" placeholder="הערה (אופציונלי)">
+    <div class="exp-row" style="margin-bottom:6px">
+      <select class="exp-sel" id="nr-price"><option value="cheap">🟢 זול</option><option value="mid">🟡 בינוני</option><option value="exp">🔴 יקר</option></select>
+      <select class="exp-sel" id="nr-emoji"><option value="🍜">🍜</option><option value="🍣">🍣</option><option value="🥩">🥩</option><option value="🥘">🥘</option><option value="🍱">🍱</option><option value="🍡">🍡</option><option value="🐙">🐙</option><option value="☕">☕</option><option value="🍵">🍵</option><option value="🫕">🫕</option><option value="🐟">🐟</option><option value="🍺">🍺</option></select>
     </div>
-    <div class="inp-row" style="margin-bottom:6px">
-      <select class="sel" id="nr-city"><option value="tokyo-shinjuku">טוקיו – שינג'וקו</option><option value="tokyo-shibuya">טוקיו – שיבויה</option><option value="tokyo-asakusa">טוקיו – אסאקוסה</option><option value="tokyo-ginza">טוקיו – גינזה</option><option value="hakone">האקונה</option><option value="alps">האלפים</option><option value="kyoto">קיוטו</option><option value="osaka">אוסקה</option></select>
-      <select class="sel" id="nr-day"></select>
+    <div class="exp-row" style="margin-bottom:8px">
+      <select class="exp-sel" id="nr-city"><option value="tokyo-asakusa">טוקיו – אסאקוסה</option><option value="tokyo-shibuya">טוקיו – שיבויה</option><option value="tokyo-ginza">טוקיו – גינזה</option><option value="alps">האלפים</option><option value="kyoto">קיוטו</option><option value="osaka">אוסקה</option></select>
+      <select class="exp-sel" id="nr-day"></select>
     </div>
-    <button class="add-btn" onclick="addRest()">+ הוסף מסעדה</button>
+    <button class="add-btn-main" onclick="addRest()">+ הוסף מסעדה</button>
   </div>
 </div>
 
-<!-- MODAL: ADD HOTEL -->
+<!-- MODAL: HOTEL -->
 <div class="modal" id="modal-hotel">
   <div class="modal-box">
+    <div class="modal-handle"></div>
     <div class="modal-title">🏨 הוסף מלון / לינה <button class="modal-close" onclick="closeModal('modal-hotel')">✕</button></div>
-    <input class="inp" id="ht-name" placeholder="שם המלון / Ryokan">
-    <input class="inp" id="ht-area" placeholder="אזור / עיר">
-    <input class="inp" id="ht-addr" placeholder="כתובת (אופציונלי)">
-    <div class="inp-row" style="margin-bottom:6px">
-      <div style="flex:1"><div style="font-size:10px;color:#9ca3af;margin-bottom:3px">כניסה</div><select class="sel" id="ht-in" style="width:100%"></select></div>
-      <div style="flex:1"><div style="font-size:10px;color:#9ca3af;margin-bottom:3px">יציאה</div><select class="sel" id="ht-out" style="width:100%"></select></div>
+    <input class="exp-inp" id="ht-name" placeholder="שם המלון / Ryokan">
+    <input class="exp-inp" id="ht-area" placeholder="אזור / עיר">
+    <input class="exp-inp" id="ht-addr" placeholder="כתובת (אופציונלי)">
+    <div class="exp-row" style="margin-bottom:6px">
+      <div style="flex:1"><div class="field-lbl" style="margin-bottom:3px">כניסה</div><select class="exp-sel" id="ht-in" style="width:100%"></select></div>
+      <div style="flex:1"><div class="field-lbl" style="margin-bottom:3px">יציאה</div><select class="exp-sel" id="ht-out" style="width:100%"></select></div>
     </div>
-    <div class="inp-row" style="margin-bottom:6px">
-      <select class="sel" id="ht-type"><option value="🏨">🏨 מלון</option><option value="♨️">♨️ ריוקאן</option><option value="🛖">🛖 Guesthouse</option><option value="🏡">🏡 Airbnb</option></select>
-      <input class="sel" id="ht-price" placeholder="מחיר/לילה (¥)" type="number">
+    <div class="exp-row" style="margin-bottom:8px">
+      <select class="exp-sel" id="ht-type"><option value="🏨">🏨 מלון</option><option value="♨️">♨️ ריוקאן</option><option value="🛖">🛖 Guesthouse</option><option value="🏡">🏡 Airbnb</option></select>
+      <input class="exp-sel" id="ht-price" placeholder="מחיר/לילה (¥)" type="number">
     </div>
-    <input class="inp" id="ht-note" placeholder="הערה (אופציונלי)">
-    <button class="add-btn" onclick="addHotel()">+ הוסף מלון</button>
+    <input class="exp-inp" id="ht-note" placeholder="הערה (אופציונלי)">
+    <button class="add-btn-main" onclick="addHotel()">+ הוסף מלון</button>
+  </div>
+</div>
+
+<!-- MODAL: EDIT ACTIVITY -->
+<div class="modal" id="modal-edit-act">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title">✏️ ערוך פעילות <button class="modal-close" onclick="closeModal('modal-edit-act')">✕</button></div>
+    <input class="exp-inp" id="ea-text" placeholder="שם הפעילות / האתר">
+    <input class="exp-inp" id="ea-note" placeholder="הערה (אופציונלי)">
+    <input type="hidden" id="ea-day"><input type="hidden" id="ea-slot"><input type="hidden" id="ea-idx">
+    <button class="add-btn-main" onclick="saveEditAct()">💾 שמור שינויים</button>
   </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
-// FIREBASE
-const firebaseConfig = {
-  apiKey:"AIzaSyAOtaa5CH4AHxz0xzBqSGI8A3j6yWXav9k",
-  authDomain:"japan-trip-2026-4113b.firebaseapp.com",
-  databaseURL:"https://japan-trip-2026-4113b-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId:"japan-trip-2026-4113b",
-  storageBucket:"japan-trip-2026-4113b.firebasestorage.app",
-  messagingSenderId:"677088933535",
-  appId:"1:677088933535:web:37a88f9390a9b83c55d4aa"
-};
+const firebaseConfig={apiKey:"AIzaSyAOtaa5CH4AHxz0xzBqSGI8A3j6yWXav9k",authDomain:"japan-trip-2026-4113b.firebaseapp.com",databaseURL:"https://japan-trip-2026-4113b-default-rtdb.europe-west1.firebasedatabase.app",projectId:"japan-trip-2026-4113b",storageBucket:"japan-trip-2026-4113b.firebasestorage.app",messagingSenderId:"677088933535",appId:"1:677088933535:web:37a88f9390a9b83c55d4aa"};
 firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
-// DATA
-
-
+const db=firebase.database();
 // מיקומים מדויקים לכל יום — lat/lng לכל אתר
 const DAY_PLACES = {
   '16/9': [
@@ -579,6 +670,7 @@ const DAY_PLACES = {
   ]
 };
 
+
 // Google Maps links per day — search queries for key locations
 const DAY_MAPS = {
   '16/9': 'https://maps.google.com/maps/search/Senso-ji+Temple,+Nakamise+Street,+Hoppy+Street+Asakusa+Tokyo',
@@ -598,6 +690,7 @@ const DAY_MAPS = {
   '30/9': 'https://maps.google.com/maps/search/Meiji+Jingu+Tokyo,+Takeshita+Street+Harajuku,+Shinjuku+Golden+Gai,+Tokyo+Metropolitan+Building',
   '1/10': 'https://maps.google.com/maps/search/Shinjuku+Gyoen,+Shibuya+Sky,+Pokémon+Center+Shibuya,+Tokyo+Haneda+Airport'
 };
+
 
 const D0 = [
 
@@ -1008,6 +1101,62 @@ const R0 = [
   {id:38,n:'Gut\'s Soul Yakiniku',c:'tokyo-shinjuku',cl:'שינג\'וקו',day:'30/9',s:'Yakiniku All-You-Can-Eat',p:'mid',e:'🥩',note:'AYCE משתלם'},
   {id:39,n:'Hakushu Teppanyaki',c:'tokyo-shibuya',cl:'שיבויה',day:'30/9',s:'Teppanyaki / Steak',p:'exp',e:'🥩',note:'מומלץ מאוד – להזמין!'}
 ]
+const R0 = [
+  // 16/9 – אסאקוסה ערב
+  {id:0,n:'Ramen-tei Asakusa',c:'tokyo-asakusa',cl:'אסאקוסה',day:'16/9',s:'Ramen + Gyoza',p:'cheap',e:'🍜',note:'מקומי ואמיתי'},
+  {id:1,n:'Tempura Daikokuya',c:'tokyo-asakusa',cl:'אסאקוסה',day:'16/9',s:'Tempura',p:'mid',e:'🍤',note:'מסורתי ומפורסם באסאקוסה'},
+  {id:2,n:'Hoppy Street Bar',c:'tokyo-asakusa',cl:'אסאקוסה',day:'16/9',s:'Izakaya / ביצ\'ה מקומית',p:'cheap',e:'🍺',note:'ברים מקומיים בסמטה'},
+  // 17/9 – אסאקוסה + Ueno
+  {id:3,n:'Kagetsudo Bakery',c:'tokyo-asakusa',cl:'אסאקוסה',day:'17/9',s:'Bakery / Melon Pan',p:'cheap',e:'🥐',note:'מפורסם – תור צפוי'},
+  {id:4,n:'Imahan Sukiyaki',c:'tokyo-asakusa',cl:'אסאקוסה',day:'17/9',s:'Sukiyaki',p:'exp',e:'🫕',note:'מסעדה ותיקה ומפורסמת'},
+  {id:5,n:'Masaru Tempura',c:'tokyo-asakusa',cl:'אסאקוסה',day:'17/9',s:'Tempura',p:'mid',e:'🍤',note:'טמפורה קלאסית'},
+  // 18/9 – גינזה
+  {id:6,n:'Ginza Kagari',c:'tokyo-ginza',cl:'גינזה',day:'18/9',s:'Ramen / Soba פרמיום',p:'mid',e:'🍜',note:'ראמן פרמיום בגינזה'},
+  {id:7,n:'Tokyo Station Food Halls',c:'tokyo-ginza',cl:'גינזה',day:'18/9',s:'Food Hall',p:'cheap',e:'🍱',note:'B1 – מגוון מדהים'},
+  {id:8,n:'Marugo Tonkatsu',c:'tokyo-ginza',cl:'גינזה',day:'18/9',s:'Tonkatsu',p:'mid',e:'🍖',note:''},
+  {id:9,n:'Sushi Tokami',c:'tokyo-ginza',cl:'גינזה',day:'18/9',s:'Sushi Omakase',p:'exp',e:'🍣',note:'לארוחה מיוחדת'},
+  {id:10,n:'Nodaiwa Unagi',c:'tokyo-ginza',cl:'גינזה',day:'18/9',s:'Unagi (צלופח)',p:'mid',e:'🐍',note:'מפורסמת'},
+  // 19/9 – דרך לטאקיאמה
+  {id:11,n:'Ekiben – Nagoya Station',c:'alps',cl:'האלפים',day:'19/9',s:'Bento לדרך',p:'cheap',e:'🍱',note:'לקנות בנגויה בזמן העצירה'},
+  {id:12,n:'Hida Beef Restaurant',c:'alps',cl:'האלפים',day:'19/9',s:'Hida Beef / Wagyu',p:'mid',e:'🥩',note:'בשר הידה – חובה!'},
+  {id:13,n:'מסעדה מקומית בשירקאווה-גו',c:'alps',cl:'שירקאווה-גו',day:'19/9',s:'אוכל מקומי',p:'cheap',e:'🍜',note:'אם מגיעים ביום הראשון'},
+  // 20/9 – קמיקוצ'י
+  {id:14,n:'Cafe בנוף קמיקוצ\'י',c:'alps',cl:'האלפים',day:'20/9',s:'Cafe / פיקניק',p:'cheap',e:'☕',note:'לאכול פשוט – פיקניק בנוף'},
+  // 21/9 – טאקיאמה / שירקאווה-גו
+  {id:15,n:'Hida Beef Bun – Morning Market',c:'alps',cl:'האלפים',day:'21/9',s:'Street Food',p:'cheap',e:'🥩',note:'נשנוש בשוק הבוקר'},
+  {id:16,n:'מסעדה מקומית שירקאווה-גו',c:'alps',cl:'שירקאווה-גו',day:'21/9',s:'אוכל מקומי',p:'cheap',e:'🍜',note:'אם שירקאווה-גו ביום זה'},
+  // 22/9 – קיוטו ראשון
+  {id:17,n:'Nishiki Market',c:'kyoto',cl:'קיוטו',day:'22/9',s:'אוכל רחוב / שוק',p:'cheap',e:'🍡',note:'פתוח עד 17:00 – לא לפספס!'},
+  {id:18,n:'Ramen Sen No Kaze',c:'kyoto',cl:'קיוטו',day:'22/9',s:'Ramen',p:'cheap',e:'🍜',note:''},
+  {id:19,n:'Yakiniku Hiro',c:'kyoto',cl:'קיוטו',day:'22/9',s:'Wagyu Yakiniku',p:'mid',e:'🥩',note:'המלצה חמה!'},
+  {id:20,n:'Kurakura Izakaya',c:'kyoto',cl:'קיוטו',day:'22/9',s:'Izakaya',p:'mid',e:'🍶',note:''},
+  // 23/9 – Higashiyama
+  {id:21,n:'Tea Ceremony En / Camellia',c:'kyoto',cl:'קיוטו',day:'23/9',s:'Tea Ceremony',p:'mid',e:'🍵',note:'חוויה מיוחדת'},
+  {id:22,n:'elefant factory coffee',c:'kyoto',cl:'קיוטו',day:'23/9',s:'Cafe',p:'cheap',e:'☕',note:'עצירת קפה אהובה'},
+  {id:23,n:'Issen Yoshoku',c:'kyoto',cl:'קיוטו',day:'23/9',s:'Okonomiyaki',p:'cheap',e:'🥘',note:'סגנון קיוטו'},
+  // 24/9 – ארשיאמה
+  {id:24,n:'Sushi Bar Naritaya',c:'kyoto',cl:'ארשיאמה',day:'24/9',s:'Sushi',p:'mid',e:'🍣',note:''},
+  {id:25,n:'Yudofu Sagano',c:'kyoto',cl:'ארשיאמה',day:'24/9',s:'Tofu Kaiseki',p:'mid',e:'🥬',note:'צמחוני בודהיסטי'},
+  {id:26,n:'Shigetsu',c:'kyoto',cl:'ארשיאמה',day:'24/9',s:'Buddhist Vegetarian',p:'mid',e:'🍃',note:'מסעדת Tenryu-ji'},
+  {id:27,n:'Beer Komachi',c:'kyoto',cl:'ארשיאמה',day:'24/9',s:'Craft Beer Bar',p:'cheap',e:'🍺',note:''},
+  // 25/9 – נארה
+  {id:28,n:'אוכל רחוב נארה',c:'kyoto',cl:'נארה',day:'25/9',s:'Street Food',p:'cheap',e:'🍡',note:'Mochi + Senbei לאיילים'},
+  {id:29,n:'מסעדה מקומית נארה',c:'kyoto',cl:'נארה',day:'25/9',s:'Japanese Set',p:'cheap',e:'🍱',note:'ארוחת צהריים'},
+  // 26/9 – אוסקה יום 1
+  {id:30,n:'Takoyaki Dotonbori',c:'osaka',cl:'אוסקה',day:'26/9',s:'Street Food',p:'cheap',e:'🐙',note:'חובה! בדוטונבורי'},
+  {id:31,n:'Okonomiyaki אוסקה',c:'osaka',cl:'אוסקה',day:'26/9',s:'Osaka-style Pancake',p:'cheap',e:'🥞',note:'סגנון אוסקה'},
+  {id:32,n:'Kuromon Market',c:'osaka',cl:'אוסקה',day:'26/9',s:'שוק + אוכל טרי',p:'cheap',e:'🦐',note:'שוק הדייגים של אוסקה'},
+  // 28/9 – חזרה לטוקיו
+  {id:33,n:'Shibuya Sky Terrace Bar',c:'tokyo-shibuya',cl:'שיבויה',day:'28/9',s:'Bar + תצפית',p:'mid',e:'🌃',note:'תצפית לילה מהממת – להזמין!'},
+  {id:34,n:'Fuunji Ramen',c:'tokyo-shinjuku',cl:'שינג\'וקו',day:'28/9',s:'Tsukemen / Ramen',p:'cheap',e:'🍜',note:'מצוין בשינג\'וקו'},
+  // 29/9 – גינזה / Roppongi
+  {id:35,n:'Nihonryori RyuGin',c:'tokyo-ginza',cl:'גינזה',day:'29/9',s:'Kaiseki Fine Dining',p:'exp',e:'🍱',note:'רמה גבוהה מאוד'},
+  {id:36,n:'Nagase Sushi',c:'tokyo-ginza',cl:'גינזה',day:'29/9',s:'Sushi Omakase',p:'exp',e:'🍣',note:'להזמין ביפנית'},
+  // 30/9 – הרג'וקו / שינג'וקו
+  {id:37,n:'Momo Paradise',c:'tokyo-shinjuku',cl:'שינג\'וקו',day:'30/9',s:'Shabu-Shabu',p:'mid',e:'🫕',note:'טוב לארוחה משפחתית'},
+  {id:38,n:'Gut\'s Soul Yakiniku',c:'tokyo-shinjuku',cl:'שינג\'וקו',day:'30/9',s:'Yakiniku All-You-Can-Eat',p:'mid',e:'🥩',note:'AYCE משתלם'},
+  {id:39,n:'Hakushu Teppanyaki',c:'tokyo-shibuya',cl:'שיבויה',day:'30/9',s:'Teppanyaki / Steak',p:'exp',e:'🥩',note:'מומלץ מאוד – להזמין!'}
+]
 const TRANS_LIST = [
   {f:'הנדה/נריטה',t:'שינג\'וקו',k:'train',d:'35–90 דק\'',n:'Suica בלבד'},
   {f:'שינג\'וקו',t:'DisneySea',k:'train',d:'55–70 דק\'',n:'JR Keiyo + Disney Resort Line'},
@@ -1023,43 +1172,31 @@ const TRANS_LIST = [
   {f:'שין-אוסקה',t:'טוקיו',k:'shin',d:'2:30 שעות',n:'Nozomi Shinkansen'}
 ];
 
-const CATS=[{id:'food',e:'🍜',n:'אוכל'},{id:'attractions',e:'🎡',n:'אתרים'},{id:'transport',e:'🚄',n:'תחבורה'},{id:'hotel',e:'🏨',n:'מלון'},{id:'flights',e:'✈️',n:'טיסות'},{id:'shopping',e:'🛍️',n:'שופינג'},{id:'other',e:'📦',n:'אחר'}];
-const TS={tokyo:'background:linear-gradient(135deg,#e8eef8,#c5d3ef);color:#1a2f6e',hakone:'background:linear-gradient(135deg,#e6f4ed,#b8dfc9);color:#1b5e3a',alps:'background:linear-gradient(135deg,#fdf3d8,#f0d48a);color:#8d6519',kyoto:'background:linear-gradient(135deg,#fce4ec,#f4a7bf);color:#c2185b',osaka:'background:linear-gradient(135deg,#fce4ec,#f4a7bf);color:#8b1a3a',park:'background:linear-gradient(135deg,#1a1a2e,#2d2d44);color:#fff'};
-const TL={tokyo:'טוקיו',hakone:'האקונה',alps:'האלפים',kyoto:'קיוטו',osaka:'אוסקה',park:'פארק'};
-const TOILS={JPY:0.02,USD:3,ILS:1};
 
-// STATE
-let DAYS=[],RESTS=[],hotels=[],expenses=[];
+
+const CATS=[{id:'food',e:'🍜',n:'אוכל'},{id:'attractions',e:'🎡',n:'אתרים'},{id:'transport',e:'🚄',n:'תחבורה'},{id:'hotel',e:'🏨',n:'מלון'},{id:'flights',e:'✈️',n:'טיסות'},{id:'shopping',e:'🛍️',n:'שופינג'},{id:'other',e:'📦',n:'אחר'}];
+const TOILS={JPY:0.02,USD:3,ILS:1};
+const TYPE_COLORS={tokyo:'#3b82f6',hakone:'#10b981',alps:'#f59e0b',kyoto:'#e8628a',osaka:'#8b5cf6',park:'#1a1a2e'};
+const TYPE_BG={tokyo:'#dbeafe',hakone:'#d1fae5',alps:'#fef3c7',kyoto:'#fce4ec',osaka:'#ede9fe',park:'#e5e7eb'};
+const TYPE_LABEL={tokyo:'טוקיו',hakone:'האקונה',alps:'האלפים',kyoto:'קיוטו',osaka:'אוסקה',park:'פארק'};
+
+let DAYS=[],RESTS=[],hotels=[],expenses=[],visitedActs={};
 let pF='all',lF='all',dF='all';
 let placeSlot='morning',placeType='⛩️';
-let nextId=500,loaded=false;
+let nextId=600,loaded=false;
 
-// FIREBASE HELPERS
-function setSync(s){
-  const dot=document.getElementById('sync-dot'),txt=document.getElementById('sync-txt');
-  if(s==='ok'){dot.className='sync-dot';txt.textContent='מחובר – כל השינויים נשמרים';}
-  else if(s==='sync'){dot.className='sync-dot syncing';txt.textContent='שומר...';}
-  else{dot.className='sync-dot off';txt.textContent='לא מחובר';}
-}
-function save(path,data){
-  setSync('sync');
-  db.ref(path).set(data).then(()=>setSync('ok')).catch(()=>setSync('off'));
-}
-function toast(m){
-  const t=document.getElementById('toast');
-  t.textContent=m;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
-}
+// SYNC
+function setSync(s){const dot=document.getElementById('sync-dot'),txt=document.getElementById('sync-txt');if(s==='ok'){dot.className='sync-dot';txt.textContent='מחובר – כל השינויים נשמרים';}else if(s==='sync'){dot.className='sync-dot sync';txt.textContent='שומר...';}else{dot.className='sync-dot off';txt.textContent='לא מחובר';}}
+function save(p,d){setSync('sync');db.ref(p).set(d).then(()=>setSync('ok')).catch(()=>setSync('off'));}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 
 // INIT
 function initData(){
   db.ref('v7_init').once('value').then(s=>{
     if(!s.val()){
-      db.ref('days').set(D0);
-      db.ref('rests').set(R0);
-      db.ref('hotels').set([]);
-      db.ref('expenses').set([]);
-      db.ref('v7_init').set(true);
+      db.ref('days').set(D0);db.ref('rests').set(R0);
+      db.ref('hotels').set([]);db.ref('expenses').set([]);
+      db.ref('visited').set({});db.ref('v7_init').set(true);
     }
   });
 }
@@ -1067,163 +1204,287 @@ function initData(){
 function startListeners(){
   db.ref('.info/connected').on('value',s=>setSync(s.val()?'ok':'off'));
   Promise.all([
-    db.ref('days').once('value'),
-    db.ref('rests').once('value'),
-    db.ref('hotels').once('value'),
-    db.ref('expenses').once('value')
-  ]).then(([ds,rs,hs,es])=>{
-    DAYS=ds.val()||D0;
-    RESTS=rs.val()||R0;
-    hotels=hs.val()||[];
-    expenses=es.val()||[];
+    db.ref('days').once('value'),db.ref('rests').once('value'),
+    db.ref('hotels').once('value'),db.ref('expenses').once('value'),
+    db.ref('visited').once('value')
+  ]).then(([ds,rs,hs,es,vs])=>{
+    DAYS=ds.val()||D0;RESTS=rs.val()||R0;
+    hotels=hs.val()||[];expenses=es.val()||[];
+    visitedActs=vs.val()||{};
     loaded=true;
     buildDays();buildFilters();renderRests();buildTransTab();renderHotels();renderBudget();populateSelects();
     document.getElementById('hdr-hotels').textContent=hotels.length;
+    document.getElementById('ov-rests').textContent=(RESTS||[]).filter(Boolean).length;
   });
   db.ref('days').on('value',s=>{DAYS=s.val()||D0;if(loaded){buildDays();buildFilters();renderRests();}});
   db.ref('rests').on('value',s=>{RESTS=s.val()||R0;if(loaded){buildFilters();renderRests();}});
   db.ref('hotels').on('value',s=>{hotels=s.val()||[];document.getElementById('hdr-hotels').textContent=hotels.length;if(loaded){renderHotels();buildDays();}});
   db.ref('expenses').on('value',s=>{expenses=s.val()||[];if(loaded)renderBudget();});
+  db.ref('visited').on('value',s=>{visitedActs=s.val()||{};if(loaded)buildDays();});
 }
 
 // TABS
-document.querySelectorAll('.nav-btn').forEach(b=>{
-  b.addEventListener('click',function(){
-    document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('on'));
-    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('on'));
-    this.classList.add('on');
-    document.getElementById('pnl-'+this.dataset.tab).classList.add('on');
-  });
-});
+document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',function(){
+  document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('on'));
+  this.classList.add('on');
+  document.getElementById('pnl-'+this.dataset.tab).classList.add('on');
+}));
 
-// DAYS
-function tb(icon,lbl,items){
-  if(!items||!items.length)return '';
-  let h=`<div class="time-block"><div class="time-head"><span style="font-size:13px">${icon}</span><span class="time-label">${lbl}</span><div class="time-line"></div></div>`;
-  items.forEach(i=>{
-    const isNew=i&&i._new;
-    const txt=typeof i==='object'?i.text:i;
-    h+=isNew?`<div class="act-item act-new"><div class="act-dot"></div><div class="act-txt"><span class="new-pill">חדש</span>${txt}</div></div>`
-             :`<div class="act-item"><div class="act-dot"></div><div class="act-txt">${txt}</div></div>`;
-  });
-  return h+'</div>';
-}
-function buildDayTrans(trans){
-  if(!trans||!trans.length)return '';
-  let h='<div class="trans-block"><div class="trans-head">🚃 תחבורה</div>';
-  trans.forEach(t=>{
-    const tc=t.k==='shin'?'tt-shin':t.k==='bus'?'tt-bus':'tt-train';
-    const tl=t.k==='shin'?'🚄 שינקנסן':t.k==='bus'?'🚌 אוטובוס':'🚃 רכבת';
-    h+=`<div class="trans-row"><div class="trans-seg"><span class="trans-from">${t.f}</span><span class="trans-arr"> → </span><span class="trans-to">${t.t}</span></div><div class="trans-tags"><span class="tt ${tc}">${tl}</span><span class="tt tt-train">${t.d}</span>${t.n?`<span class="tt tt-note">${t.n}</span>`:''}</div></div>`;
-  });
-  return h+'</div>';
-}
-function buildDayRests(ri){
-  if(!ri||!ri.length)return '';
-  const found=RESTS.filter(r=>r&&ri.includes(r.id));
-  if(!found.length)return '';
-  let h='<div class="day-rests"><div class="day-rest-lbl">🍜 מסעדות מומלצות</div>';
-  found.forEach(r=>{
-    const pe=r.p==='cheap'?'🟢':r.p==='mid'?'🟡':'🔴';
-    h+=`<div class="mini-rest"><span style="font-size:15px">${r.e}</span><div style="flex:1"><div style="font-size:12px;font-weight:700;color:#1a1a2e">${r.n}</div><div style="font-size:10px;color:#9ca3af">${r.s}${r.note?' · '+r.note:''}</div></div><span style="font-size:11px;font-weight:800">${pe}</span></div>`;
-  });
-  return h+'</div>';
+// VISITED
+function toggleVisited(key){
+  visitedActs[key]=!visitedActs[key];
+  save('visited',visitedActs);
 }
 
-function buildDayMap(dayId) {
-  const places = DAY_PLACES[dayId];
-  const gmUrl = DAY_MAPS[dayId];
-  if (!places || !places.length) return '';
+// ACTIVITIES
+function parseActText(item){
+  if(!item)return{text:'',note:'',isNew:false};
+  if(typeof item==='string')return{text:item,note:'',isNew:false};
+  return{text:item.text||'',note:item.note||'',isNew:!!item._new};
+}
 
-  // Center = average of all points
-  const avgLat = places.reduce((s,p)=>s+p.lat,0)/places.length;
-  const avgLng = places.reduce((s,p)=>s+p.lng,0)/places.length;
-
-  // Build OpenStreetMap embed URL with markers
-  // Using OpenStreetMap via iframe — free, no API key needed
-  const zoom = places.length === 1 ? 15 : 13;
-
-  // Build markers string for OpenStreetMap
-  const markersParam = places.map((p,i)=>
-    `mlat${i+1}=${p.lat}&mlon${i+1}=${p.lng}`
-  ).join('&');
-
-  // Use Google Maps embed (static, shows all places as search)
-  // Build a clean iframe using OSM with all markers
-  const osmUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${avgLng-0.03},${avgLat-0.02},${avgLng+0.03},${avgLat+0.02}&layer=mapnik`;
-
-  // Build Google Maps directions/search URL with all waypoints
-  const gmSearchUrl = gmUrl || ('https://maps.google.com/maps/search/' + places.map(p=>encodeURIComponent(p.name)).join('+OR+'));
-
-  const pinsList = places.map((p,i) =>
-    `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid #f0ece4">` +
-    `<span style="background:#e8628a;color:#fff;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;flex-shrink:0">${i+1}</span>` +
-    `<span style="font-size:11px;color:#374151">${p.name}</span>` +
-    `<a href="https://maps.google.com/?q=${p.lat},${p.lng}" target="_blank" rel="noopener" style="margin-right:auto;font-size:10px;color:#1a73e8;text-decoration:none">נווט</a>` +
-    `</div>`
-  ).join('');
-
-  return `<div class="day-map-wrap">
-    <div style="font-size:10px;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:0.8px;padding:8px 11px;background:#f5f3ef;border-bottom:1px solid #e5e1d8;display:flex;align-items:center;gap:6px">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#e8628a" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      מפה ואתרים ליום זה
+function buildActItem(item,dayId,slot,idx){
+  const {text,note,isNew}=parseActText(item);
+  const key=`${dayId}|${slot}|${idx}`;
+  const vis=visitedActs[key];
+  const newPill=isNew?'<span class="act-new-tag">חדש</span>':'';
+  const visClass=vis?'visited':'';
+  return `<div class="act-item" id="act-${key.replace(/[|]/g,'-')}">
+    <div class="act-dot-wrap">
+      <div class="act-dot" style="background:${vis?'#10b981':'var(--pink)'}"></div>
     </div>
-    <div style="padding:8px 11px 0">${pinsList}</div>
-    <div class="day-map-btns" style="padding:8px 11px 10px">
-      <a class="map-btn map-btn-primary" href="${gmSearchUrl}" target="_blank" rel="noopener">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        פתח ב-Google Maps
-      </a>
-      <button class="map-btn map-btn-loc" onclick="locateMe('${dayId}', this)">
-        <span class="map-locate-dot"></span>
-        הראה מיקום נוכחי
+    <div class="act-content">
+      <div class="act-name ${visClass}">${newPill}${text}</div>
+      ${note?`<div class="act-note">${note}</div>`:''}
+      <div class="act-actions">
+        <button class="act-btn act-btn-visit ${vis?'done':''}" onclick="toggleVisited('${key}')">
+          ${vis?'✅ ביקרנו':'○ סמן ביקור'}
+        </button>
+        <button class="act-btn act-btn-edit" onclick="openEditAct('${dayId}','${slot}',${idx},'${text.replace(/'/g,"\\'")}','${note.replace(/'/g,"\\'")}')">✏️</button>
+        <button class="act-btn act-btn-del" onclick="deleteAct('${dayId}','${slot}',${idx})">🗑</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function buildTimeSec(icon,lbl,items,dayId,slot){
+  if(!items||!items.length)return'';
+  const dotColor=slot==='morning'?'#f59e0b':slot==='afternoon'?'#3b82f6':'#8b5cf6';
+  return`<div class="timeline-section">
+    <div class="timeline-hdr">
+      <div class="timeline-icon" style="background:${dotColor}20;color:${dotColor}">${icon}</div>
+      <span class="timeline-lbl">${lbl}</span>
+      <div class="timeline-line"></div>
+    </div>
+    <div class="act-list">${items.map((it,i)=>buildActItem(it,dayId,slot,i)).join('')}</div>
+    <div class="add-act-row" id="add-row-${dayId}-${slot}" style="display:none">
+      <input class="add-act-inp" id="add-inp-${dayId}-${slot}" placeholder="הוסף פעילות...">
+      <select class="add-act-sel" id="add-type-${dayId}-${slot}">
+        <option value="⛩️">⛩️</option><option value="🌿">🌿</option><option value="🛍️">🛍️</option>
+        <option value="🏛️">🏛️</option><option value="🎭">🎭</option><option value="📍">📍</option>
+      </select>
+      <button class="add-act-btn" onclick="quickAddAct('${dayId}','${slot}')">+</button>
+    </div>
+    <button onclick="toggleAddRow('${dayId}','${slot}')" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--pink);font-weight:700;font-family:'Heebo',sans-serif;padding:4px 0 0 4px">+ פעילות</button>
+  </div>`;
+}
+
+function toggleAddRow(dayId,slot){
+  const r=document.getElementById(`add-row-${dayId}-${slot}`);
+  if(r){r.style.display=r.style.display==='none'?'flex':'none';}
+}
+
+function quickAddAct(dayId,slot){
+  const inp=document.getElementById(`add-inp-${dayId}-${slot}`);
+  const typeEl=document.getElementById(`add-type-${dayId}-${slot}`);
+  const text=(inp?inp.value.trim():'');
+  if(!text)return;
+  const icon=typeEl?typeEl.value:'📍';
+  const days=[...(DAYS||[])];
+  const i=days.findIndex(d=>d&&d.d===dayId);
+  if(i===-1)return;
+  const arr=[...(days[i][slot]||[]),{text:icon+' '+text,_new:true}];
+  days[i]={...days[i],[slot]:arr};
+  save('days',days);
+  if(inp)inp.value='';
+  toast('✅ נוסף!');
+}
+
+function deleteAct(dayId,slot,idx){
+  if(!confirm('למחוק פעילות זו?'))return;
+  const days=[...(DAYS||[])];
+  const i=days.findIndex(d=>d&&d.d===dayId);
+  if(i===-1)return;
+  const arr=[...(days[i][slot]||[])];
+  arr.splice(idx,1);
+  days[i]={...days[i],[slot]:arr};
+  save('days',days);
+  toast('🗑 נמחק');
+}
+
+function openEditAct(dayId,slot,idx,text,note){
+  document.getElementById('ea-day').value=dayId;
+  document.getElementById('ea-slot').value=slot;
+  document.getElementById('ea-idx').value=idx;
+  document.getElementById('ea-text').value=text;
+  document.getElementById('ea-note').value=note;
+  openModal('modal-edit-act');
+}
+
+function saveEditAct(){
+  const dayId=document.getElementById('ea-day').value;
+  const slot=document.getElementById('ea-slot').value;
+  const idx=parseInt(document.getElementById('ea-idx').value);
+  const text=document.getElementById('ea-text').value.trim();
+  const note=document.getElementById('ea-note').value.trim();
+  if(!text)return;
+  const days=[...(DAYS||[])];
+  const i=days.findIndex(d=>d&&d.d===dayId);
+  if(i===-1)return;
+  const arr=[...(days[i][slot]||[])];
+  const existing=arr[idx];
+  arr[idx]=typeof existing==='object'?{...existing,text,note}:{text,note};
+  days[i]={...days[i],[slot]:arr};
+  save('days',days);
+  closeModal('modal-edit-act');
+  toast('✅ נשמר!');
+}
+
+// MAP in day
+function buildDayMapSec(dayId){
+  const places=DAY_PLACES[dayId];
+  const gmUrl=DAY_MAPS[dayId];
+  if(!places||!places.length)return'';
+  const pinsList=places.map((p,i)=>`<div class="place-row">
+    <div class="place-num">${i+1}</div>
+    <span class="place-name">${p.name}</span>
+    <a class="place-nav" href="https://maps.google.com/?q=${p.lat},${p.lng}" target="_blank">🗺️ נווט</a>
+  </div>`).join('');
+  return`<div class="day-map-sec">
+    <div class="day-map-title">🗺️ מפה ואתרים</div>
+    <div class="places-list">${pinsList}</div>
+    <div class="map-btns-row">
+      <a class="map-btn-main" href="${gmUrl||'#'}" target="_blank">📍 פתח ב-Google Maps</a>
+      <button class="map-btn-loc" onclick="locateMe('${dayId}',this)">
+        <span class="loc-pulse"></span>מיקום נוכחי
       </button>
     </div>
   </div>`;
 }
 
-function locateMe(dayId, btn) {
-  if (!navigator.geolocation) { alert('הדפדפן לא תומך במיקום'); return; }
-  btn.textContent = '⏳ מאתר...';
-  navigator.geolocation.getCurrentPosition(
-    function(pos) {
-      const lat = pos.coords.latitude;
-      const lng = pos.coords.longitude;
-      const places = DAY_PLACES[dayId] || [];
-      // Build Google Maps URL with current location + all day places
-      let url = 'https://www.google.com/maps/dir/' + lat + ',' + lng;
-      places.forEach(p => { url += '/' + p.lat + ',' + p.lng; });
-      window.open(url, '_blank');
-      btn.innerHTML = '<span class="map-locate-dot"></span>הראה מיקום נוכחי';
-    },
-    function(err) {
-      // Fallback: just open maps with current location
-      alert('לא ניתן לאתר מיקום. בדוק הרשאות מיקום בדפדפן.');
-      btn.innerHTML = '<span class="map-locate-dot"></span>הראה מיקום נוכחי';
-    },
-    {enableHighAccuracy: true, timeout: 8000}
-  );
+function locateMe(dayId,btn){
+  if(!navigator.geolocation){alert('הדפדפן לא תומך במיקום');return;}
+  const orig=btn.innerHTML;
+  btn.textContent='⏳ מאתר...';
+  navigator.geolocation.getCurrentPosition(p=>{
+    const places=DAY_PLACES[dayId]||[];
+    let url=`https://www.google.com/maps/dir/${p.coords.latitude},${p.coords.longitude}`;
+    places.forEach(pl=>{url+=`/${pl.lat},${pl.lng}`;});
+    window.open(url,'_blank');
+    btn.innerHTML=orig;
+  },()=>{alert('לא ניתן לאתר מיקום. בדוק הרשאות.');btn.innerHTML=orig;},{enableHighAccuracy:true,timeout:8000});
 }
 
+// RESTS in day
+function buildDayRests(ri){
+  if(!ri||!ri.length)return'';
+  const found=(RESTS||[]).filter(r=>r&&ri.includes(r.id));
+  if(!found.length)return'';
+  const pe=p=>p==='cheap'?'🟢':p==='mid'?'🟡':'🔴';
+  const bg=p=>p==='cheap'?'#d1fae5':p==='mid'?'#fef3c7':'#fee2e2';
+  return`<div class="day-rests-sec">
+    <div class="day-rests-title">🍜 מסעדות מומלצות</div>
+    ${found.map(r=>`<div class="mini-rest-card">
+      <div class="mini-rest-ico" style="background:${bg(r.p)}">${r.e}</div>
+      <div style="flex:1">
+        <div class="mini-rest-name">${r.n}</div>
+        <div class="mini-rest-sub">${r.s}${r.note?' · '+r.note:''}</div>
+      </div>
+      <span style="font-size:13px">${pe(r.p)}</span>
+    </div>`).join('')}
+  </div>`;
+}
+
+// TRANSPORT in day
+function buildDayTrans(trans){
+  if(!trans||!trans.length)return'';
+  const tc=k=>k==='shin'?'tc-shin':k==='bus'?'tc-bus':'tc-train';
+  const tl=k=>k==='shin'?'🚄 שינקנסן':k==='bus'?'🚌 אוטובוס':'🚃 רכבת';
+  return`<div class="day-transport">
+    <div class="day-transport-title">🚃 תחבורה</div>
+    ${trans.map(t=>`<div class="trans-seg">
+      <span class="trans-from">${t.f}</span>
+      <span class="trans-arr">→</span>
+      <span class="trans-to">${t.t}</span>
+    </div>
+    <div class="trans-chips">
+      <span class="tc ${tc(t.k)}">${tl(t.k)}</span>
+      <span class="tc tc-train">${t.d}</span>
+      ${t.n?`<span class="tc tc-note">${t.n}</span>`:''}
+    </div>`).join('')}
+  </div>`;
+}
+
+// VISITED COUNT per day
+function countVisited(dayId,day){
+  let total=0,vis=0;
+  ['morning','afternoon','evening'].forEach(slot=>{
+    (day[slot]||[]).forEach((_,i)=>{total++;if(visitedActs[`${dayId}|${slot}|${i}`])vis++;});
+  });
+  return{total,vis};
+}
+
+// BUILD DAYS
 function buildDays(){
   let h='';
   (DAYS||[]).forEach(d=>{
     if(!d)return;
-    const st=TS[d.type]||'';
-    const lb=TL[d.type]||'';
+    const col=TYPE_COLORS[d.type]||'#6b7280';
+    const bg=TYPE_BG[d.type]||'#f1f5f9';
+    const lb=TYPE_LABEL[d.type]||'';
     const hotel=getHotelForNight(d.d);
-    const hs=hotel?`<div class="hotel-strip"><span style="font-size:16px">${hotel.type}</span><div style="flex:1"><div class="hotel-strip-name">${hotel.name}</div><div class="hotel-strip-sub">לינה הלילה · ${hotel.area||''}</div></div></div>`:'';
-    const te=d._te?`<div style="font-size:11px;color:#e8628a;font-weight:700;margin-top:2px"><span class="new-pill">חדש</span> ${d._te}</div>`:'';
-    const mapBlock = buildDayMap(d.d);
-    const inner=(d.al?'<div style="margin-bottom:6px"><span class="area-badge">📍 '+d.al+'</span></div>':'')+
-      tb('☀️','בוקר',d.morning)+tb('🌤️','צהריים',d.afternoon)+tb('🌙','ערב',d.evening)+
-      buildDayTrans(d.trans)+(d.note?'<div class="day-note">💡 '+d.note+'</div>':'')+buildDayRests(d.ri)+mapBlock;
-    h+=`<div class="day-card"><div class="day-head"><div class="day-num" style="${st}"><div class="day-num-d">${d.d}</div><div class="day-num-l">${lb}</div></div><div class="day-info"><div class="day-title">${d.e} ${d.title}</div>${te}<div class="day-sub">${d.sub}</div></div><span class="day-arrow">›</span></div><div class="day-body">${hs}<div class="day-inner">${inner}</div></div></div>`;
+    const {total,vis}=countVisited(d.d,d);
+    const visBadge=vis>0?`<span class="visited-count">✅ ${vis}/${total} ביקרנו</span>`:'';
+    const titleExtra=d._te?`<div style="font-size:11px;color:var(--pink);font-weight:700;margin-top:2px"><span class="act-new-tag">חדש</span> ${d._te}</div>`:'';
+    const hotelStrip=hotel?`<div class="hotel-night-strip">
+      <span style="font-size:18px">${hotel.type}</span>
+      <div><div class="hotel-night-name">${hotel.name}</div><div class="hotel-night-sub">לינה הלילה · ${hotel.area||''}</div></div>
+    </div>`:'';
+    const morning=buildTimeSec('☀️','בוקר',d.morning,d.d,'morning');
+    const afternoon=buildTimeSec('🌤️','צהריים',d.afternoon,d.d,'afternoon');
+    const evening=buildTimeSec('🌙','ערב',d.evening,d.d,'evening');
+    const areaLabel=d.al?`<div class="day-meta-chip" style="background:${bg};color:${col}">📍 ${d.al}</div>`:'';
+    h+=`<div class="day-card" id="dc-${d.d.replace('/','_')}">
+      <div class="day-hdr" onclick="this.closest('.day-card').classList.toggle('open')">
+        <div class="day-color-bar" style="background:${col}"></div>
+        <div class="day-hdr-inner">
+          <div class="day-badge" style="background:${bg};color:${col}">
+            <div class="day-badge-date">${d.d}</div>
+            <div class="day-badge-lbl">${lb}</div>
+          </div>
+          <div class="day-info">
+            <div class="day-title">${d.e} ${d.title}</div>
+            ${titleExtra}
+            <div class="day-sub">${d.sub}</div>
+            <div class="day-meta">${areaLabel}${visBadge}</div>
+          </div>
+          <span class="day-arrow">›</span>
+        </div>
+      </div>
+      <div class="day-body">
+        ${hotelStrip}
+        <div class="day-timeline">
+          ${morning}${afternoon}${evening}
+        </div>
+        ${buildDayTrans(d.trans)}
+        ${d.note?`<div class="day-note-strip">💡 ${d.note}</div>`:''}
+        ${buildDayRests(d.ri)}
+        ${buildDayMapSec(d.d)}
+      </div>
+    </div>`;
   });
-  document.getElementById('day-list').innerHTML=h||'<div style="text-align:center;color:#9ca3af;padding:20px">אין ימים</div>';
-  document.querySelectorAll('.day-card').forEach(c=>{
-    c.querySelector('.day-head').addEventListener('click',()=>c.classList.toggle('open'));
-  });
+  document.getElementById('day-list').innerHTML=h||'<div style="text-align:center;color:var(--gray2);padding:30px">אין ימים</div>';
 }
 
 // RESTAURANTS
@@ -1231,7 +1492,7 @@ function buildFilters(){
   const prices=[{v:'all',l:'הכל'},{v:'cheap',l:'🟢 זול'},{v:'mid',l:'🟡 בינוני'},{v:'exp',l:'🔴 יקר'}];
   document.getElementById('fp').innerHTML=prices.map(p=>`<button class="fb${pF===p.v?' on':''}" data-pf="${p.v}">${p.l}</button>`).join('');
   document.querySelectorAll('#fp .fb').forEach(b=>b.addEventListener('click',function(){pF=this.dataset.pf;buildFilters();renderRests();}));
-  const seen={},areas=[];
+  const seen={};const areas=[];
   (RESTS||[]).forEach(r=>{if(r&&!seen[r.c]){seen[r.c]=1;areas.push({v:r.c,l:r.cl||r.c});}});
   document.getElementById('fl').innerHTML=`<button class="fb${lF==='all'?' on':''}" data-lf="all">כל האזורים</button>`+areas.map(a=>`<button class="fb${lF===a.v?' on':''}" data-lf="${a.v}">${a.l}</button>`).join('');
   document.querySelectorAll('#fl .fb').forEach(b=>b.addEventListener('click',function(){lF=this.dataset.lf;buildFilters();renderRests();}));
@@ -1239,6 +1500,7 @@ function buildFilters(){
   document.getElementById('fd').innerHTML=`<button class="fb${dF==='all'?' on':''}" data-df="all">כל הימים</button>`+dwr.map(d=>`<button class="fb${dF===d?' on':''}" data-df="${d}">${d}</button>`).join('');
   document.querySelectorAll('#fd .fb').forEach(b=>b.addEventListener('click',function(){dF=this.dataset.df;buildFilters();renderRests();}));
 }
+
 function renderRests(){
   const f=(RESTS||[]).filter(r=>{
     if(!r)return false;
@@ -1250,27 +1512,45 @@ function renderRests(){
   const total=(RESTS||[]).filter(Boolean).length;
   document.getElementById('rest-count').textContent=`מציג ${f.length} מתוך ${total} מסעדות`;
   document.getElementById('ov-rests').textContent=total;
-  if(!f.length){document.getElementById('rest-list').innerHTML='<div style="text-align:center;color:#9ca3af;font-size:12px;padding:20px">אין תוצאות</div>';return;}
-  document.getElementById('rest-list').innerHTML=f.map(r=>{
-    const pc=r.p==='cheap'?'price-g':r.p==='mid'?'price-y':'price-r';
-    const pe=r.p==='cheap'?'🟢':r.p==='mid'?'🟡':'🔴';
-    const bg=r.p==='cheap'?'#e6f4ed':r.p==='mid'?'#fdf3d8':'#fce4ec';
-    return `<div class="rest-card"><div class="rest-ico" style="background:${bg}">${r.e}</div><div style="flex:1;min-width:0"><div class="rest-name">${r.n}</div><div class="rest-meta">${r.s} · ${r.cl||r.c} · ${r.day}${r.note?' · '+r.note:''}</div></div><span class="rp2 ${pc}">${pe}</span></div>`;
-  }).join('');
+  const pe=p=>p==='cheap'?'🟢':p==='mid'?'🟡':'🔴';
+  const pc=p=>p==='cheap'?'pg':p==='mid'?'py':'pr';
+  const bg=p=>p==='cheap'?'#d1fae5':p==='mid'?'#fef3c7':'#fee2e2';
+  const col=p=>p==='cheap'?'#10b981':p==='mid'?'#f59e0b':'#ef4444';
+  if(!f.length){document.getElementById('rest-list').innerHTML='<div style="text-align:center;color:var(--gray2);font-size:12px;padding:30px">אין תוצאות</div>';return;}
+  document.getElementById('rest-list').innerHTML=f.map(r=>`<div class="rest-card">
+    <div class="rest-color-strip" style="background:${col(r.p)}"></div>
+    <div class="rest-inner">
+      <div class="rest-ico" style="background:${bg(r.p)}">${r.e}</div>
+      <div style="flex:1;min-width:0">
+        <div class="rest-name">${r.n}</div>
+        <div class="rest-meta">${r.s} · ${r.cl||r.c} · ${r.day}${r.note?' · '+r.note:''}</div>
+      </div>
+      <span class="rest-price ${pc(r.p)}">${pe(r.p)}</span>
+    </div>
+  </div>`).join('');
 }
 
-// TRANSPORT
+// TRANSPORT TAB
 function buildTransTab(){
-  document.getElementById('trans-list').innerHTML=TRANS_LIST.map(t=>{
-    const tc=t.k==='shin'?'tt-shin':t.k==='bus'?'tt-bus':'tt-train';
-    const tl=t.k==='shin'?'🚄 שינקנסן':t.k==='bus'?'🚌 אוטובוס':'🚃 רכבת';
-    return `<div class="tr-card"><div class="tr-route"><span class="tr-from">${t.f}</span><span class="tr-arr">→</span><span class="tr-to">${t.t}</span></div><div class="trans-tags"><span class="tt ${tc}">${tl}</span><span class="tt tt-train">${t.d}</span>${t.n?`<span class="tt tt-note">${t.n}</span>`:''}</div></div>`;
-  }).join('');
+  const tc=k=>k==='shin'?'tc-shin':k==='bus'?'tc-bus':'tc-train';
+  const tl=k=>k==='shin'?'🚄 שינקנסן':k==='bus'?'🚌 אוטובוס':'🚃 רכבת';
+  document.getElementById('trans-list').innerHTML=TRANS_LIST.map(t=>`<div class="trans-card">
+    <div class="trans-route">
+      <span class="trans-city">${t.f}</span>
+      <span class="trans-arrow">→</span>
+      <span class="trans-city">${t.t}</span>
+    </div>
+    <div class="trans-chips">
+      <span class="tc ${tc(t.k)}">${tl(t.k)}</span>
+      <span class="tc tc-train">${t.d}</span>
+      ${t.n?`<span class="tc tc-note">${t.n}</span>`:''}
+    </div>
+  </div>`).join('');
 }
 
 // HOTELS
-function d2i(s){const p=s.split('/');const d=parseInt(p[0]),m=parseInt(p[1]);return m===9?d-16:d+14;}
-function getHotelForNight(ds){const i=d2i(ds);return (hotels||[]).find(h=>h&&i>=d2i(h.ci)&&i<d2i(h.co))||null;}
+function d2i(s){const p=s.split('/');return parseInt(p[1])===9?parseInt(p[0])-16:parseInt(p[0])+14;}
+function getHotelForNight(ds){return(hotels||[]).find(h=>h&&d2i(ds)>=d2i(h.ci)&&d2i(ds)<d2i(h.co))||null;}
 function addHotel(){
   const name=document.getElementById('ht-name').value.trim();
   const area=document.getElementById('ht-area').value.trim();
@@ -1289,18 +1569,31 @@ function addHotel(){
 }
 function delHotel(id){if(!confirm('למחוק?'))return;save('hotels',(hotels||[]).filter(h=>h&&h.id!==id));toast('🗑 מלון נמחק');}
 function renderHotels(){
-  const v=(hotels||[]).filter(Boolean);
-  if(!v.length){document.getElementById('hotel-list').innerHTML='<div style="text-align:center;color:#9ca3af;font-size:13px;padding:30px 0">עדיין לא הוספת מלונות.</div>';return;}
-  const s=v.slice().sort((a,b)=>d2i(a.ci)-d2i(b.ci));
-  document.getElementById('hotel-list').innerHTML=s.map(h=>{
+  const v=(hotels||[]).filter(Boolean).sort((a,b)=>d2i(a.ci)-d2i(b.ci));
+  if(!v.length){document.getElementById('hotel-list').innerHTML='<div style="text-align:center;color:var(--gray2);padding:40px 20px;font-size:13px">עדיין לא הוספת מלונות 🏨</div>';return;}
+  document.getElementById('hotel-list').innerHTML=v.map(h=>{
     const tp=h.price?'¥'+(parseInt(h.price)*h.nights).toLocaleString():'—';
-    return `<div class="hotel-card"><div class="hotel-top"><div class="hotel-ico">${h.type}</div><div style="flex:1"><div class="hotel-name">${h.name}</div><div class="hotel-loc">📍 ${h.area||'—'}</div></div><div class="hotel-dates">${h.ci} → ${h.co}</div></div><div class="hotel-body"><div class="hotel-row"><span class="hotel-row-l">לילות</span><span class="hotel-row-v">${h.nights}</span></div>${h.addr?`<div class="hotel-row"><span class="hotel-row-l">כתובת</span><span class="hotel-row-v" style="font-size:11px">${h.addr}</span></div>`:''}${h.price?`<div class="hotel-row"><span class="hotel-row-l">מחיר/לילה</span><span class="hotel-row-v">¥${parseInt(h.price).toLocaleString()}</span></div><div class="hotel-row"><span class="hotel-row-l">סה"כ</span><span class="hotel-row-v" style="color:#e8628a">${tp}</span></div>`:''}${h.note?`<div class="hotel-row"><span class="hotel-row-l">הערה</span><span class="hotel-row-v" style="font-size:11px">${h.note}</span></div>`:''}<button class="hotel-del" onclick="delHotel(${h.id})">🗑 מחק</button></div></div>`;
+    return`<div class="hotel-card">
+      <div class="hotel-top">
+        <div class="hotel-ico">${h.type}</div>
+        <div style="flex:1"><div class="hotel-name">${h.name}</div><div class="hotel-loc">📍 ${h.area||'—'}</div></div>
+        <div class="hotel-dates-badge">${h.ci} → ${h.co}</div>
+      </div>
+      <div class="hotel-body">
+        <div class="hotel-row"><span class="hotel-row-l">לילות</span><span class="hotel-row-v">${h.nights}</span></div>
+        ${h.addr?`<div class="hotel-row"><span class="hotel-row-l">כתובת</span><span class="hotel-row-v" style="font-size:11px">${h.addr}</span></div>`:''}
+        ${h.price?`<div class="hotel-row"><span class="hotel-row-l">מחיר/לילה</span><span class="hotel-row-v">¥${parseInt(h.price).toLocaleString()}</span></div>`:''}
+        ${h.price?`<div class="hotel-row"><span class="hotel-row-l">סה"כ</span><span class="hotel-row-v" style="color:var(--pink)">${tp}</span></div>`:''}
+        ${h.note?`<div class="hotel-row"><span class="hotel-row-l">הערה</span><span class="hotel-row-v" style="font-size:11px">${h.note}</span></div>`:''}
+        <button class="hotel-del" onclick="delHotel(${h.id})">🗑 מחק</button>
+      </div>
+    </div>`;
   }).join('');
 }
 
 // BUDGET
 function toILS(a,c){return a*(TOILS[c]||1);}
-function fmtILS(v){return '₪'+Math.round(v).toLocaleString();}
+function fmtILS(v){return'₪'+Math.round(v).toLocaleString();}
 function addExpense(){
   const desc=document.getElementById('exp-desc').value.trim();
   const amt=parseFloat(document.getElementById('exp-amt').value);
@@ -1311,8 +1604,7 @@ function addExpense(){
   const catObj=CATS.find(c=>c.id===cat)||CATS[0];
   const amtILS=toILS(amt,cur);
   save('expenses',[...(expenses||[]),{id:nextId++,desc,amt:amtILS,origAmt:amt,origCur:cur,cat,day,e:catObj.e}]);
-  document.getElementById('exp-desc').value='';
-  document.getElementById('exp-amt').value='';
+  document.getElementById('exp-desc').value='';document.getElementById('exp-amt').value='';
   document.getElementById('exp-preview').textContent='';
   toast('✅ הוצאה נשמרה!');
 }
@@ -1324,52 +1616,52 @@ function renderBudget(){
   document.getElementById('exp-count').textContent=v.length;
   document.getElementById('cat-grid').innerHTML=CATS.map(cat=>{
     const t=v.filter(e=>e.cat===cat.id).reduce((s,e)=>s+(e.amt||0),0);
-    return `<div class="cat-card${t>0?' act':''}"><span class="cat-ico">${cat.e}</span><div class="cat-name">${cat.n}</div><div class="cat-total">${t>0?fmtILS(t):'—'}</div></div>`;
+    return`<div class="cat-card${t>0?' act':''}"><span class="cat-ico">${cat.e}</span><div class="cat-name">${cat.n}</div><div class="cat-total">${t>0?fmtILS(t):'—'}</div></div>`;
   }).join('');
-  // by day
   const dm={};v.forEach(e=>{dm[e.day]=(dm[e.day]||0)+(e.amt||0);});
   const dk=Object.keys(dm).sort();
   const mx=dk.length?Math.max(...dk.map(k=>dm[k])):1;
-  if(!dk.length){document.getElementById('day-breakdown').innerHTML='<div style="text-align:center;color:#9ca3af;font-size:12px;padding:8px">עדיין אין הוצאות</div>';}
-  else{
-    const dayRows=dk.map(k=>{
+  document.getElementById('day-breakdown').innerHTML=!dk.length
+    ?'<div style="text-align:center;color:var(--gray2);font-size:12px;padding:8px">עדיין אין הוצאות</div>'
+    :dk.map(k=>{
       const pct=Math.round(dm[k]/mx*100);
       const dObj=(DAYS||[]).find(d=>d&&d.d===k);
-      return `<div class="day-bar-row"><div style="display:flex;justify-content:space-between;align-items:baseline"><div><span style="font-size:12px;font-weight:700">${k}</span>${dObj?`<span style="font-size:10px;color:#9ca3af;margin-right:5px">${dObj.title}</span>`:''}</div><span style="font-size:13px;font-weight:800;color:#e8628a">${fmtILS(dm[k])}</span></div><div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div></div>`;
-    }).join('');
-    document.getElementById('day-breakdown').innerHTML=dayRows+`<div style="display:flex;justify-content:space-between;padding:10px 0 2px;font-size:12px;font-weight:800;border-top:2px solid #e5e1d8;margin-top:4px"><span>סה"כ</span><span style="color:#e8628a">${fmtILS(tot)}</span></div>`;
-  }
-  if(!v.length){document.getElementById('exp-list').innerHTML='<div style="text-align:center;color:#9ca3af;font-size:12px;padding:8px">הוסף את ההוצאה הראשונה!</div>';return;}
+      return`<div class="day-bar-row">
+        <div style="display:flex;justify-content:space-between;align-items:baseline">
+          <div><span style="font-size:12px;font-weight:700">${k}</span>${dObj?`<span style="font-size:10px;color:var(--gray2);margin-right:5px">${dObj.title}</span>`:''}</div>
+          <span style="font-size:13px;font-weight:800;color:var(--pink)">${fmtILS(dm[k])}</span>
+        </div>
+        <div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div>
+      </div>`;
+    }).join('')+`<div style="display:flex;justify-content:space-between;padding:10px 0 2px;font-size:13px;font-weight:800;border-top:2px solid var(--gray3);margin-top:4px"><span>סה"כ</span><span style="color:var(--pink)">${fmtILS(tot)}</span></div>`;
+  if(!v.length){document.getElementById('exp-list').innerHTML='<div style="text-align:center;color:var(--gray2);font-size:12px;padding:16px">הוסף את ההוצאה הראשונה!</div>';return;}
   document.getElementById('exp-list').innerHTML=v.slice().reverse().map(ex=>{
     const co=CATS.find(c=>c.id===ex.cat)||CATS[0];
-    const orig=ex.origCur&&ex.origCur!=='ILS'?` <span style="font-size:10px;color:#9ca3af">(${ex.origCur==='JPY'?'¥':'$'}${Number(ex.origAmt).toLocaleString()})</span>`:'';
-    return `<div class="exp-row"><span style="font-size:15px;width:22px;text-align:center">${ex.e}</span><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${ex.desc}</div><div style="font-size:10px;color:#9ca3af">${co.n} · ${ex.day}</div></div><span style="font-size:12px;font-weight:800;flex-shrink:0;margin-left:4px">${fmtILS(ex.amt||0)}${orig}</span><button class="exp-del" onclick="delExpense(${ex.id})">✕</button></div>`;
+    const orig=ex.origCur&&ex.origCur!=='ILS'?` <span style="font-size:10px;color:var(--gray2)">(${ex.origCur==='JPY'?'¥':'$'}${Number(ex.origAmt).toLocaleString()})</span>`:'';
+    return`<div class="exp-list-row">
+      <span style="font-size:16px;width:24px;text-align:center">${ex.e}</span>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${ex.desc}</div>
+        <div style="font-size:10px;color:var(--gray2)">${co.n} · ${ex.day}</div>
+      </div>
+      <span style="font-size:12px;font-weight:800;flex-shrink:0;margin-left:4px">${fmtILS(ex.amt||0)}${orig}</span>
+      <button class="exp-del-btn" onclick="delExpense(${ex.id})">✕</button>
+    </div>`;
   }).join('');
 }
-document.getElementById('exp-amt').addEventListener('input',()=>{
-  const a=parseFloat(document.getElementById('exp-amt').value);
-  const c=document.getElementById('exp-cur').value;
-  const p=document.getElementById('exp-preview');
-  if(!a||a<=0||c==='ILS'){p.textContent='';return;}
-  p.textContent=(c==='JPY'?'¥':'$')+a.toLocaleString()+' = '+fmtILS(toILS(a,c));
-});
-document.getElementById('exp-cur').addEventListener('change',()=>document.getElementById('exp-amt').dispatchEvent(new Event('input')));
-document.getElementById('add-exp-btn').addEventListener('click',addExpense);
-document.getElementById('exp-amt').addEventListener('keydown',e=>{if(e.key==='Enter')addExpense();});
 
-// PLACE MODAL
+// PLACE / REST ADD
+let placeTypeVal='⛩️';
 function pickSlot(btn){document.querySelectorAll('#np-slots .time-opt').forEach(x=>x.classList.remove('on'));btn.classList.add('on');placeSlot=btn.dataset.s;}
-document.querySelectorAll('#np-chips .type-chip').forEach(c=>c.addEventListener('click',function(){document.querySelectorAll('#np-chips .type-chip').forEach(x=>x.classList.remove('on'));this.classList.add('on');placeType=this.dataset.t;}));
+document.querySelectorAll('#np-chips .type-chip').forEach(c=>c.addEventListener('click',function(){document.querySelectorAll('#np-chips .type-chip').forEach(x=>x.classList.remove('on'));this.classList.add('on');placeTypeVal=this.dataset.t;}));
 
 function addPlace(){
   const dayId=document.getElementById('np-day').value;
   const name=document.getElementById('np-name').value.trim();
   const note=document.getElementById('np-note').value.trim();
   if(!name){alert('אנא הכנס שם אתר');return;}
-  const full=placeType+' '+name+(note?' ('+note+')':'');
-  const days=[...(DAYS||[])];
-  const i=days.findIndex(d=>d&&d.d===dayId);
-  if(i===-1)return;
+  const full=placeTypeVal+' '+name+(note?' ('+note+')':'');
+  const days=[...(DAYS||[])];const i=days.findIndex(d=>d&&d.d===dayId);if(i===-1)return;
   if(placeSlot==='title'){days[i]={...days[i],_te:full};}
   else{const arr=[...(days[i][placeSlot]||[]),{text:full,_new:true}];days[i]={...days[i],[placeSlot]:arr};}
   save('days',days);
@@ -1384,24 +1676,20 @@ function addRestToDay(){
   const dObj=(DAYS||[]).find(d=>d&&d.d===day);
   const nr={id:nextId++,n:name,c:dObj?dObj.area:'other',cl:dObj?dObj.al:'',day,s:document.getElementById('rd-style').value||'מסעדה',p:document.getElementById('rd-price').value,e:document.getElementById('rd-emoji').value,note:''};
   const rests=[...(RESTS||[]),nr];
-  const days=[...(DAYS||[])];
-  const i=days.findIndex(d=>d&&d.d===day);
+  const days=[...(DAYS||[])];const i=days.findIndex(d=>d&&d.d===day);
   if(i!==-1){days[i]={...days[i],ri:[...(days[i].ri||[]),nr.id]};}
   save('rests',rests);save('days',days);
   ['rd-name','rd-style'].forEach(id=>document.getElementById(id).value='');
-  closeModal('modal-rest-day');toast('✅ מסעדה נוספה ונשמרה!');
+  closeModal('modal-rest-day');toast('✅ מסעדה נוספה!');
 }
 
 function addRest(){
-  const name=document.getElementById('nr-name').value.trim();
-  if(!name){alert('אנא הכנס שם');return;}
-  const CL={'tokyo-shinjuku':'שינג\'וקו','tokyo-shibuya':'שיבויה','tokyo-asakusa':'אסאקוסה','tokyo-ginza':'גינזה','hakone':'האקונה','alps':'האלפים','kyoto':'קיוטו','osaka':'אוסקה'};
-  const c=document.getElementById('nr-city').value;
-  const day=document.getElementById('nr-day').value;
+  const name=document.getElementById('nr-name').value.trim();if(!name){alert('אנא הכנס שם');return;}
+  const CL={'tokyo-asakusa':'אסאקוסה','tokyo-shibuya':'שיבויה','tokyo-ginza':'גינזה','alps':'האלפים','kyoto':'קיוטו','osaka':'אוסקה'};
+  const c=document.getElementById('nr-city').value;const day=document.getElementById('nr-day').value;
   const nr={id:nextId++,n:name,c,cl:CL[c]||c,day:day==='general'?'—':day,s:document.getElementById('nr-style').value||'מסעדה',p:document.getElementById('nr-price').value,e:document.getElementById('nr-emoji').value,note:document.getElementById('nr-note').value.trim()};
   const rests=[...(RESTS||[]),nr];
-  const days=[...(DAYS||[])];
-  const i=days.findIndex(d=>d&&d.d===day);
+  const days=[...(DAYS||[])];const i=days.findIndex(d=>d&&d.d===day);
   if(i!==-1&&day!=='general'){days[i]={...days[i],ri:[...(days[i].ri||[]),nr.id]};}
   save('rests',rests);if(i!==-1&&day!=='general')save('days',days);
   ['nr-name','nr-style','nr-note'].forEach(id=>document.getElementById(id).value='');
@@ -1420,7 +1708,7 @@ function populateSelects(){
 function openModal(id){
   document.getElementById(id).classList.add('open');
   if(id==='modal-place'){
-    placeSlot='morning';placeType='⛩️';
+    placeSlot='morning';placeTypeVal='⛩️';
     document.querySelectorAll('#np-slots .time-opt').forEach(x=>x.classList.remove('on'));
     document.querySelector('#np-slots [data-s="morning"]').classList.add('on');
     document.querySelectorAll('#np-chips .type-chip').forEach(x=>x.classList.remove('on'));
@@ -1430,12 +1718,23 @@ function openModal(id){
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
 
+// BUDGET LISTENERS
+document.getElementById('exp-amt').addEventListener('input',()=>{
+  const a=parseFloat(document.getElementById('exp-amt').value);
+  const c=document.getElementById('exp-cur').value;
+  const p=document.getElementById('exp-preview');
+  if(!a||a<=0||c==='ILS'){p.textContent='';return;}
+  p.textContent=(c==='JPY'?'¥':'$')+a.toLocaleString()+' = '+fmtILS(toILS(a,c));
+});
+document.getElementById('exp-cur').addEventListener('change',()=>document.getElementById('exp-amt').dispatchEvent(new Event('input')));
+document.getElementById('add-exp-btn').addEventListener('click',addExpense);
+document.getElementById('exp-amt').addEventListener('keydown',e=>{if(e.key==='Enter')addExpense();});
+
 // COUNTDOWN
 document.getElementById('cnt').textContent=Math.max(0,Math.ceil((new Date('2026-09-16')-new Date())/86400000))||'🎌';
 
 // START
-initData();
-startListeners();
+initData();startListeners();
 </script>
 </body>
 </html>

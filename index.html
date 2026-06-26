@@ -1261,7 +1261,7 @@ function buildActItem(item,dayId,slot,idx){
         <button class="act-btn act-btn-visit ${vis?'done':''}" onclick="toggleVisited('${key}')">
           ${vis?'✅ ביקרנו':'○ סמן ביקור'}
         </button>
-        <button class="act-btn act-btn-edit" onclick="openEditAct('${dayId}','${slot}',${idx},'${text.replace(/'/g,"\\'")}','${note.replace(/'/g,"\\'")}')">✏️</button>
+        <button class="act-btn act-btn-edit" onclick="openEditAct('${dayId}','${slot}',${idx},'${text.replace(/'/g,"'")}','${note.replace(/'/g,"'")}')">✏️</button>
         <button class="act-btn act-btn-del" onclick="deleteAct('${dayId}','${slot}',${idx})">🗑</button>
       </div>
     </div>

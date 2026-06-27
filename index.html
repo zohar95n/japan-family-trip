@@ -347,6 +347,7 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--navy);direc
     <button class="nav-btn" data-tab="rs"><span class="nav-ico">🍜</span>מסעדות</button>
     <button class="nav-btn" data-tab="ht"><span class="nav-ico">🏨</span>מלונות</button>
     <button class="nav-btn" data-tab="tr"><span class="nav-ico">🚄</span>תחבורה</button>
+    <button class="nav-btn" data-tab="fl2"><span class="nav-ico">✈️</span>טיסות</button>
     <button class="nav-btn" data-tab="bg"><span class="nav-ico">💴</span>תקציב</button>
   </div>
 </div>
@@ -430,14 +431,45 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--navy);direc
   </div>
 </div>
 
+
+<!-- FLIGHTS -->
+<div class="panel" id="pnl-fl2">
+  <div class="max-w">
+    <div class="add-row"><button class="add-dashed" style="flex:1" onclick="openModal('modal-flight')">+ הוסף טיסה</button></div>
+    <div class="section-pad"><div class="sec-hdr"><div class="sec-title">הטיסות שלנו</div></div></div>
+    <div id="flight-list"><div style="text-align:center;color:var(--gray2);padding:40px 20px;font-size:13px">עדיין לא הוספת טיסות ✈️</div></div>
+    <div class="section-pad" style="margin-top:4px"><div class="sec-hdr"><div class="sec-title">טיפים לטיסה</div></div></div>
+    <div style="background:linear-gradient(135deg,#fffbeb,#fef3c7);margin:0 16px 12px;border-radius:var(--radius);padding:14px 16px;border:1px solid rgba(245,158,11,0.3)">
+      <div style="font-size:12px;color:#78350f;line-height:2">
+        💡 <strong>Check-in אונליין</strong> – פתח 24 שעות לפני הטיסה<br>
+        💡 <strong>שדה התעופה</strong> – להגיע לפחות 3 שעות לפני<br>
+        💡 <strong>Suica</strong> – ניתן לטעון בשדה התעופה מיד עם הנחיתה<br>
+        💡 <strong>מזוודות</strong> – אפשר לשלוח מהמלון לשדה התעופה (Yamato) יומיים מראש
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- BUDGET -->
 <div class="panel" id="pnl-bg">
   <div class="max-w">
-    <div style="background:#eff6ff;margin:16px 16px 8px;border-radius:var(--radius-sm);padding:9px 14px;font-size:11px;color:#1e40af;font-weight:600;border:1px solid #bfdbfe">💱 שערי המרה: 100¥ = ₪2 &nbsp;·&nbsp; $1 = ₪3 &nbsp;·&nbsp; כל הסכומים מוצגים בשקלים</div>
-    <div class="budget-hero max-w">
-      <div><div class="budget-num" id="total-spent">₪0</div><div class="budget-lbl">סה"כ הוצאות</div></div>
-      <div style="text-align:left"><div class="budget-num" id="exp-count">0</div><div class="budget-lbl">רשומות</div></div>
+    <div style="background:#eff6ff;margin:16px 16px 8px;border-radius:var(--radius-sm);padding:9px 14px;font-size:11px;color:#1e40af;font-weight:600;border:1px solid #bfdbfe">💱 שערי המרה: 100¥ = ₪2 &nbsp;·&nbsp; $1 = ₪3 &nbsp;·&nbsp; כל הסכומים בשקלים</div>
+
+    <!-- SUMMARY CARDS -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 16px 0">
+      <div class="stat-card"><span class="stat-num" id="total-spent">₪0</span><span class="stat-lbl">סה"כ</span></div>
+      <div class="stat-card"><span class="stat-num" id="exp-count" style="font-size:22px">0</span><span class="stat-lbl">רשומות</span></div>
+      <div class="stat-card"><span class="stat-num" id="avg-per-day" style="font-size:18px">₪0</span><span class="stat-lbl">ממוצע יומי</span></div>
     </div>
+
+    <!-- VIEW TOGGLE -->
+    <div style="display:flex;gap:7px;padding:12px 16px 0">
+      <button class="type-chip on" id="bg-view-all" onclick="setBgView('all',this)">📊 הכל</button>
+      <button class="type-chip" id="bg-view-daily" onclick="setBgView('daily',this)">📅 לפי יום</button>
+      <button class="type-chip" id="bg-view-cat" onclick="setBgView('cat',this)">🏷️ קטגוריות</button>
+    </div>
+
+    <!-- ADD EXPENSE -->
     <div class="section-pad"><div class="sec-hdr"><div class="sec-title">הוסף הוצאה</div></div></div>
     <div class="exp-add-card">
       <input class="exp-inp" id="exp-desc" placeholder="תיאור (למשל: ארוחת ערב, כרטיסים...)">
@@ -450,11 +482,31 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--navy);direc
       <div class="exp-preview" id="exp-preview"></div>
       <button class="add-btn-main" id="add-exp-btn">+ הוסף הוצאה</button>
     </div>
-    <div class="section-pad"><div class="sec-hdr"><div class="sec-title">לפי קטגוריה</div></div></div>
-    <div class="cat-grid" id="cat-grid"></div>
-    <div class="section-pad"><div class="sec-hdr"><div class="sec-title">הוצאות לפי יום</div></div></div>
-    <div style="background:#fff;margin:0 16px 12px;border-radius:var(--radius);box-shadow:var(--shadow);padding:12px 16px;border:1px solid rgba(0,0,0,0.04)"><div id="day-breakdown"><div style="text-align:center;color:var(--gray2);font-size:12px;padding:8px">עדיין אין הוצאות</div></div></div>
-    <div class="section-pad"><div class="sec-hdr"><div class="sec-title">כל ההוצאות</div></div></div>
+
+    <!-- FILTER BY CATEGORY -->
+    <div id="bg-cat-section">
+      <div class="section-pad"><div class="sec-hdr"><div class="sec-title">לפי קטגוריה</div></div></div>
+      <div class="filter-row" id="exp-cat-filter">
+        <button class="fb on" data-cf="all">הכל</button>
+        <button class="fb" data-cf="food">🍜 אוכל</button>
+        <button class="fb" data-cf="attractions">🎡 אתרים</button>
+        <button class="fb" data-cf="transport">🚄 תחבורה</button>
+        <button class="fb" data-cf="hotel">🏨 מלון</button>
+        <button class="fb" data-cf="flights">✈️ טיסות</button>
+        <button class="fb" data-cf="shopping">🛍️ שופינג</button>
+        <button class="fb" data-cf="other">📦 אחר</button>
+      </div>
+      <div class="cat-grid" id="cat-grid"></div>
+    </div>
+
+    <!-- DAILY VIEW -->
+    <div id="bg-daily-section" style="display:none">
+      <div class="section-pad"><div class="sec-hdr"><div class="sec-title">הוצאות לפי יום</div></div></div>
+      <div style="background:#fff;margin:0 16px 12px;border-radius:var(--radius);box-shadow:var(--shadow);padding:12px 16px;border:1px solid rgba(0,0,0,0.04)"><div id="day-breakdown"></div></div>
+    </div>
+
+    <!-- ALL EXPENSES -->
+    <div class="section-pad"><div class="sec-hdr" style="justify-content:space-between"><div class="sec-title">כל ההוצאות</div><span id="exp-filter-lbl" style="font-size:10px;color:var(--gray2)"></span></div></div>
     <div class="exp-list-card" style="margin-bottom:16px"><div id="exp-list"><div style="text-align:center;color:var(--gray2);font-size:12px;padding:16px">הוסף את ההוצאה הראשונה!</div></div></div>
   </div>
 </div>
@@ -558,7 +610,113 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--navy);direc
   </div>
 </div>
 
+
+
+<!-- MODAL: EDIT EXPENSE -->
+<div class="modal" id="modal-edit-exp">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title">✏️ ערוך הוצאה <button class="modal-close" onclick="closeModal('modal-edit-exp')">✕</button></div>
+    <input type="hidden" id="ee-id">
+    <input class="exp-inp" id="ee-desc" placeholder="תיאור">
+    <div class="exp-row">
+      <input class="exp-sel" id="ee-amt" placeholder="סכום מקורי" type="number" style="max-width:90px">
+      <select class="exp-sel" id="ee-cur"><option value="ILS">₪ שקל</option><option value="JPY">¥ יין</option><option value="USD">$ דולר</option></select>
+      <select class="exp-sel" id="ee-cat"><option value="food">🍜 אוכל</option><option value="attractions">🎡 אתרים</option><option value="transport">🚄 תחבורה</option><option value="hotel">🏨 מלון</option><option value="flights">✈️ טיסות</option><option value="shopping">🛍️ שופינג</option><option value="other">📦 אחר</option></select>
+    </div>
+    <select class="exp-sel" id="ee-day" style="width:100%;margin-bottom:8px"></select>
+    <button class="add-btn-main" onclick="saveEditExpense()">💾 שמור שינויים</button>
+  </div>
+</div>
+
+<!-- MODAL: FLIGHT -->
+<div class="modal" id="modal-flight">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="flight-modal-title">✈️ הוסף טיסה <button class="modal-close" onclick="closeModal('modal-flight')">✕</button></div>
+    <input type="hidden" id="ft-edit-id">
+    <div class="field-wrap"><div class="field-lbl">כיוון</div>
+      <div style="display:flex;gap:7px;margin-bottom:0">
+        <button class="type-chip on" id="ft-dir-out" onclick="setFlightDir('out')">🛫 טיסה ליפן</button>
+        <button class="type-chip" id="ft-dir-back" onclick="setFlightDir('back')">🛬 טיסה חזרה</button>
+      </div>
+    </div>
+    <div class="exp-row" style="margin-bottom:8px">
+      <div style="flex:1"><div class="field-lbl">תאריך</div><input class="exp-inp" id="ft-date" type="date" style="margin-bottom:0"></div>
+      <div style="flex:1"><div class="field-lbl">שעת המראה</div><input class="exp-inp" id="ft-dep" type="time" style="margin-bottom:0"></div>
+    </div>
+    <div class="exp-row" style="margin-bottom:8px">
+      <div style="flex:1"><div class="field-lbl">נמל המראה</div><input class="exp-inp" id="ft-from" placeholder="למשל: TLV" style="margin-bottom:0"></div>
+      <div style="flex:1"><div class="field-lbl">נמל יעד</div><input class="exp-inp" id="ft-to" placeholder="למשל: NRT" style="margin-bottom:0"></div>
+    </div>
+    <div class="exp-row" style="margin-bottom:8px">
+      <div style="flex:1"><div class="field-lbl">שעת נחיתה</div><input class="exp-inp" id="ft-arr" type="time" style="margin-bottom:0"></div>
+      <div style="flex:1"><div class="field-lbl">חברת תעופה</div><input class="exp-inp" id="ft-airline" placeholder="למשל: El Al" style="margin-bottom:0"></div>
+    </div>
+    <div class="exp-row" style="margin-bottom:8px">
+      <div style="flex:1"><div class="field-lbl">מספר טיסה</div><input class="exp-inp" id="ft-num" placeholder="למשל: LY081" style="margin-bottom:0"></div>
+      <div style="flex:1"><div class="field-lbl">מחיר כולל (₪)</div><input class="exp-inp" id="ft-price" type="number" placeholder="אופציונלי" style="margin-bottom:0"></div>
+    </div>
+    <div class="field-lbl">הערות</div>
+    <input class="exp-inp" id="ft-note" placeholder="למשל: כבודה 23 ק״ג, ארוחה כלולה...">
+    <button class="add-btn-main" onclick="saveFlight()">+ שמור טיסה</button>
+  </div>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+
+
+<!-- MODAL: EDIT EXPENSE -->
+<div class="modal" id="modal-edit-exp">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title">✏️ ערוך הוצאה <button class="modal-close" onclick="closeModal('modal-edit-exp')">✕</button></div>
+    <input type="hidden" id="ee-id">
+    <input class="exp-inp" id="ee-desc" placeholder="תיאור">
+    <div class="exp-row">
+      <input class="exp-sel" id="ee-amt" placeholder="סכום מקורי" type="number" style="max-width:90px">
+      <select class="exp-sel" id="ee-cur"><option value="ILS">₪ שקל</option><option value="JPY">¥ יין</option><option value="USD">$ דולר</option></select>
+      <select class="exp-sel" id="ee-cat"><option value="food">🍜 אוכל</option><option value="attractions">🎡 אתרים</option><option value="transport">🚄 תחבורה</option><option value="hotel">🏨 מלון</option><option value="flights">✈️ טיסות</option><option value="shopping">🛍️ שופינג</option><option value="other">📦 אחר</option></select>
+    </div>
+    <select class="exp-sel" id="ee-day" style="width:100%;margin-bottom:8px"></select>
+    <button class="add-btn-main" onclick="saveEditExpense()">💾 שמור שינויים</button>
+  </div>
+</div>
+
+<!-- MODAL: FLIGHT -->
+<div class="modal" id="modal-flight">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="flight-modal-title">✈️ הוסף טיסה <button class="modal-close" onclick="closeModal('modal-flight')">✕</button></div>
+    <input type="hidden" id="ft-edit-id">
+    <div class="field-wrap"><div class="field-lbl">כיוון</div>
+      <div style="display:flex;gap:7px;margin-bottom:0">
+        <button class="type-chip on" id="ft-dir-out" onclick="setFlightDir('out')">🛫 טיסה ליפן</button>
+        <button class="type-chip" id="ft-dir-back" onclick="setFlightDir('back')">🛬 טיסה חזרה</button>
+      </div>
+    </div>
+    <div class="exp-row" style="margin-bottom:8px">
+      <div style="flex:1"><div class="field-lbl">תאריך</div><input class="exp-inp" id="ft-date" type="date" style="margin-bottom:0"></div>
+      <div style="flex:1"><div class="field-lbl">שעת המראה</div><input class="exp-inp" id="ft-dep" type="time" style="margin-bottom:0"></div>
+    </div>
+    <div class="exp-row" style="margin-bottom:8px">
+      <div style="flex:1"><div class="field-lbl">נמל המראה</div><input class="exp-inp" id="ft-from" placeholder="למשל: TLV" style="margin-bottom:0"></div>
+      <div style="flex:1"><div class="field-lbl">נמל יעד</div><input class="exp-inp" id="ft-to" placeholder="למשל: NRT" style="margin-bottom:0"></div>
+    </div>
+    <div class="exp-row" style="margin-bottom:8px">
+      <div style="flex:1"><div class="field-lbl">שעת נחיתה</div><input class="exp-inp" id="ft-arr" type="time" style="margin-bottom:0"></div>
+      <div style="flex:1"><div class="field-lbl">חברת תעופה</div><input class="exp-inp" id="ft-airline" placeholder="למשל: El Al" style="margin-bottom:0"></div>
+    </div>
+    <div class="exp-row" style="margin-bottom:8px">
+      <div style="flex:1"><div class="field-lbl">מספר טיסה</div><input class="exp-inp" id="ft-num" placeholder="למשל: LY081" style="margin-bottom:0"></div>
+      <div style="flex:1"><div class="field-lbl">מחיר כולל (₪)</div><input class="exp-inp" id="ft-price" type="number" placeholder="אופציונלי" style="margin-bottom:0"></div>
+    </div>
+    <div class="field-lbl">הערות</div>
+    <input class="exp-inp" id="ft-note" placeholder="למשל: כבודה 23 ק״ג, ארוחה כלולה...">
+    <button class="add-btn-main" onclick="saveFlight()">+ שמור טיסה</button>
+  </div>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
 const firebaseConfig={apiKey:"AIzaSyAOtaa5CH4AHxz0xzBqSGI8A3j6yWXav9k",authDomain:"japan-trip-2026-4113b.firebaseapp.com",databaseURL:"https://japan-trip-2026-4113b-default-rtdb.europe-west1.firebasedatabase.app",projectId:"japan-trip-2026-4113b",storageBucket:"japan-trip-2026-4113b.firebasestorage.app",messagingSenderId:"677088933535",appId:"1:677088933535:web:37a88f9390a9b83c55d4aa"};
@@ -1099,7 +1257,39 @@ const R0 = [
   // 30/9 – הרג'וקו / שינג'וקו
   {id:37,n:'Momo Paradise',c:'tokyo-shinjuku',cl:'שינג\'וקו',day:'30/9',s:'Shabu-Shabu',p:'mid',e:'🫕',note:'טוב לארוחה משפחתית'},
   {id:38,n:'Gut\'s Soul Yakiniku',c:'tokyo-shinjuku',cl:'שינג\'וקו',day:'30/9',s:'Yakiniku All-You-Can-Eat',p:'mid',e:'🥩',note:'AYCE משתלם'},
-  {id:39,n:'Hakushu Teppanyaki',c:'tokyo-shibuya',cl:'שיבויה',day:'30/9',s:'Teppanyaki / Steak',p:'exp',e:'🥩',note:'מומלץ מאוד – להזמין!'}
+  {id:39,n:'Hakushu Teppanyaki',c:'tokyo-shibuya',cl:'שיבויה',day:'30/9',s:'Teppanyaki / Steak',p:'exp',e:'🥩',note:'מומלץ מאוד – להזמין!'},
+  // === המלצות מהקובץ – 2024 ===
+  // 17/9 – אסאקוסה + Ueno
+  {id:40,n:'Gyukatsu Motomura',c:'tokyo-asakusa',cl:'אסאקוסה/אקיהברה',day:'17/9',s:'Gyukatsu – בשר על אבן חמה',p:'mid',e:'🥩',note:'מסעדת בשר מצוינת – אבן חמה, יש המתנה שווה! יש גם באקיהברה'},
+  {id:41,n:'Flippers Pancake',c:'tokyo-asakusa',cl:'שיבויה/שימוקיטזוואה',day:'17/9',s:'פנקייק יפני',p:'mid',e:'🥞',note:'פנקייק יפני מפורסם – הרבה סניפים'},
+  // 18/9 – גינזה
+  {id:42,n:'Mori Art Museum & View',c:'tokyo-ginza',cl:'רופונגי',day:'18/9',s:'מוזיאון + תצפית',p:'mid',e:'🎨',note:'מוזיאון מהמם בקומות גבוהות + תצפית על העיר'},
+  {id:43,n:'Tsukiji Outer Market',c:'tokyo-ginza',cl:'גינזה',day:'18/9',s:'שוק דגים',p:'cheap',e:'🐟',note:'פתוח עד 14:00 – לבוא מוקדם! אוכל רחוב טרי'},
+  {id:44,n:'Itamae Sushi Ginza Corridor',c:'tokyo-ginza',cl:'גינזה',day:'18/9',s:'Sushi',p:'mid',e:'🍣',note:'מסעדת סושי מצוינת בגינזה – לנסות!'},
+  {id:45,n:'Ginza Coffee X',c:'tokyo-ginza',cl:'גינזה',day:'18/9',s:'Specialty Coffee',p:'mid',e:'☕',note:'ספשלטי קופי וואו – לא זול אבל מדהים'},
+  {id:46,n:'Ogawa Coffee Laboratory',c:'tokyo-shibuya',cl:'שימוקיטזוואה',day:'18/9',s:'Specialty Coffee',p:'cheap',e:'☕',note:'ספשלטי קופי מושלם בשימוקיטזוואה'},
+  // 22/9 – קיוטו
+  {id:47,n:'% Arabica Arashiyama',c:'kyoto',cl:'ארשיאמה',day:'22/9',s:'Specialty Coffee',p:'cheap',e:'☕',note:'קפה מפורסם בארשיאמה – חובה!'},
+  {id:48,n:'Walden Woods Kyoto',c:'kyoto',cl:'קיוטו',day:'22/9',s:'Specialty Coffee',p:'cheap',e:'☕',note:'קפה מהמם כמה דקות מתחנת קיוטו'},
+  {id:49,n:'Hohei Gyoza',c:'kyoto',cl:'קיוטו',day:'22/9',s:'Gyoza',p:'cheap',e:'🥟',note:'!!מסעדת גיוזות מדהימה – אם יש המתנה שווה לחכות'},
+  // 23/9 – קיוטו/Higashiyama
+  {id:50,n:'Sushi Musashi',c:'kyoto',cl:'קיוטו',day:'23/9',s:'Conveyor Sushi',p:'cheap',e:'🍣',note:'סושי מסוע מצוין – גם דגים ופירות ים מיוחדים'},
+  {id:51,n:'Starbucks Higashiyama',c:'kyoto',cl:'קיוטו',day:'23/9',s:'Cafe',p:'cheap',e:'☕',note:'סטארבקס מיוחד בתוך בית תה עתיק – אווירה מדהימה'},
+  // 24/9 – ארשיאמה
+  {id:52,n:'Kinkaku-ji – המקדש המוזהב',c:'kyoto',cl:'קיוטו',day:'24/9',s:'מקדש',p:'cheap',e:'⛩️',note:'מקדש הזהב המפורסם – לבוא מוקדם'},
+  {id:53,n:'Philosophers Path',c:'kyoto',cl:'קיוטו',day:'24/9',s:'טיול רגלי',p:'cheap',e:'🌸',note:'שביל הפילוסופים – יפהפה, ליד Ginkaku-ji'},
+  // 26/9 – אוסקה
+  {id:54,n:'Yukari Okonomiyaki',c:'osaka',cl:'אוסקה',day:'26/9',s:'Okonomiyaki',p:'cheap',e:'🥘',note:'מסעדת אוקונומיאקי מצוינת! לבחור מיקס פירות ים ופורק'},
+  {id:55,n:'Umeda Sky Building',c:'osaka',cl:'אוסקה',day:'26/9',s:'תצפית',p:'mid',e:'🌃',note:'תצפית מהממת – לבוא בשקיעה/ערב. גן צף למעלה!'},
+  {id:56,n:'Gyozaoh Dotonbori',c:'osaka',cl:'אוסקה',day:'26/9',s:'Gyoza',p:'cheap',e:'🥟',note:'מסעדת גיוזות מצוינת בדוטונבורי'},
+  // 28/9 – חזרה לטוקיו
+  {id:57,n:'551 Horai',c:'osaka',cl:'אוסקה',day:'28/9',s:'Baozi + Gyoza לדרך',p:'cheap',e:'🥟',note:'באנים וגיוזות וואו בתחנות רכבת – יש תור אבל שווה מאוד!'},
+  // 30/9 – שיבויה/שינגוקו
+  {id:58,n:'Nonbei Yokocho',c:'tokyo-shibuya',cl:'שיבויה',day:'30/9',s:'שדרת איזאקיות',p:'cheap',e:'🍶',note:'שדרת איזאקיות – אווירה מדהימה בלילה!'},
+  {id:59,n:'Nagi Ramen',c:'tokyo-shibuya',cl:'שינגוקו',day:'30/9',s:'Ramen',p:'cheap',e:'🍜',note:'ראמן מפורסם מאוד בשינגוקו – יש תור ושווה'},
+  // 1/10 – יום אחרון
+  {id:60,n:'Ameyoko Market',c:'tokyo-asakusa',cl:'Ueno',day:'1/10',s:'שוק + קניות',p:'cheap',e:'🛍️',note:'שוק ענקי מתחת לרכבת Ueno – מחירים טובים'},
+  {id:61,n:'Menchirashi Harajuku',c:'tokyo-shibuya',cl:'הרגוקו',day:'1/10',s:'Udon',p:'cheap',e:'🍜',note:'אודון מצוין! לקחת קרבונרה – יש תור קצר'}
 ]
 
 
@@ -1120,13 +1310,38 @@ function setSync(s){const dot=document.getElementById('sync-dot'),txt=document.g
 function save(p,d){setSync('sync');db.ref(p).set(d).then(()=>setSync('ok')).catch(()=>setSync('off'));}
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 
+
+// מלונות מ-Gmail (Booking.com) – עדכון מלא
+const GMAIL_HOTELS = [
+  // טוקיו 1 – אסאקוסה (16.9–19.9, 3 לילות, 2 חדרים)
+  {id:700,name:'the b asakusa',area:'אסאקוסה / טוקיו',addr:'Taito-ku, Nishi Asakusa 3-16-12, Tokyo',ci:'16/9',co:'19/9',type:'🏨',price:'39897',note:'2 חדרים · ¥119,691 סה"כ · PIN: 4671 · Conf: 6648910760',nights:3},
+  // טאקיאמה (19.9–22.9, 3 לילות) – מספר אפשרויות
+  {id:701,name:'FAV LUX Hida Takayama',area:'טאקיאמה',addr:'Takayama',ci:'19/9',co:'22/9',type:'🏨',price:'',note:'Conf: 5426144637 · PIN: 7142',nights:3},
+  {id:702,name:'Thanyaporn Hotel',area:'טאקיאמה',addr:'Takayama',ci:'19/9',co:'22/9',type:'🏡',price:'',note:'אפרטמנט · Conf: 5669105909 · PIN: 2726',nights:3},
+  {id:703,name:'Oyado Koto No Yume',area:'טאקיאמה',addr:'Takayama',ci:'19/9',co:'22/9',type:'♨️',price:'',note:'Conf: 5601944043 · PIN: 0526',nights:3},
+  {id:704,name:'Ryokufuen Kiyoharu',area:'טאקיאמה',addr:'Takayama',ci:'19/9',co:'22/9',type:'♨️',price:'',note:'Conf: 5134631470 · PIN: 7661',nights:3},
+  // קיוטו (22.9–26.9, 4 לילות) – מספר אפשרויות
+  {id:705,name:'Hotel Gracery Kyoto Sanjo',area:'קיוטו',addr:'Kyoto',ci:'22/9',co:'26/9',type:'🏨',price:'',note:'Conf: 6762446312 · PIN: 2704',nights:4},
+  {id:706,name:'Hotel Forza Kyoto Shijo Kawaramachi',area:'קיוטו',addr:'Kyoto',ci:'22/9',co:'26/9',type:'🏨',price:'',note:'Conf: 6767482463 · PIN: 9142',nights:4},
+  {id:707,name:'The Royal Park Hotel Kyoto Sanjo',area:'קיוטו',addr:'Kyoto',ci:'22/9',co:'26/9',type:'🏨',price:'',note:'Conf: 6727505879 · PIN: 4209',nights:4},
+  {id:708,name:'Agora Kyoto Karasuma',area:'קיוטו',addr:'Kyoto',ci:'22/9',co:'26/9',type:'🏨',price:'',note:'Conf: 6882168334 · PIN: 3603',nights:4},
+  {id:709,name:'Hotel Vista Premio Kyoto Kawaramachi',area:'קיוטו',addr:'Kyoto',ci:'22/9',co:'26/9',type:'🏨',price:'',note:'Conf: 5831802181 · PIN: 1239',nights:4},
+  {id:710,name:'GOZAN HOTEL Higashiyama Sanjo',area:'קיוטו',addr:'Kyoto',ci:'22/9',co:'26/9',type:'🏨',price:'',note:'Conf: 6790025325 · PIN: 1052',nights:4},
+  // אוסקה (26.9–28.9, 2 לילות) – מספר אפשרויות
+  {id:711,name:'Comfort Hotel Osaka Shinsaibashi',area:'אוסקה',addr:'Osaka',ci:'26/9',co:'28/9',type:'🏨',price:'',note:'Conf: 5669113453 · PIN: 1090',nights:2},
+  {id:712,name:'APA Hotel Namba Shinsaibashi Higashi',area:'אוסקה',addr:'Osaka',ci:'26/9',co:'28/9',type:'🏨',price:'',note:'Conf: 6790045431 · PIN: 8152',nights:2},
+  // טוקיו 2 – שינגוקו (28.9–2.10, 4 לילות, 2 חדרים)
+  {id:713,name:'Hotel Sunroute Plaza Shinjuku',area:'שינגוקו / טוקיו',addr:'Shinjuku, Tokyo',ci:'28/9',co:'2/10',type:'🏨',price:'',note:'2 חדרים (Triple + Double) · PIN: 2345 · Conf: 5336336554 · ביטול חינם עד 24.9',nights:4}
+];
+
+
 // INIT
 function initData(){
-  db.ref('v7_init').once('value').then(s=>{
+  db.ref('v10_init').once('value').then(s=>{
     if(!s.val()){
       db.ref('days').set(D0);db.ref('rests').set(R0);
-      db.ref('hotels').set([]);db.ref('expenses').set([]);
-      db.ref('visited').set({});db.ref('v7_init').set(true);
+      db.ref('hotels').set(GMAIL_HOTELS);db.ref('expenses').set([]);
+      db.ref('flights').set([]);db.ref('visited').set({});db.ref('v10_init').set(true);
     }
   });
 }
@@ -1136,13 +1351,13 @@ function startListeners(){
   Promise.all([
     db.ref('days').once('value'),db.ref('rests').once('value'),
     db.ref('hotels').once('value'),db.ref('expenses').once('value'),
-    db.ref('visited').once('value')
-  ]).then(([ds,rs,hs,es,vs])=>{
+    db.ref('visited').once('value'),db.ref('flights').once('value')
+  ]).then(([ds,rs,hs,es,vs,fs])=>{
     DAYS=ds.val()||D0;RESTS=rs.val()||R0;
     hotels=hs.val()||[];expenses=es.val()||[];
-    visitedActs=vs.val()||{};
+    visitedActs=vs.val()||{};flights=fs.val()||[];
     loaded=true;
-    buildDays();buildFilters();renderRests();buildTransTab();renderHotels();renderBudget();populateSelects();
+    buildDays();buildFilters();renderRests();buildTransTab();renderHotels();renderBudget();renderFlights();populateSelects();
     document.getElementById('hdr-hotels').textContent=hotels.length;
     document.getElementById('ov-rests').textContent=(RESTS||[]).filter(Boolean).length;
   });
@@ -1150,6 +1365,7 @@ function startListeners(){
   db.ref('rests').on('value',s=>{RESTS=s.val()||R0;if(loaded){buildFilters();renderRests();}});
   db.ref('hotels').on('value',s=>{hotels=s.val()||[];document.getElementById('hdr-hotels').textContent=hotels.length;if(loaded){renderHotels();buildDays();}});
   db.ref('expenses').on('value',s=>{expenses=s.val()||[];if(loaded)renderBudget();});
+  db.ref('flights').on('value',s=>{flights=s.val()||[];if(loaded)renderFlights();});
   db.ref('visited').on('value',s=>{visitedActs=s.val()||{};if(loaded)buildDays();});
 }
 
@@ -1515,7 +1731,7 @@ function renderHotels(){
         ${h.price?`<div class="hotel-row"><span class="hotel-row-l">מחיר/לילה</span><span class="hotel-row-v">¥${parseInt(h.price).toLocaleString()}</span></div>`:''}
         ${h.price?`<div class="hotel-row"><span class="hotel-row-l">סה"כ</span><span class="hotel-row-v" style="color:var(--pink)">${tp}</span></div>`:''}
         ${h.note?`<div class="hotel-row"><span class="hotel-row-l">הערה</span><span class="hotel-row-v" style="font-size:11px">${h.note}</span></div>`:''}
-        <button class="hotel-del" onclick="delHotel(${h.id})">🗑 מחק</button>
+        <div style="display:flex;gap:7px;margin-top:10px"><button onclick="editHotel(${h.id})" style="background:#e0e7ff;border:1px solid #c7d2fe;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;color:#3730a3;cursor:pointer;font-family:Heebo,sans-serif">✏️ ערוך</button><button class="hotel-del" onclick="delHotel(${h.id})">🗑 מחק</button></div>
       </div>
     </div>`;
   }).join('');
@@ -1540,44 +1756,77 @@ function addExpense(){
 }
 function delExpense(id){save('expenses',(expenses||[]).filter(e=>e&&e.id!==id));}
 function renderBudget(){
-  const v=(expenses||[]).filter(Boolean);
-  const tot=v.reduce((s,e)=>s+(e.amt||0),0);
+  const all=(expenses||[]).filter(Boolean);
+  const tot=all.reduce((s,e)=>s+(e.amt||0),0);
+  const daysWithExp=new Set(all.map(e=>e.day)).size||1;
   document.getElementById('total-spent').textContent=fmtILS(tot);
-  document.getElementById('exp-count').textContent=v.length;
+  document.getElementById('exp-count').textContent=all.length;
+  const avgEl=document.getElementById('avg-per-day');
+  if(avgEl)avgEl.textContent=all.length?fmtILS(tot/daysWithExp):'₪0';
+  
+  // Category cards (always show all)
   document.getElementById('cat-grid').innerHTML=CATS.map(cat=>{
-    const t=v.filter(e=>e.cat===cat.id).reduce((s,e)=>s+(e.amt||0),0);
+    const t=all.filter(e=>e.cat===cat.id).reduce((s,e)=>s+(e.amt||0),0);
     return`<div class="cat-card${t>0?' act':''}"><span class="cat-ico">${cat.e}</span><div class="cat-name">${cat.n}</div><div class="cat-total">${t>0?fmtILS(t):'—'}</div></div>`;
   }).join('');
-  const dm={};v.forEach(e=>{dm[e.day]=(dm[e.day]||0)+(e.amt||0);});
+  
+  // Filter for list
+  const v=activeCatFilter==='all'?all:all.filter(e=>e.cat===activeCatFilter);
+  const filterLbl=document.getElementById('exp-filter-lbl');
+  if(filterLbl)filterLbl.textContent=activeCatFilter!=='all'?`מסנן: ${CATS.find(c=>c.id===activeCatFilter)?.n||''} (${v.length})`:`${all.length} הוצאות`;
+  // Day breakdown uses ALL expenses (not filtered)
+  const dm={};all.forEach(e=>{dm[e.day]=(dm[e.day]||0)+(e.amt||0);});
   const dk=Object.keys(dm).sort();
   const mx=dk.length?Math.max(...dk.map(k=>dm[k])):1;
-  document.getElementById('day-breakdown').innerHTML=!dk.length
-    ?'<div style="text-align:center;color:var(--gray2);font-size:12px;padding:8px">עדיין אין הוצאות</div>'
-    :dk.map(k=>{
-      const pct=Math.round(dm[k]/mx*100);
-      const dObj=(DAYS||[]).find(d=>d&&d.d===k);
-      return`<div class="day-bar-row">
-        <div style="display:flex;justify-content:space-between;align-items:baseline">
-          <div><span style="font-size:12px;font-weight:700">${k}</span>${dObj?`<span style="font-size:10px;color:var(--gray2);margin-right:5px">${dObj.title}</span>`:''}</div>
-          <span style="font-size:13px;font-weight:800;color:var(--pink)">${fmtILS(dm[k])}</span>
+  const dayBreakEl=document.getElementById('day-breakdown');
+  if(dayBreakEl){
+    dayBreakEl.innerHTML=!dk.length
+      ?'<div style="text-align:center;color:var(--gray2);font-size:12px;padding:8px">עדיין אין הוצאות</div>'
+      :dk.map(k=>{
+        const pct=Math.round(dm[k]/mx*100);
+        const dObj=(DAYS||[]).find(d=>d&&d.d===k);
+        const dayExps=all.filter(e=>e.day===k);
+        return`<div class="day-bar-row" style="cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+          <div style="display:flex;justify-content:space-between;align-items:baseline">
+            <div><span style="font-size:12px;font-weight:700">${k}</span>${dObj?`<span style="font-size:10px;color:var(--gray2);margin-right:5px">${dObj.title}</span>`:''}</div>
+            <span style="font-size:13px;font-weight:800;color:var(--pink)">${fmtILS(dm[k])}</span>
+          </div>
+          <div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div>
         </div>
-        <div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div>
-      </div>`;
-    }).join('')+`<div style="display:flex;justify-content:space-between;padding:10px 0 2px;font-size:13px;font-weight:800;border-top:2px solid var(--gray3);margin-top:4px"><span>סה"כ</span><span style="color:var(--pink)">${fmtILS(tot)}</span></div>`;
+        <div style="display:none;padding:4px 0 8px;border-bottom:1px solid var(--gray3)">
+          ${dayExps.map(ex=>{
+            const co=CATS.find(ct=>ct.id===ex.cat)||CATS[0];
+            return`<div style="display:flex;align-items:center;gap:7px;padding:5px 4px;font-size:11px">
+              <span>${ex.e}</span><span style="flex:1;color:var(--navy)">${ex.desc}</span>
+              <span style="color:var(--gray2)">${co.n}</span>
+              <span style="font-weight:700;color:var(--pink)">${fmtILS(ex.amt||0)}</span>
+              <button onclick="event.stopPropagation();openEditExpense(${ex.id})" style="background:#e0e7ff;border:none;border-radius:5px;padding:2px 6px;cursor:pointer;font-size:10px">✏️</button>
+              <button onclick="event.stopPropagation();delExpense(${ex.id})" style="background:#fee2e2;border:none;border-radius:5px;padding:2px 6px;cursor:pointer;font-size:10px">🗑</button>
+            </div>`;
+          }).join('')}
+        </div>`;
+      }).join('')+`<div style="display:flex;justify-content:space-between;padding:10px 0 2px;font-size:13px;font-weight:800;border-top:2px solid var(--gray3);margin-top:4px"><span>סה"כ</span><span style="color:var(--pink)">${fmtILS(tot)}</span></div>`;
+  }
   if(!v.length){document.getElementById('exp-list').innerHTML='<div style="text-align:center;color:var(--gray2);font-size:12px;padding:16px">הוסף את ההוצאה הראשונה!</div>';return;}
-  document.getElementById('exp-list').innerHTML=v.slice().reverse().map(ex=>{
-    const co=CATS.find(c=>c.id===ex.cat)||CATS[0];
-    const orig=ex.origCur&&ex.origCur!=='ILS'?` <span style="font-size:10px;color:var(--gray2)">(${ex.origCur==='JPY'?'¥':'$'}${Number(ex.origAmt).toLocaleString()})</span>`:'';
-    return`<div class="exp-list-row">
-      <span style="font-size:16px;width:24px;text-align:center">${ex.e}</span>
-      <div style="flex:1;min-width:0">
-        <div style="font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${ex.desc}</div>
-        <div style="font-size:10px;color:var(--gray2)">${co.n} · ${ex.day}</div>
-      </div>
-      <span style="font-size:12px;font-weight:800;flex-shrink:0;margin-left:4px">${fmtILS(ex.amt||0)}${orig}</span>
-      <button class="exp-del-btn" onclick="delExpense(${ex.id})">✕</button>
-    </div>`;
-  }).join('');
+  if(!v.length){
+    document.getElementById('exp-list').innerHTML='<div style="text-align:center;color:var(--gray2);font-size:12px;padding:16px">'+
+      (activeCatFilter!=='all'?'אין הוצאות בקטגוריה זו':'הוסף את ההוצאה הראשונה!')+'</div>';
+  } else {
+    document.getElementById('exp-list').innerHTML=v.slice().reverse().map(ex=>{
+      const co=CATS.find(c=>c.id===ex.cat)||CATS[0];
+      const orig=ex.origCur&&ex.origCur!=='ILS'?` <span style="font-size:10px;color:var(--gray2)">(${ex.origCur==='JPY'?'¥':'$'}${Number(ex.origAmt).toLocaleString()})</span>`:'';
+      return`<div class="exp-list-row">
+        <span style="font-size:16px;width:24px;text-align:center">${ex.e}</span>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${ex.desc}</div>
+          <div style="font-size:10px;color:var(--gray2)">${co.n} · ${ex.day}</div>
+        </div>
+        <span style="font-size:12px;font-weight:800;flex-shrink:0;margin-left:4px">${fmtILS(ex.amt||0)}${orig}</span>
+        <button onclick="openEditExpense(${ex.id})" style="background:#e0e7ff;border:none;border-radius:6px;padding:3px 7px;cursor:pointer;font-size:11px;margin-left:4px">✏️</button>
+        <button class="exp-del-btn" onclick="delExpense(${ex.id})">✕</button>
+      </div>`;
+    }).join('');
+  }
 }
 
 // PLACE / REST ADD
@@ -1659,6 +1908,248 @@ document.getElementById('exp-amt').addEventListener('input',()=>{
 document.getElementById('exp-cur').addEventListener('change',()=>document.getElementById('exp-amt').dispatchEvent(new Event('input')));
 document.getElementById('add-exp-btn').addEventListener('click',addExpense);
 document.getElementById('exp-amt').addEventListener('keydown',e=>{if(e.key==='Enter')addExpense();});
+
+
+// ===== FLIGHTS =====
+let flights=[];
+let flightDir='out';
+
+function setFlightDir(dir){
+  flightDir=dir;
+  document.getElementById('ft-dir-out').classList.toggle('on',dir==='out');
+  document.getElementById('ft-dir-back').classList.toggle('on',dir==='back');
+}
+
+function saveFlight(){
+  const editId=document.getElementById('ft-edit-id').value;
+  const f={
+    id:editId?parseInt(editId):nextId++,
+    dir:flightDir,
+    date:document.getElementById('ft-date').value,
+    dep:document.getElementById('ft-dep').value,
+    arr:document.getElementById('ft-arr').value,
+    from:document.getElementById('ft-from').value.trim().toUpperCase(),
+    to:document.getElementById('ft-to').value.trim().toUpperCase(),
+    airline:document.getElementById('ft-airline').value.trim(),
+    num:document.getElementById('ft-num').value.trim(),
+    price:document.getElementById('ft-price').value,
+    note:document.getElementById('ft-note').value.trim()
+  };
+  if(!f.date||!f.from||!f.to){alert('אנא מלא לפחות תאריך, נמל המראה ויעד');return;}
+  if(editId){
+    flights=(flights||[]).map(x=>x&&x.id===parseInt(editId)?f:x);
+  } else {
+    flights=[...(flights||[]),f];
+  }
+  save('flights',flights);
+  ['ft-date','ft-dep','ft-arr','ft-from','ft-to','ft-airline','ft-num','ft-price','ft-note'].forEach(id=>{
+    const el=document.getElementById(id); if(el)el.value='';
+  });
+  document.getElementById('ft-edit-id').value='';
+  setModalTitle('flight-modal-title','✈️ הוסף טיסה','modal-flight');
+  closeModal('modal-flight');
+  toast('✅ טיסה נשמרה!');
+}
+
+function editFlight(id){
+  const f=(flights||[]).find(x=>x&&x.id===id);
+  if(!f)return;
+  setFlightDir(f.dir||'out');
+  document.getElementById('ft-edit-id').value=id;
+  document.getElementById('ft-date').value=f.date||'';
+  document.getElementById('ft-dep').value=f.dep||'';
+  document.getElementById('ft-arr').value=f.arr||'';
+  document.getElementById('ft-from').value=f.from||'';
+  document.getElementById('ft-to').value=f.to||'';
+  document.getElementById('ft-airline').value=f.airline||'';
+  document.getElementById('ft-num').value=f.num||'';
+  document.getElementById('ft-price').value=f.price||'';
+  document.getElementById('ft-note').value=f.note||'';
+  setModalTitle('flight-modal-title','✏️ ערוך טיסה','modal-flight');
+  openModal('modal-flight');
+}
+
+function delFlight(id){
+  if(!confirm('למחוק טיסה זו?'))return;
+  flights=(flights||[]).filter(x=>x&&x.id!==id);
+  save('flights',flights);
+  toast('🗑 טיסה נמחקה');
+}
+
+function renderFlights(){
+  const v=(flights||[]).filter(Boolean).sort((a,b)=>a.date>b.date?1:-1);
+  if(!v.length){
+    document.getElementById('flight-list').innerHTML='<div style="text-align:center;color:var(--gray2);padding:40px 20px;font-size:13px">עדיין לא הוספת טיסות ✈️</div>';
+    return;
+  }
+  document.getElementById('flight-list').innerHTML=v.map(f=>{
+    const isOut=f.dir==='out';
+    const col=isOut?'#3b82f6':'#10b981';
+    const bg=isOut?'#dbeafe':'#d1fae5';
+    const ico=isOut?'🛫':'🛬';
+    const dir=isOut?'טיסה ליפן':'טיסה חזרה';
+    return `<div style="background:#fff;margin:0 16px 10px;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border:1px solid rgba(0,0,0,0.04)">
+      <div style="background:linear-gradient(135deg,${col},${col}dd);padding:12px 16px;display:flex;align-items:center;gap:10px">
+        <span style="font-size:24px">${ico}</span>
+        <div style="flex:1">
+          <div style="color:#fff;font-size:15px;font-weight:800">${f.from} → ${f.to}</div>
+          <div style="color:rgba(255,255,255,0.7);font-size:11px">${dir} · ${f.date||''}</div>
+        </div>
+        <div style="display:flex;gap:6px">
+          <button onclick="editFlight(${f.id})" style="background:rgba(255,255,255,0.2);border:none;border-radius:7px;padding:5px 10px;color:#fff;cursor:pointer;font-size:11px;font-weight:700;font-family:Heebo,sans-serif">✏️ ערוך</button>
+          <button onclick="delFlight(${f.id})" style="background:rgba(255,255,255,0.2);border:none;border-radius:7px;padding:5px 10px;color:#fff;cursor:pointer;font-size:11px;font-weight:700;font-family:Heebo,sans-serif">🗑</button>
+        </div>
+      </div>
+      <div style="padding:12px 16px">
+        ${f.dep||f.arr?`<div style="display:flex;gap:20px;margin-bottom:8px;align-items:center">
+          <div style="text-align:center"><div style="font-size:20px;font-weight:900;color:var(--navy)">${f.dep||'—'}</div><div style="font-size:10px;color:var(--gray2)">המראה</div></div>
+          <div style="flex:1;text-align:center;color:var(--pink);font-size:20px">✈️ ·····</div>
+          <div style="text-align:center"><div style="font-size:20px;font-weight:900;color:var(--navy)">${f.arr||'—'}</div><div style="font-size:10px;color:var(--gray2)">נחיתה</div></div>
+        </div>`:''}
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px">
+          ${f.airline?`<div><span style="color:var(--gray2)">חברה:</span> <strong>${f.airline}</strong></div>`:''}
+          ${f.num?`<div><span style="color:var(--gray2)">טיסה:</span> <strong>${f.num}</strong></div>`:''}
+          ${f.price?`<div><span style="color:var(--gray2)">מחיר:</span> <strong style="color:var(--pink)">₪${parseInt(f.price).toLocaleString()}</strong></div>`:''}
+        </div>
+        ${f.note?`<div style="background:var(--gray4);border-radius:8px;padding:7px 10px;margin-top:8px;font-size:11px;color:var(--gray)">💡 ${f.note}</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ===== BUDGET ENHANCED =====
+let activeCatFilter='all';
+let bgView='all';
+
+function setBgView(view, btn){
+  bgView=view;
+  ['bg-view-all','bg-view-daily','bg-view-cat'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.classList.remove('on');
+  });
+  if(btn)btn.classList.add('on');
+  const catSec=document.getElementById('bg-cat-section');
+  const dailySec=document.getElementById('bg-daily-section');
+  if(catSec)catSec.style.display=(view==='cat'||view==='all')?'block':'none';
+  if(dailySec)dailySec.style.display=(view==='daily'||view==='all')?'block':'none';
+  renderBudget();
+}
+
+// Category filter
+document.querySelectorAll('#exp-cat-filter .fb').forEach(b=>b.addEventListener('click',function(){
+  document.querySelectorAll('#exp-cat-filter .fb').forEach(x=>x.classList.remove('on'));
+  this.classList.add('on');
+  activeCatFilter=this.dataset.cf;
+  renderBudget();
+}));
+
+// Edit expense
+function openEditExpense(id){
+  const ex=(expenses||[]).find(e=>e&&e.id===id);
+  if(!ex)return;
+  document.getElementById('ee-id').value=id;
+  document.getElementById('ee-desc').value=ex.desc||'';
+  document.getElementById('ee-amt').value=ex.origAmt||ex.amt||'';
+  document.getElementById('ee-cur').value=ex.origCur||'ILS';
+  document.getElementById('ee-cat').value=ex.cat||'food';
+  document.getElementById('ee-day').value=ex.day||'general';
+  // populate ee-day select
+  const s=document.getElementById('ee-day');
+  if(s){
+    s.innerHTML='<option value="general">כללי</option>'+(DAYS||[]).filter(Boolean).map(d=>`<option value="${d.d}">${d.d} – ${d.title}</option>`).join('');
+    s.value=ex.day||'general';
+  }
+  openModal('modal-edit-exp');
+}
+
+function saveEditExpense(){
+  const id=parseInt(document.getElementById('ee-id').value);
+  const desc=document.getElementById('ee-desc').value.trim();
+  const amt=parseFloat(document.getElementById('ee-amt').value);
+  const cur=document.getElementById('ee-cur').value;
+  const cat=document.getElementById('ee-cat').value;
+  const day=document.getElementById('ee-day').value;
+  if(!desc||!amt){alert('אנא מלא תיאור וסכום');return;}
+  const catObj=CATS.find(c=>c.id===cat)||CATS[0];
+  const amtILS=toILS(amt,cur);
+  expenses=(expenses||[]).map(e=>{
+    if(!e||e.id!==id)return e;
+    return{...e,desc,amt:amtILS,origAmt:amt,origCur:cur,cat,day,e:catObj.e};
+  });
+  save('expenses',expenses);
+  closeModal('modal-edit-exp');
+  toast('✅ הוצאה עודכנה!');
+}
+
+// ===== HOTELS ENHANCED (with edit) =====
+function editHotel(id){
+  const h=(hotels||[]).find(x=>x&&x.id===id);
+  if(!h)return;
+  document.getElementById('ht-name').value=h.name||'';
+  document.getElementById('ht-area').value=h.area||'';
+  document.getElementById('ht-addr').value=h.addr||'';
+  document.getElementById('ht-in').value=h.ci||'';
+  document.getElementById('ht-out').value=h.co||'';
+  document.getElementById('ht-type').value=h.type||'🏨';
+  document.getElementById('ht-price').value=h.price||'';
+  document.getElementById('ht-note').value=h.note||'';
+  // store edit id in a hidden field or use a global
+  window._editHotelId=id;
+  setModalTitle2('#modal-hotel .modal-title','✏️ ערוך מלון','modal-hotel');
+  openModal('modal-hotel');
+}
+
+// Override addHotel to support editing
+const _origAddHotel=addHotel;
+window.addHotel=function(){
+  if(window._editHotelId){
+    // Edit mode
+    const name=document.getElementById('ht-name').value.trim();
+    const area=document.getElementById('ht-area').value.trim();
+    const addr=document.getElementById('ht-addr').value.trim();
+    const ci=document.getElementById('ht-in').value;
+    const co=document.getElementById('ht-out').value;
+    const type=document.getElementById('ht-type').value;
+    const price=document.getElementById('ht-price').value;
+    const note=document.getElementById('ht-note').value.trim();
+    if(!name||!ci||!co){alert('אנא מלא שם, תאריך כניסה ויציאה');return;}
+    const updated=(hotels||[]).map(h=>{
+      if(!h||h.id!==window._editHotelId)return h;
+      return{...h,name,area,addr,ci,co,type,price,note,nights:d2i(co)-d2i(ci)};
+    });
+    save('hotels',updated);
+    window._editHotelId=null;
+    ['ht-name','ht-area','ht-addr','ht-price','ht-note'].forEach(id=>document.getElementById(id).value='');
+  setModalTitle2('#modal-hotel .modal-title','🏨 הוסף מלון / לינה','modal-hotel');
+    closeModal('modal-hotel');
+    toast('✅ מלון עודכן!');
+  } else {
+    _origAddHotel();
+  }
+};
+
+
+// MODAL TITLE HELPERS
+function setModalTitle(elId, title, modalId){
+  const el = document.getElementById(elId);
+  if(!el) return;
+  const btn = document.createElement('button');
+  btn.className = 'modal-close';
+  btn.textContent = '✕';
+  btn.onclick = function(){ closeModal(modalId); };
+  el.textContent = title + ' ';
+  el.appendChild(btn);
+}
+function setModalTitle2(selector, title, modalId){
+  const el = document.querySelector(selector);
+  if(!el) return;
+  const btn = document.createElement('button');
+  btn.className = 'modal-close';
+  btn.textContent = '✕';
+  btn.onclick = function(){ closeModal(modalId); if(modalId==='modal-hotel') window._editHotelId=null; };
+  el.textContent = title + ' ';
+  el.appendChild(btn);
+}
 
 // COUNTDOWN
 document.getElementById('cnt').textContent=Math.max(0,Math.ceil((new Date('2026-09-16')-new Date())/86400000))||'🎌';

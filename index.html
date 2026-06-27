@@ -468,8 +468,11 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--navy);direc
 <!-- HOTELS -->
 <div class="panel" id="pnl-ht">
   <div class="max-w">
-    <div class="add-row"><button class="add-dashed" style="flex:1" onclick="openModal('modal-hotel')">+ הוסף מלון / לינה</button></div>
-    <div id="hotel-list"><div style="text-align:center;color:var(--gray2);padding:40px 20px;font-size:13px">עדיין לא הוספת מלונות 🏨</div></div>
+    <div style="background:#e8f4ea;margin:12px 16px 4px;border-radius:10px;padding:10px 14px;font-size:11px;color:#2e7d52;border:1px solid #81c784">
+      🏨 <strong>המלונות נטענים מ-Gmail (Booking.com).</strong> ערוך כדי להוסיף מחיר לילה ולעדכן פרטים.
+    </div>
+    <div class="add-row"><button class="add-dashed" style="flex:1" onclick="openModal('modal-hotel')">+ הוסף מלון נוסף</button></div>
+    <div id="hotel-list"><div class="loading"><div class="spinner"></div>טוען מלונות...</div></div>
   </div>
 </div>
 
@@ -1404,7 +1407,8 @@ function initData(){
   db.ref('rests').once('value').then(s=>{
     if(!s.val()) db.ref('rests').set(R0);
   });
-  // ALWAYS force-update hotels from Gmail data (includes the b asakusa + Sunroute)
+  // Force-update hotels from Gmail — always use latest booking data
+  // This fires async; Promise.all fallback handles the race condition
   db.ref('hotels').set(GMAIL_HOTELS);
   db.ref('visited').once('value').then(s=>{
     if(!s.val()) db.ref('visited').set({});
@@ -1422,7 +1426,7 @@ function startListeners(){
     db.ref('mustRests').once('value'),db.ref('dayPlans').once('value')
   ]).then(([ds,rs,hs,es,vs,fs,hls,ans,mrs,dps])=>{
     DAYS=ds.val()||D0;RESTS=rs.val()||R0;
-    hotels=hs.val()||[];expenses=es.val()||[];
+    hotels=(hs.val()&&hs.val().length)?hs.val():GMAIL_HOTELS;expenses=es.val()||[];
     visitedActs=vs.val()||{};flights=fs.val()||[];
     highlights=hls.val()||{};actNotes=ans.val()||{};
     mustRests=mrs.val()||{};dayPlans=dps.val()||{};
@@ -1443,11 +1447,11 @@ function startListeners(){
   db.ref('hotels').on('value',s=>{hotels=s.val()||[];document.getElementById('hdr-hotels').textContent=hotels.length;if(loaded){renderHotels();buildDays();renderBudget();}});
   db.ref('expenses').on('value',s=>{expenses=s.val()||[];if(loaded)renderBudget();});
   db.ref('flights').on('value',s=>{flights=s.val()||[];if(loaded)renderFlights();});
-  db.ref('visited').on('value',s=>{visitedActs=s.val()||{};if(loaded)buildDays();});
-  db.ref('highlights').on('value',s=>{highlights=s.val()||{};if(loaded)buildDays();});
-  db.ref('actNotes').on('value',s=>{actNotes=s.val()||{};if(loaded)buildDays();});
-  db.ref('mustRests').on('value',s=>{mustRests=s.val()||{};if(loaded){renderRests();buildDays();}});
-  db.ref('dayPlans').on('value',s=>{dayPlans=s.val()||{};if(loaded)buildDays();});
+  db.ref('visited').on('value',s=>{visitedActs=s.val()||{};if(loaded)updateActItems();});
+  db.ref('highlights').on('value',s=>{highlights=s.val()||{};if(loaded)updateActItems();});
+  db.ref('actNotes').on('value',s=>{actNotes=s.val()||{};if(loaded)updateActItems();});
+  db.ref('mustRests').on('value',s=>{mustRests=s.val()||{};if(loaded){renderRests();updateActItems();}});
+  db.ref('dayPlans').on('value',s=>{dayPlans=s.val()||{};if(loaded)updatePlanners();});
 }
 
 // TABS
@@ -1672,7 +1676,123 @@ function countVisited(dayId,day){
 }
 
 // BUILD DAYS
+
+// ===== IN-PLACE UPDATES (no DOM rebuild) =====
+function updateActItems(){
+  // Update each act-item in place without rebuilding the whole list
+  document.querySelectorAll('.act-item[id]').forEach(el=>{
+    const key=el.id.replace(/^act-/,'');
+    const vis=!!visitedActs[key];
+    const hl=!!highlights[key];
+    const an=actNotes[key]||'';
+
+    // Update dot color
+    const dot=el.querySelector('.act-dot');
+    if(dot) dot.style.background=vis?'#10b981':hl?'#f59e0b':'var(--pink)';
+
+    // Update highlight class and style
+    const content=el.querySelector('.act-content');
+    if(content){
+      content.style.cssText=hl?'background:linear-gradient(135deg,#fffbeb,#fef3c7);border-radius:8px;padding:5px 8px;border:1px solid rgba(245,158,11,0.25);':'';
+    }
+    el.classList.toggle('highlight',hl);
+
+    // Update highlight tag
+    let hlTag=el.querySelector('.hl-tag');
+    if(hl&&!hlTag){
+      const nameEl=el.querySelector('.act-name');
+      if(nameEl){
+        hlTag=document.createElement('span');
+        hlTag.className='hl-tag';
+        hlTag.style.cssText='font-size:10px;background:#f59e0b;color:#fff;border-radius:20px;padding:1px 7px;margin-right:4px;font-weight:700';
+        hlTag.textContent='⭐ חובה';
+        nameEl.prepend(hlTag);
+      }
+    } else if(!hl&&hlTag){
+      hlTag.remove();
+    }
+
+    // Update visited state
+    const nameEl=el.querySelector('.act-name');
+    if(nameEl) nameEl.classList.toggle('visited',vis);
+
+    // Update visit circle
+    const circle=el.querySelector('.visit-circle');
+    if(circle){
+      circle.classList.toggle('done',vis);
+      circle.textContent=vis?'✓':'';
+    }
+
+    // Update highlight button
+    const hlBtn=el.querySelector('.act-btn-highlight');
+    if(hlBtn) hlBtn.classList.toggle('on',hl);
+
+    // Update note
+    let noteEl=el.querySelector('.act-note-inline');
+    if(an){
+      if(!noteEl){
+        noteEl=document.createElement('div');
+        noteEl.className='act-note-inline';
+        noteEl.style.cssText='font-size:11px;color:#6b7280;margin-top:3px;display:flex;align-items:flex-start;gap:4px;font-style:italic;overflow:hidden;white-space:nowrap;text-overflow:ellipsis';
+        const actions=el.querySelector('.act-actions');
+        if(actions) actions.before(noteEl);
+      }
+      noteEl.innerHTML='<span style="flex-shrink:0">📝</span><span>'+an+'</span>';
+    } else if(noteEl){
+      noteEl.remove();
+    }
+  });
+
+  // Update visited count badges on day cards
+  document.querySelectorAll('.day-card').forEach(card=>{
+    const dayId=card.id.replace(/^dc-/,'').replace('_','/');
+    const dayObj=(DAYS||[]).find(d=>d&&d.d===dayId);
+    if(!dayObj) return;
+    let total=0,vis=0;
+    ['morning','afternoon','evening'].forEach(slot=>{
+      (dayObj[slot]||[]).forEach((_,i)=>{
+        total++;
+        const key=`${dayId.replace('/','_')}__${slot}__${i}`;
+        if(visitedActs[key]) vis++;
+      });
+    });
+    let badge=card.querySelector('.visited-count');
+    if(vis>0){
+      if(!badge){
+        badge=document.createElement('span');
+        badge.className='visited-count';
+        const meta=card.querySelector('.day-meta');
+        if(meta) meta.appendChild(badge);
+      }
+      badge.textContent=`✅ ${vis}/${total} ביקרנו`;
+    } else if(badge){
+      badge.remove();
+    }
+  });
+}
+
+function updatePlanners(){
+  // Rebuild only the planners inside OPEN day cards
+  document.querySelectorAll('.day-card.open').forEach(card=>{
+    const dayId=card.id.replace(/^dc-/,'').replace('_','/');
+    const plannerEl=document.getElementById('planner-'+dayId.replace('/','_'));
+    if(plannerEl){
+      const wasOpen=plannerEl.classList.contains('open');
+      plannerEl.outerHTML=buildDayPlanner(dayId);
+      if(wasOpen){
+        const newEl=document.getElementById('planner-'+dayId.replace('/','_'));
+        if(newEl) newEl.classList.add('open');
+      }
+    }
+  });
+}
+
 function buildDays(){
+  // Save which cards are open
+  const openCards=new Set();
+  document.querySelectorAll('.day-card.open').forEach(el=>{
+    if(el.id) openCards.add(el.id);
+  });
   let h='';
   (DAYS||[]).forEach(d=>{
     if(!d)return;
@@ -1813,26 +1933,62 @@ function addHotel(){
 function delHotel(id){if(!confirm('למחוק?'))return;save('hotels',(hotels||[]).filter(h=>h&&h.id!==id));toast('🗑 מלון נמחק');setTimeout(()=>renderBudget(),500);}
 function renderHotels(){
   const v=(hotels||[]).filter(Boolean).sort((a,b)=>d2i(a.ci)-d2i(b.ci));
-  if(!v.length){document.getElementById('hotel-list').innerHTML='<div style="text-align:center;color:var(--gray2);padding:40px 20px;font-size:13px">עדיין לא הוספת מלונות 🏨</div>';return;}
+  if(!v.length){
+    document.getElementById('hotel-list').innerHTML='<div style="text-align:center;color:var(--gray2);padding:40px 20px;font-size:13px">טוען... אם אין מלונות לאחר שנייה, רענן את הדף.</div>';
+    return;
+  }
   document.getElementById('hotel-list').innerHTML=v.map(h=>{
-    const tp=h.price?'¥'+(parseInt(h.price)*h.nights).toLocaleString():'—';
+    const pricePerNight=h.price?parseInt(h.price):0;
+    const totalYen=pricePerNight*h.nights;
+    const totalILS=Math.round(totalYen*0.02);
+    const priceDisp=pricePerNight?`¥${pricePerNight.toLocaleString()}/לילה · ¥${totalYen.toLocaleString()} סה"כ · ₪${totalILS.toLocaleString()}`:'לא הוזן מחיר';
+    // Color by city
+    const cityCol=h.area&&h.area.includes('אסאקוסה')||h.area&&h.area.includes('שינגוקו')||h.area&&h.area.includes('טוקיו')?'#3b82f6':
+                  h.area&&h.area.includes('טאקיאמה')?'#f59e0b':
+                  h.area&&h.area.includes('קיוטו')?'#e8628a':
+                  h.area&&h.area.includes('אוסקה')?'#8b5cf6':'#6b7280';
     return`<div class="hotel-card">
-      <div class="hotel-top">
+      <div class="hotel-top" style="background:linear-gradient(135deg,${cityCol}dd,${cityCol}99)">
         <div class="hotel-ico">${h.type}</div>
-        <div style="flex:1"><div class="hotel-name">${h.name}</div><div class="hotel-loc">📍 ${h.area||'—'}</div></div>
+        <div style="flex:1;min-width:0">
+          <div class="hotel-name" style="font-size:13px">${h.name}</div>
+          <div class="hotel-loc">📍 ${h.area||'—'} · ${h.nights} לילות</div>
+        </div>
         <div class="hotel-dates-badge">${h.ci} → ${h.co}</div>
       </div>
       <div class="hotel-body">
-        <div class="hotel-row"><span class="hotel-row-l">לילות</span><span class="hotel-row-v">${h.nights}</span></div>
-        ${h.addr?`<div class="hotel-row"><span class="hotel-row-l">כתובת</span><span class="hotel-row-v" style="font-size:11px">${h.addr}</span></div>`:''}
-        ${h.price?`<div class="hotel-row"><span class="hotel-row-l">מחיר/לילה</span><span class="hotel-row-v">¥${parseInt(h.price).toLocaleString()}</span></div>`:''}
-        ${h.price?`<div class="hotel-row"><span class="hotel-row-l">סה"כ</span><span class="hotel-row-v" style="color:var(--pink)">${tp}</span></div>`:''}
-        ${h.note?`<div class="hotel-row"><span class="hotel-row-l">הערה</span><span class="hotel-row-v" style="font-size:11px">${h.note}</span></div>`:''}
-        <div style="display:flex;gap:7px;margin-top:10px"><button onclick="editHotel(${h.id})" style="background:#e0e7ff;border:1px solid #c7d2fe;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;color:#3730a3;cursor:pointer;font-family:Heebo,sans-serif">✏️ ערוך</button><button class="hotel-del" onclick="delHotel(${h.id})">🗑 מחק</button></div>
+        <div class="hotel-row">
+          <span class="hotel-row-l">💰 מחיר</span>
+          <span class="hotel-row-v" style="font-size:11px;color:${pricePerNight?'var(--pink)':'var(--gray2)'}">${priceDisp}</span>
+        </div>
+        ${h.note?`<div class="hotel-row"><span class="hotel-row-l">📋 הערה</span><span class="hotel-row-v" style="font-size:11px">${h.note}</span></div>`:''}
+        ${h.addr?`<div class="hotel-row"><span class="hotel-row-l">📍 כתובת</span><span class="hotel-row-v" style="font-size:11px">${h.addr}</span></div>`:''}
+        <div style="display:flex;gap:7px;margin-top:10px;align-items:center">
+          <input id="hp-${h.id}" type="number" placeholder="הכנס מחיר ¥/לילה" value="${pricePerNight||''}"
+            style="flex:1;border:1px solid var(--gray3);border-radius:8px;padding:6px 10px;font-size:11px;font-family:Heebo,sans-serif;direction:rtl;outline:none"
+            onfocus="this.style.borderColor='var(--pink)'" onblur="this.style.borderColor='var(--gray3)'">
+          <button onclick="saveHotelPrice(${h.id})" style="background:var(--green);color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:Heebo,sans-serif;flex-shrink:0">💾 שמור מחיר</button>
+          <button onclick="editHotel(${h.id})" style="background:#e0e7ff;border:1px solid #c7d2fe;border-radius:8px;padding:6px 10px;font-size:11px;font-weight:700;color:#3730a3;cursor:pointer;font-family:Heebo,sans-serif">✏️</button>
+          <button class="hotel-del" onclick="delHotel(${h.id})">🗑</button>
+        </div>
       </div>
     </div>`;
   }).join('');
 }
+
+function saveHotelPrice(id){
+  const inp=document.getElementById('hp-'+id);
+  if(!inp) return;
+  const price=inp.value.trim();
+  const updated=(hotels||[]).map(h=>{
+    if(!h||h.id!==id) return h;
+    return {...h, price};
+  });
+  save('hotels', updated);
+  toast('✅ מחיר נשמר!');
+}
+
+
 
 // BUDGET
 function toILS(a,c){return a*(TOILS[c]||1);}

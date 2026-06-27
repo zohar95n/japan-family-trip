@@ -154,7 +154,7 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--navy);direc
 .act-name{font-size:13px;font-weight:600;color:var(--navy);line-height:1.4}
 .act-name.visited{text-decoration:line-through;color:var(--gray2)}
 .act-note{font-size:11px;color:var(--gray2);margin-top:2px}
-.act-actions{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap}
+.act-actions{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap;align-items:center}
 .act-btn{display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:700;border:none;cursor:pointer;font-family:'Heebo',sans-serif;transition:all 0.15s}
 .act-btn-visit{background:#d1fae5;color:#065f46}
 .act-btn-visit.done{background:#065f46;color:#fff}
@@ -338,6 +338,23 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--navy);direc
 .planner-add-inp:focus{border-color:var(--pink)}
 .planner-add-btn{background:var(--pink);color:#fff;border:none;border-radius:7px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:Heebo,sans-serif}
 .planner-time-lbl{font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;margin-bottom:6px;display:inline-block}
+
+/* VISIT CIRCLE */
+.visit-circle{width:22px;height:22px;border-radius:50%;border:2px solid var(--gray3);background:#fff;cursor:pointer;font-size:13px;font-weight:800;color:transparent;display:flex;align-items:center;justify-content:center;transition:all 0.15s;flex-shrink:0;padding:0;line-height:1}
+.visit-circle.done{background:#10b981;border-color:#10b981;color:#fff}
+.visit-circle:hover:not(.done){border-color:#10b981;background:#f0fdf4}
+
+/* ACT HIGHLIGHT */
+.act-item.highlight .act-name{font-weight:800}
+.act-btn-highlight{background:#fef3c7;color:#d97706;border:1px solid #fde68a}
+.act-btn-highlight.on{background:#f59e0b;color:#fff;border-color:#f59e0b}
+
+/* PLANNER SOURCE PILLS */
+.planner-source-pill{background:#fff;border:1px solid var(--gray3);border-radius:20px;padding:4px 10px;font-size:11px;font-weight:600;color:var(--navy);white-space:nowrap;cursor:grab;transition:all 0.15s}
+.planner-source-pill:hover{border-color:var(--pink);color:var(--pink);background:#fce4ec}
+.planner-source-pill:active{cursor:grabbing}
+.planner-item[draggable='true']{cursor:grab}
+.planner-item[draggable='true']:active{cursor:grabbing;opacity:0.7}
 /* LOADING */
 .loading{text-align:center;padding:50px 20px;color:var(--gray2)}
 .spinner{width:32px;height:32px;border:3px solid var(--gray3);border-top-color:var(--pink);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px}
@@ -491,11 +508,13 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--navy);direc
     <div style="background:#eff6ff;margin:16px 16px 8px;border-radius:var(--radius-sm);padding:9px 14px;font-size:11px;color:#1e40af;font-weight:600;border:1px solid #bfdbfe">💱 שערי המרה: 100¥ = ₪2 &nbsp;·&nbsp; $1 = ₪3 &nbsp;·&nbsp; כל הסכומים בשקלים</div>
 
     <!-- SUMMARY CARDS -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 16px 0">
-      <div class="stat-card"><span class="stat-num" id="total-spent">₪0</span><span class="stat-lbl">סה"כ</span></div>
-      <div class="stat-card"><span class="stat-num" id="exp-count" style="font-size:22px">0</span><span class="stat-lbl">רשומות</span></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 16px 4px">
+      <div class="stat-card"><span class="stat-num" id="total-spent">₪0</span><span class="stat-lbl">סה"כ כולל</span></div>
+      <div class="stat-card"><span class="stat-num" id="exp-count" style="font-size:14px;margin-top:4px">0</span><span class="stat-lbl">הוצאות</span></div>
       <div class="stat-card"><span class="stat-num" id="avg-per-day" style="font-size:18px">₪0</span><span class="stat-lbl">ממוצע יומי</span></div>
     </div>
+    <!-- AVERAGES -->
+    <div style="padding:8px 16px 0" id="budget-averages"></div>
 
     <!-- VIEW TOGGLE -->
     <div style="display:flex;gap:7px;padding:12px 16px 0">
@@ -1379,11 +1398,11 @@ function initData(){
   db.ref('rests').once('value').then(s=>{
     if(!s.val()) db.ref('rests').set(R0);
   });
-  // Force update hotels to latest from Gmail
-  db.ref('v10_hotels').once('value').then(s=>{
-    if(!s.val()){
+  // Always update hotels from Gmail on first load if they're missing or outdated
+  db.ref('hotels').once('value').then(s=>{
+    const existing = s.val();
+    if(!existing || !existing.length || !existing.find(h=>h&&h.id===700)){
       db.ref('hotels').set(GMAIL_HOTELS);
-      db.ref('v10_hotels').set(true);
     }
   });
   db.ref('visited').once('value').then(s=>{
@@ -1413,7 +1432,7 @@ function startListeners(){
   });
   db.ref('days').on('value',s=>{DAYS=s.val()||D0;if(loaded){buildDays();buildFilters();renderRests();}});
   db.ref('rests').on('value',s=>{RESTS=s.val()||R0;if(loaded){buildFilters();renderRests();}});
-  db.ref('hotels').on('value',s=>{hotels=s.val()||[];document.getElementById('hdr-hotels').textContent=hotels.length;if(loaded){renderHotels();buildDays();}});
+  db.ref('hotels').on('value',s=>{hotels=s.val()||[];document.getElementById('hdr-hotels').textContent=hotels.length;if(loaded){renderHotels();buildDays();renderBudget();}});
   db.ref('expenses').on('value',s=>{expenses=s.val()||[];if(loaded)renderBudget();});
   db.ref('flights').on('value',s=>{flights=s.val()||[];if(loaded)renderFlights();});
   db.ref('visited').on('value',s=>{visitedActs=s.val()||{};if(loaded)buildDays();});
@@ -1446,27 +1465,36 @@ function parseActText(item){
 
 function buildActItem(item,dayId,slot,idx){
   const {text,note,isNew}=parseActText(item);
-  const key=`${dayId}|${slot}|${idx}`;
-  const vis=visitedActs[key];
+  const key=`${dayId.replace('/','_')}__${slot}__${idx}`;
+  const vis=!!visitedActs[key];
+  const hl=!!highlights[key];
+  const an=actNotes[key]||'';
   const newPill=isNew?'<span class="act-new-tag">חדש</span>':'';
-  const visClass=vis?'visited':'';
-  return `<div class="act-item" id="act-${key.replace(/[|]/g,'-')}">
+  const dotBg=vis?'#10b981':hl?'#f59e0b':'var(--pink)';
+  const hlStyle=hl?'background:linear-gradient(135deg,#fffbeb,#fef3c7);border-radius:8px;padding:5px 8px;border:1px solid rgba(245,158,11,0.25);':'';
+  const hlTag=hl?'<span style="font-size:10px;background:#f59e0b;color:#fff;border-radius:20px;padding:1px 7px;margin-right:4px;font-weight:700">⭐ חובה</span>':'';
+  const noteHtml=an?`<div style="font-size:11px;color:#6b7280;margin-top:3px;display:flex;align-items:flex-start;gap:4px;font-style:italic;overflow:hidden;white-space:nowrap;text-overflow:ellipsis"><span style="flex-shrink:0">📝</span><span>${an}</span></div>`:'';
+  return `<div class="act-item${hl?' highlight':''}" id="act-${key}">
     <div class="act-dot-wrap">
-      <div class="act-dot" style="background:${vis?'#10b981':'var(--pink)'}"></div>
+      <div class="act-dot" style="background:${dotBg};transition:background 0.2s"></div>
     </div>
-    <div class="act-content">
-      <div class="act-name ${visClass}">${newPill}${text}</div>
-      ${note?`<div class="act-note">${note}</div>`:''}
+    <div class="act-content" style="${hlStyle}">
+      ${hlTag}<span class="act-name${vis?' visited':''}">${newPill}${text}</span>
+      ${noteHtml}
       <div class="act-actions">
-        <button class="act-btn act-btn-visit ${vis?'done':''}" onclick="toggleVisited('${key}')">
-          ${vis?'✅ ביקרנו':'○ סמן ביקור'}
+        <button class="visit-circle${vis?' done':''}" onclick="toggleVisited('${key}')" title="${vis?'לחץ לביטול':'סמן ביקור'}">
+          ${vis?'✓':''}
         </button>
-        <button class="act-btn act-btn-edit" onclick="openEditAct('${dayId}','${slot}',${idx},'${text.replace(/'/g,"'")}','${note.replace(/'/g,"'")}')">✏️</button>
+        <button class="act-btn${hl?' act-btn-highlight on':' act-btn-highlight'}" onclick="toggleHighlight('${dayId}','${slot}',${idx})" title="סמן כחובה">⭐</button>
+        <button class="act-btn act-btn-note" onclick="saveActNote('${dayId}','${slot}',${idx})" title="הוסף הערה">📝</button>
+        <button class="act-btn act-btn-edit" onclick="openEditAct('${dayId}','${slot}',${idx},'${text.replace(/'/g,String.fromCharCode(39))}','${an.replace(/'/g,String.fromCharCode(39))}')">✏️</button>
         <button class="act-btn act-btn-del" onclick="deleteAct('${dayId}','${slot}',${idx})">🗑</button>
       </div>
     </div>
   </div>`;
 }
+
+
 
 function buildTimeSec(icon,lbl,items,dayId,slot){
   if(!items||!items.length)return'';
@@ -1774,7 +1802,7 @@ function addHotel(){
   ['ht-name','ht-area','ht-addr','ht-price','ht-note'].forEach(id=>document.getElementById(id).value='');
   closeModal('modal-hotel');toast('✅ מלון נוסף ונשמר!');
 }
-function delHotel(id){if(!confirm('למחוק?'))return;save('hotels',(hotels||[]).filter(h=>h&&h.id!==id));toast('🗑 מלון נמחק');}
+function delHotel(id){if(!confirm('למחוק?'))return;save('hotels',(hotels||[]).filter(h=>h&&h.id!==id));toast('🗑 מלון נמחק');setTimeout(()=>renderBudget(),500);}
 function renderHotels(){
   const v=(hotels||[]).filter(Boolean).sort((a,b)=>d2i(a.ci)-d2i(b.ci));
   if(!v.length){document.getElementById('hotel-list').innerHTML='<div style="text-align:center;color:var(--gray2);padding:40px 20px;font-size:13px">עדיין לא הוספת מלונות 🏨</div>';return;}
@@ -1818,24 +1846,71 @@ function addExpense(){
 function delExpense(id){save('expenses',(expenses||[]).filter(e=>e&&e.id!==id));}
 function renderBudget(){
   const all=(expenses||[]).filter(Boolean);
-  const tot=all.reduce((s,e)=>s+(e.amt||0),0);
-  const daysWithExp=new Set(all.map(e=>e.day)).size||1;
+  const hotelList=(hotels||[]).filter(Boolean);
+
+  // Calculate hotel costs from hotel entries (¥ → ILS)
+  const hotelExpenses=hotelList.filter(h=>h.price&&parseInt(h.price)>0).map(h=>({
+    id:'hotel_'+h.id, desc:h.name, amt:parseInt(h.price)*h.nights*0.02,
+    origAmt:parseInt(h.price)*h.nights, origCur:'JPY',
+    cat:'hotel', day:h.ci, e:'🏨', fromHotel:true
+  }));
+
+  // Merged for display totals (expenses + hotel derived)
+  const allWithHotels=[...all, ...hotelExpenses];
+  const tot=allWithHotels.reduce((s,e)=>s+(e.amt||0),0);
+  const manualTot=all.reduce((s,e)=>s+(e.amt||0),0);
+
+  // Averages
+  const totalNights=16;
+  const totalDays=16;
+  const foodExp=all.filter(e=>e.cat==='food');
+  const foodTot=foodExp.reduce((s,e)=>s+(e.amt||0),0);
+  const foodDays=new Set(foodExp.map(e=>e.day)).size||1;
+  const hotelTot=hotelExpenses.reduce((s,e)=>s+(e.amt||0),0);
+  const avgPerNight=totalNights>0?hotelTot/totalNights:0;
+  const avgFoodPerDay=foodDays>0?foodTot/foodDays:0;
+  const avgDailyTotal=totalDays>0?tot/totalDays:0;
+
+  // Update summary cards
   document.getElementById('total-spent').textContent=fmtILS(tot);
-  document.getElementById('exp-count').textContent=all.length;
+  document.getElementById('exp-count').textContent=all.length+' ידניות';
   const avgEl=document.getElementById('avg-per-day');
-  if(avgEl)avgEl.textContent=all.length?fmtILS(tot/daysWithExp):'₪0';
-  
-  // Category cards (always show all)
+  if(avgEl)avgEl.textContent=fmtILS(avgDailyTotal);
+
+  // Add averages section
+  const avgSection=document.getElementById('budget-averages');
+  if(avgSection){
+    avgSection.innerHTML=`
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px">
+        <div class="stat-card" style="padding:10px 6px">
+          <span class="stat-num" style="font-size:16px">${fmtILS(avgPerNight)}</span>
+          <span class="stat-lbl">ממוצע ללילה 🏨</span>
+        </div>
+        <div class="stat-card" style="padding:10px 6px">
+          <span class="stat-num" style="font-size:16px">${fmtILS(avgFoodPerDay)}</span>
+          <span class="stat-lbl">ממוצע אוכל יומי 🍜</span>
+        </div>
+        <div class="stat-card" style="padding:10px 6px">
+          <span class="stat-num" style="font-size:16px">${fmtILS(avgDailyTotal)}</span>
+          <span class="stat-lbl">ממוצע יומי כולל</span>
+        </div>
+      </div>
+      <div style="font-size:10px;color:var(--gray2);margin-top:6px">* כולל מלונות (¥→₪ לפי 100¥=₪2) · ${totalNights} לילות · ${totalDays} ימים</div>
+    `;
+  }
+
+  // Category cards (all expenses including hotels)
   document.getElementById('cat-grid').innerHTML=CATS.map(cat=>{
-    const t=all.filter(e=>e.cat===cat.id).reduce((s,e)=>s+(e.amt||0),0);
+    const t=allWithHotels.filter(e=>e.cat===cat.id).reduce((s,e)=>s+(e.amt||0),0);
     return`<div class="cat-card${t>0?' act':''}"><span class="cat-ico">${cat.e}</span><div class="cat-name">${cat.n}</div><div class="cat-total">${t>0?fmtILS(t):'—'}</div></div>`;
   }).join('');
-  
-  // Filter for list
+
+  // Filter for list (manual expenses only for editing)
   const v=activeCatFilter==='all'?all:all.filter(e=>e.cat===activeCatFilter);
   const filterLbl=document.getElementById('exp-filter-lbl');
-  if(filterLbl)filterLbl.textContent=activeCatFilter!=='all'?`מסנן: ${CATS.find(c=>c.id===activeCatFilter)?.n||''} (${v.length})`:`${all.length} הוצאות`;
-  // Day breakdown uses ALL expenses (not filtered)
+  if(filterLbl)filterLbl.textContent=activeCatFilter!=='all'?`${CATS.find(ct=>ct.id===activeCatFilter)?.n||''} (${v.length})`:`${all.length} הוצאות ידניות`;
+
+  // Day breakdown (manual expenses)
   const dm={};all.forEach(e=>{dm[e.day]=(dm[e.day]||0)+(e.amt||0);});
   const dk=Object.keys(dm).sort();
   const mx=dk.length?Math.max(...dk.map(k=>dm[k])):1;
@@ -1866,15 +1941,32 @@ function renderBudget(){
             </div>`;
           }).join('')}
         </div>`;
-      }).join('')+`<div style="display:flex;justify-content:space-between;padding:10px 0 2px;font-size:13px;font-weight:800;border-top:2px solid var(--gray3);margin-top:4px"><span>סה"כ</span><span style="color:var(--pink)">${fmtILS(tot)}</span></div>`;
+      }).join('')+`<div style="display:flex;justify-content:space-between;padding:10px 0 2px;font-size:13px;font-weight:800;border-top:2px solid var(--gray3);margin-top:4px"><span>סה"כ ידני</span><span style="color:var(--pink)">${fmtILS(manualTot)}</span></div>`;
   }
-  if(!v.length){document.getElementById('exp-list').innerHTML='<div style="text-align:center;color:var(--gray2);font-size:12px;padding:16px">הוסף את ההוצאה הראשונה!</div>';return;}
+
+  // Hotel costs section
+  const hotelBreakEl=document.getElementById('hotel-cost-breakdown');
+  if(hotelBreakEl&&hotelList.length){
+    const sorted=hotelList.filter(h=>h.price&&parseInt(h.price)>0).sort((a,b)=>d2i(a.ci)-d2i(b.ci));
+    hotelBreakEl.innerHTML=sorted.length?sorted.map(h=>{
+      const tot2=parseInt(h.price)*h.nights*0.02;
+      return`<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--gray3);font-size:12px">
+        <span style="font-size:15px">${h.type}</span>
+        <div style="flex:1;min-width:0"><div style="font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${h.name}</div>
+        <div style="font-size:10px;color:var(--gray2)">${h.ci}→${h.co} · ${h.nights} לילות · ¥${parseInt(h.price).toLocaleString()}/לילה</div></div>
+        <span style="font-weight:800;color:var(--pink);flex-shrink:0">${fmtILS(tot2)}</span>
+      </div>`;
+    }).join('')+`<div style="display:flex;justify-content:space-between;padding:8px 0 2px;font-size:13px;font-weight:800;border-top:2px solid var(--gray3);margin-top:2px">
+      <span>סה"כ מלונות</span><span style="color:var(--pink)">${fmtILS(hotelTot)}</span>
+    </div>`:'<div style="text-align:center;color:var(--gray2);font-size:12px;padding:8px">הוסף מחיר למלונות כדי לראות עלויות</div>';
+  }
+
+  // Expense list
   if(!v.length){
-    document.getElementById('exp-list').innerHTML='<div style="text-align:center;color:var(--gray2);font-size:12px;padding:16px">'+
-      (activeCatFilter!=='all'?'אין הוצאות בקטגוריה זו':'הוסף את ההוצאה הראשונה!')+'</div>';
+    document.getElementById('exp-list').innerHTML='<div style="text-align:center;color:var(--gray2);font-size:12px;padding:16px">'+(activeCatFilter!=='all'?'אין הוצאות בקטגוריה זו':'הוסף את ההוצאה הראשונה!')+'</div>';
   } else {
     document.getElementById('exp-list').innerHTML=v.slice().reverse().map(ex=>{
-      const co=CATS.find(c=>c.id===ex.cat)||CATS[0];
+      const co=CATS.find(ct=>ct.id===ex.cat)||CATS[0];
       const orig=ex.origCur&&ex.origCur!=='ILS'?` <span style="font-size:10px;color:var(--gray2)">(${ex.origCur==='JPY'?'¥':'$'}${Number(ex.origAmt).toLocaleString()})</span>`:'';
       return`<div class="exp-list-row">
         <span style="font-size:16px;width:24px;text-align:center">${ex.e}</span>
@@ -2200,13 +2292,13 @@ let mustRests = {};  // {restId: true}
 let dayPlans = {};   // {dayId: {morning:[],afternoon:[],evening:[]}}
 
 function toggleHighlight(dayId, slot, idx){
-  const key = `${dayId}|${slot}|${idx}`;
+  const key = `${dayId.replace("/","_")}__${slot}__${idx}`;
   highlights[key] = !highlights[key];
   save('highlights', highlights);
 }
 
 function saveActNote(dayId, slot, idx){
-  const key = `${dayId}|${slot}|${idx}`;
+  const key = `${dayId.replace("/","_")}__${slot}__${idx}`;
   const note = prompt('הוסף הערה לאתר זה:', actNotes[key] || '');
   if(note === null) return; // cancelled
   if(note.trim() === ''){
@@ -2222,43 +2314,124 @@ function toggleMustRest(id){
   save('mustRests', mustRests);
 }
 
+
+// ===== DAY PLANNER DRAG =====
+let _planDragData = null;
+
+function planDragFromDay(event, text){
+  _planDragData = {type:'new', text};
+  event.dataTransfer.effectAllowed='copy';
+}
+
+function planDragStart(event, dayId, slot, idx){
+  _planDragData = {type:'move', dayId, slot, idx};
+  event.dataTransfer.effectAllowed='move';
+}
+
+function planDropSlot(event, dayId, toSlot){
+  event.preventDefault();
+  if(!_planDragData) return;
+  const plan = {...(dayPlans[dayId]||{morning:[],afternoon:[],evening:[]})};
+  if(_planDragData.type==='new'){
+    plan[toSlot] = [...(plan[toSlot]||[]), _planDragData.text];
+  } else if(_planDragData.type==='move' && _planDragData.dayId===dayId){
+    const fromArr = [...(plan[_planDragData.slot]||[])];
+    const item = fromArr.splice(_planDragData.idx, 1)[0];
+    plan[_planDragData.slot] = fromArr;
+    plan[toSlot] = [...(plan[toSlot]||[]), item];
+  }
+  dayPlans[dayId] = plan;
+  save('dayPlans', dayPlans);
+  _planDragData = null;
+}
+
+function planDrop(event, dayId, toSlot, toIdx){
+  event.preventDefault();
+  event.stopPropagation();
+  if(!_planDragData || _planDragData.type!=='move') return;
+  if(_planDragData.dayId!==dayId) return;
+  const plan = {...(dayPlans[dayId]||{morning:[],afternoon:[],evening:[]})};
+  const fromArr = [...(plan[_planDragData.slot]||[])];
+  const item = fromArr.splice(_planDragData.idx, 1)[0];
+  plan[_planDragData.slot] = fromArr;
+  const toArr = [...(plan[toSlot]||[])];
+  toArr.splice(toIdx, 0, item);
+  plan[toSlot] = toArr;
+  dayPlans[dayId] = plan;
+  save('dayPlans', dayPlans);
+  _planDragData = null;
+}
+
 // ===== DAY PLANNER =====
 function buildDayPlanner(dayId) {
   const plan = dayPlans[dayId] || {morning:[], afternoon:[], evening:[]};
+  // Get all activities from the day for drag source
+  const dayObj = (DAYS||[]).find(d=>d&&d.d===dayId);
+  const allActs = [];
+  if(dayObj){
+    ['morning','afternoon','evening'].forEach(slot=>{
+      (dayObj[slot]||[]).forEach((item,i)=>{
+        const txt = typeof item==='object'?item.text:item;
+        if(txt) allActs.push({text:txt.replace(/<[^>]+>/g,'').substring(0,40), slot, idx:i});
+      });
+    });
+  }
+
   const slots = [
-    {k:'morning', ico:'☀️', lbl:'בוקר', col:'#f59e0b'},
-    {k:'afternoon', ico:'🌤️', lbl:'צהריים', col:'#3b82f6'},
-    {k:'evening', ico:'🌙', lbl:'ערב', col:'#8b5cf6'}
+    {k:'morning', ico:'☀️', lbl:'בוקר', col:'#f59e0b', bg:'#fffbeb'},
+    {k:'afternoon', ico:'🌤️', lbl:'צהריים', col:'#3b82f6', bg:'#eff6ff'},
+    {k:'evening', ico:'🌙', lbl:'ערב', col:'#8b5cf6', bg:'#faf5ff'}
   ];
+
   const slotHtml = slots.map(s => {
-    const items = (plan[s.k]||[]).map((item,i) =>
-      `<div class="planner-item">
+    const items = (plan[s.k]||[]);
+    const itemsHtml = items.map((item,i) => {
+      const isFromDay = typeof item==='object' && item.fromDay;
+      return `<div class="planner-item" draggable="true"
+        ondragstart="planDragStart(event,'${dayId}','${s.k}',${i})"
+        ondragover="event.preventDefault()"
+        ondrop="planDrop(event,'${dayId}','${s.k}',${i})">
         <span class="pi-drag">⠿</span>
-        <span style="flex:1;font-size:11px">${item}</span>
+        <span style="flex:1;font-size:11px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">${typeof item==='object'?item.text:item}</span>
         <button class="pi-del" onclick="removePlanItem('${dayId}','${s.k}',${i})">✕</button>
-      </div>`
-    ).join('');
-    return `<div class="planner-slot">
+      </div>`;
+    }).join('');
+
+    return `<div class="planner-slot"
+      style="background:${s.bg};border-color:${s.col}40"
+      ondragover="event.preventDefault()"
+      ondrop="planDropSlot(event,'${dayId}','${s.k}')">
       <div class="planner-slot-lbl" style="color:${s.col}">${s.ico} ${s.lbl}</div>
-      ${items}
+      ${itemsHtml||`<div style="font-size:10px;color:#9ca3af;text-align:center;padding:8px 0">גרור לכאן או הוסף</div>`}
       <div class="planner-add">
-        <input class="planner-add-inp" id="pi-${dayId}-${s.k}" placeholder="הוסף...">
+        <input class="planner-add-inp" id="pi-${dayId.replace('/','_')}-${s.k}" placeholder="הוסף פעילות...">
         <button class="planner-add-btn" onclick="addPlanItem('${dayId}','${s.k}')">+</button>
       </div>
     </div>`;
   }).join('');
 
+  // Activity source pills from the day
+  const sourcePills = allActs.map(a=>
+    `<div class="planner-source-pill" draggable="true"
+      ondragstart="planDragFromDay(event,'${a.text.replace(/'/g,'')}')"
+      style="cursor:grab">${a.text.substring(0,25)}${a.text.length>25?'…':''}</div>`
+  ).join('');
+
   return `<div class="day-planner" id="planner-${dayId.replace('/','_')}">
     <div class="day-planner-hdr" onclick="this.closest('.day-planner').classList.toggle('open')">
-      <div class="day-planner-title">🗓️ תכנון יומי – סדר הפעילויות</div>
+      <div class="day-planner-title">🗓️ תכנון סדר יום (גרור ושחרר)</div>
       <span style="color:rgba(255,255,255,0.4);font-size:13px">›</span>
     </div>
     <div class="day-planner-body">
-      <div style="font-size:11px;color:var(--gray2);margin-bottom:8px">סדר את הפעילויות לפי שעות היום:</div>
+      ${allActs.length?`<div style="margin-bottom:8px">
+        <div style="font-size:10px;font-weight:700;color:var(--gray2);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.8px">גרור פעילויות ביום לתוכנית:</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px">${sourcePills}</div>
+      </div>`:''}
       <div class="planner-slots">${slotHtml}</div>
     </div>
   </div>`;
 }
+
 
 function addPlanItem(dayId, slot){
   const inp = document.getElementById(`pi-${dayId}-${slot}`);

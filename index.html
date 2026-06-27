@@ -303,6 +303,41 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--navy);direc
 .time-opt:first-child{border-left:none}
 .time-opt.on{background:var(--pink);color:#fff}
 
+
+/* ===== HIGHLIGHTS & NOTES ===== */
+.act-item.highlight .act-name{color:#d97706;font-weight:800}
+.act-item.highlight .act-dot{background:#f59e0b;box-shadow:0 0 0 3px rgba(245,158,11,0.25)}
+.act-item.highlight .act-content{background:linear-gradient(135deg,#fffbeb,#fef3c7);border-radius:8px;padding:6px 8px;border:1px solid rgba(245,158,11,0.3)}
+.highlight-star{font-size:11px;margin-left:4px;vertical-align:middle}
+.act-note-text{font-size:11px;color:#6b7280;margin-top:3px;font-style:italic;display:flex;align-items:flex-start;gap:4px}
+.act-note-text::before{content:'📝';font-style:normal;flex-shrink:0}
+.act-btn-highlight{background:#fef3c7;color:#d97706;border:1px solid #f59e0b}
+.act-btn-highlight.on{background:#f59e0b;color:#fff}
+.act-btn-note{background:#f0fdf4;color:#16a34a;border:1px solid #86efac}
+
+/* MANDATORY RESTAURANT */
+.must-badge{background:#e8628a;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:20px;margin-right:4px;vertical-align:middle;text-transform:uppercase;letter-spacing:0.5px}
+.rest-card.must{border-right:4px solid #e8628a}
+.mini-rest-card.must{border-right:3px solid #e8628a}
+
+/* DAY PLANNER */
+.day-planner{margin:0 16px 14px;background:#fff;border:1px solid var(--gray3);border-radius:var(--radius);overflow:hidden}
+.day-planner-hdr{background:linear-gradient(135deg,#1a1a2e,#0f3460);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.day-planner-title{color:#f9a8c9;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:6px}
+.day-planner-body{padding:12px 14px;display:none}
+.day-planner.open .day-planner-body{display:block}
+.planner-slots{display:flex;gap:8px;margin-bottom:10px}
+.planner-slot{flex:1;background:var(--gray4);border-radius:8px;padding:8px;min-height:70px;border:1.5px dashed var(--gray3);transition:all 0.15s}
+.planner-slot-lbl{font-size:10px;font-weight:800;color:var(--gray2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;display:flex;align-items:center;gap:4px}
+.planner-item{background:#fff;border:1px solid var(--gray3);border-radius:6px;padding:5px 8px;margin-bottom:4px;font-size:11px;color:var(--navy);font-weight:600;display:flex;align-items:center;gap:5px;cursor:move}
+.planner-item .pi-drag{color:var(--gray3);font-size:12px;cursor:grab}
+.planner-item .pi-del{background:none;border:none;cursor:pointer;color:var(--gray3);font-size:11px;margin-right:auto}
+.planner-item .pi-del:hover{color:#ef4444}
+.planner-add{display:flex;gap:6px;margin-top:6px}
+.planner-add-inp{flex:1;border:1px solid var(--gray3);border-radius:7px;padding:6px 10px;font-size:11px;font-family:Heebo,sans-serif;direction:rtl;outline:none}
+.planner-add-inp:focus{border-color:var(--pink)}
+.planner-add-btn{background:var(--pink);color:#fff;border:none;border-radius:7px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:Heebo,sans-serif}
+.planner-time-lbl{font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;margin-bottom:6px;display:inline-block}
 /* LOADING */
 .loading{text-align:center;padding:50px 20px;color:var(--gray2)}
 .spinner{width:32px;height:32px;border:3px solid var(--gray3);border-top-color:var(--pink);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px}
@@ -1337,13 +1372,24 @@ const GMAIL_HOTELS = [
 
 // INIT
 function initData(){
-  db.ref('v10_init').once('value').then(s=>{
+  // Smart init: seed content only if missing, NEVER wipe expenses/flights
+  db.ref('days').once('value').then(s=>{
+    if(!s.val()) db.ref('days').set(D0);
+  });
+  db.ref('rests').once('value').then(s=>{
+    if(!s.val()) db.ref('rests').set(R0);
+  });
+  // Force update hotels to latest from Gmail
+  db.ref('v10_hotels').once('value').then(s=>{
     if(!s.val()){
-      db.ref('days').set(D0);db.ref('rests').set(R0);
-      db.ref('hotels').set(GMAIL_HOTELS);db.ref('expenses').set([]);
-      db.ref('flights').set([]);db.ref('visited').set({});db.ref('v10_init').set(true);
+      db.ref('hotels').set(GMAIL_HOTELS);
+      db.ref('v10_hotels').set(true);
     }
   });
+  db.ref('visited').once('value').then(s=>{
+    if(!s.val()) db.ref('visited').set({});
+  });
+  // expenses and flights are NEVER wiped
 }
 
 function startListeners(){
@@ -1351,11 +1397,15 @@ function startListeners(){
   Promise.all([
     db.ref('days').once('value'),db.ref('rests').once('value'),
     db.ref('hotels').once('value'),db.ref('expenses').once('value'),
-    db.ref('visited').once('value'),db.ref('flights').once('value')
-  ]).then(([ds,rs,hs,es,vs,fs])=>{
+    db.ref('visited').once('value'),db.ref('flights').once('value'),
+    db.ref('highlights').once('value'),db.ref('actNotes').once('value'),
+    db.ref('mustRests').once('value'),db.ref('dayPlans').once('value')
+  ]).then(([ds,rs,hs,es,vs,fs,hls,ans,mrs,dps])=>{
     DAYS=ds.val()||D0;RESTS=rs.val()||R0;
     hotels=hs.val()||[];expenses=es.val()||[];
     visitedActs=vs.val()||{};flights=fs.val()||[];
+    highlights=hls.val()||{};actNotes=ans.val()||{};
+    mustRests=mrs.val()||{};dayPlans=dps.val()||{};
     loaded=true;
     buildDays();buildFilters();renderRests();buildTransTab();renderHotels();renderBudget();renderFlights();populateSelects();
     document.getElementById('hdr-hotels').textContent=hotels.length;
@@ -1367,6 +1417,10 @@ function startListeners(){
   db.ref('expenses').on('value',s=>{expenses=s.val()||[];if(loaded)renderBudget();});
   db.ref('flights').on('value',s=>{flights=s.val()||[];if(loaded)renderFlights();});
   db.ref('visited').on('value',s=>{visitedActs=s.val()||{};if(loaded)buildDays();});
+  db.ref('highlights').on('value',s=>{highlights=s.val()||{};if(loaded)buildDays();});
+  db.ref('actNotes').on('value',s=>{actNotes=s.val()||{};if(loaded)buildDays();});
+  db.ref('mustRests').on('value',s=>{mustRests=s.val()||{};if(loaded){renderRests();buildDays();}});
+  db.ref('dayPlans').on('value',s=>{dayPlans=s.val()||{};if(loaded)buildDays();});
 }
 
 // TABS
@@ -1626,6 +1680,7 @@ function buildDays(){
         ${buildDayTrans(d.trans)}
         ${d.note?`<div class="day-note-strip">💡 ${d.note}</div>`:''}
         ${buildDayRests(d.ri)}
+        ${buildDayPlanner(d.d)}
         ${buildDayMapSec(d.d)}
       </div>
     </div>`;
@@ -1663,17 +1718,23 @@ function renderRests(){
   const bg=p=>p==='cheap'?'#d1fae5':p==='mid'?'#fef3c7':'#fee2e2';
   const col=p=>p==='cheap'?'#10b981':p==='mid'?'#f59e0b':'#ef4444';
   if(!f.length){document.getElementById('rest-list').innerHTML='<div style="text-align:center;color:var(--gray2);font-size:12px;padding:30px">אין תוצאות</div>';return;}
-  document.getElementById('rest-list').innerHTML=f.map(r=>`<div class="rest-card">
+  document.getElementById('rest-list').innerHTML=f.map(r=>{
+    const isMust=mustRests[r.id];
+    return `<div class="rest-card${isMust?' must':''}">
     <div class="rest-color-strip" style="background:${col(r.p)}"></div>
     <div class="rest-inner">
       <div class="rest-ico" style="background:${bg(r.p)}">${r.e}</div>
       <div style="flex:1;min-width:0">
-        <div class="rest-name">${r.n}</div>
+        <div class="rest-name">${isMust?'<span class=\"must-badge\">⭐ חובה</span>':''}${r.n}</div>
         <div class="rest-meta">${r.s} · ${r.cl||r.c} · ${r.day}${r.note?' · '+r.note:''}</div>
       </div>
-      <span class="rest-price ${pc(r.p)}">${pe(r.p)}</span>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0">
+        <span class="rest-price ${pc(r.p)}">${pe(r.p)}</span>
+        <button onclick="toggleMustRest(${r.id})" style="background:${isMust?'#e8628a':'#fce4ec'};border:none;border-radius:20px;padding:3px 9px;font-size:10px;font-weight:700;color:${isMust?'#fff':'#e8628a'};cursor:pointer;font-family:Heebo,sans-serif">${isMust?'⭐ חובה':'☆ חובה'}</button>
+      </div>
     </div>
-  </div>`).join('');
+  </div>`;
+  }).join('');
 }
 
 // TRANSPORT TAB
@@ -2128,6 +2189,95 @@ window.addHotel=function(){
   }
 };
 
+
+
+// ===== HIGHLIGHTS & NOTES =====
+// highlights: {dayId|slot|idx: true/false}
+// actNotes: {dayId|slot|idx: "note text"}
+let highlights = {};
+let actNotes = {};
+let mustRests = {};  // {restId: true}
+let dayPlans = {};   // {dayId: {morning:[],afternoon:[],evening:[]}}
+
+function toggleHighlight(dayId, slot, idx){
+  const key = `${dayId}|${slot}|${idx}`;
+  highlights[key] = !highlights[key];
+  save('highlights', highlights);
+}
+
+function saveActNote(dayId, slot, idx){
+  const key = `${dayId}|${slot}|${idx}`;
+  const note = prompt('הוסף הערה לאתר זה:', actNotes[key] || '');
+  if(note === null) return; // cancelled
+  if(note.trim() === ''){
+    delete actNotes[key];
+  } else {
+    actNotes[key] = note.trim();
+  }
+  save('actNotes', actNotes);
+}
+
+function toggleMustRest(id){
+  mustRests[id] = !mustRests[id];
+  save('mustRests', mustRests);
+}
+
+// ===== DAY PLANNER =====
+function buildDayPlanner(dayId) {
+  const plan = dayPlans[dayId] || {morning:[], afternoon:[], evening:[]};
+  const slots = [
+    {k:'morning', ico:'☀️', lbl:'בוקר', col:'#f59e0b'},
+    {k:'afternoon', ico:'🌤️', lbl:'צהריים', col:'#3b82f6'},
+    {k:'evening', ico:'🌙', lbl:'ערב', col:'#8b5cf6'}
+  ];
+  const slotHtml = slots.map(s => {
+    const items = (plan[s.k]||[]).map((item,i) =>
+      `<div class="planner-item">
+        <span class="pi-drag">⠿</span>
+        <span style="flex:1;font-size:11px">${item}</span>
+        <button class="pi-del" onclick="removePlanItem('${dayId}','${s.k}',${i})">✕</button>
+      </div>`
+    ).join('');
+    return `<div class="planner-slot">
+      <div class="planner-slot-lbl" style="color:${s.col}">${s.ico} ${s.lbl}</div>
+      ${items}
+      <div class="planner-add">
+        <input class="planner-add-inp" id="pi-${dayId}-${s.k}" placeholder="הוסף...">
+        <button class="planner-add-btn" onclick="addPlanItem('${dayId}','${s.k}')">+</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  return `<div class="day-planner" id="planner-${dayId.replace('/','_')}">
+    <div class="day-planner-hdr" onclick="this.closest('.day-planner').classList.toggle('open')">
+      <div class="day-planner-title">🗓️ תכנון יומי – סדר הפעילויות</div>
+      <span style="color:rgba(255,255,255,0.4);font-size:13px">›</span>
+    </div>
+    <div class="day-planner-body">
+      <div style="font-size:11px;color:var(--gray2);margin-bottom:8px">סדר את הפעילויות לפי שעות היום:</div>
+      <div class="planner-slots">${slotHtml}</div>
+    </div>
+  </div>`;
+}
+
+function addPlanItem(dayId, slot){
+  const inp = document.getElementById(`pi-${dayId}-${slot}`);
+  if(!inp || !inp.value.trim()) return;
+  const plan = {...(dayPlans[dayId] || {morning:[], afternoon:[], evening:[]})};
+  plan[slot] = [...(plan[slot]||[]), inp.value.trim()];
+  dayPlans[dayId] = plan;
+  save('dayPlans', dayPlans);
+  inp.value = '';
+}
+
+function removePlanItem(dayId, slot, idx){
+  const plan = {...(dayPlans[dayId] || {})};
+  const arr = [...(plan[slot]||[])];
+  arr.splice(idx, 1);
+  plan[slot] = arr;
+  dayPlans[dayId] = plan;
+  save('dayPlans', dayPlans);
+}
 
 // MODAL TITLE HELPERS
 function setModalTitle(elId, title, modalId){

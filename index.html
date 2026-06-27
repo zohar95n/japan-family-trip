@@ -355,6 +355,12 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--navy);direc
 .planner-source-pill:active{cursor:grabbing}
 .planner-item[draggable='true']{cursor:grab}
 .planner-item[draggable='true']:active{cursor:grabbing;opacity:0.7}
+
+/* DRAG OVER */
+.ps-slot{border:1.5px dashed #d1d5db;border-radius:9px;padding:8px;transition:all 0.15s;min-height:60px}
+.ps-slot.drag-over{border-color:var(--pink);background:rgba(232,98,138,0.05)!important}
+.ps-item{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--gray3);border-radius:6px;padding:5px 8px;margin-bottom:4px;cursor:grab;transition:opacity 0.15s;font-size:11px}
+.ps-item:active{cursor:grabbing}
 /* LOADING */
 .loading{text-align:center;padding:50px 20px;color:var(--gray2)}
 .spinner{width:32px;height:32px;border:3px solid var(--gray3);border-top-color:var(--pink);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px}
@@ -1357,7 +1363,7 @@ const TYPE_LABEL={tokyo:'טוקיו',hakone:'האקונה',alps:'האלפים',k
 let DAYS=[],RESTS=[],hotels=[],expenses=[],visitedActs={};
 let pF='all',lF='all',dF='all';
 let placeSlot='morning',placeType='⛩️';
-let nextId=600,loaded=false;
+let nextId=Date.now(),loaded=false;
 
 // SYNC
 function setSync(s){const dot=document.getElementById('sync-dot'),txt=document.getElementById('sync-txt');if(s==='ok'){dot.className='sync-dot';txt.textContent='מחובר – כל השינויים נשמרים';}else if(s==='sync'){dot.className='sync-dot sync';txt.textContent='שומר...';}else{dot.className='sync-dot off';txt.textContent='לא מחובר';}}
@@ -1398,13 +1404,8 @@ function initData(){
   db.ref('rests').once('value').then(s=>{
     if(!s.val()) db.ref('rests').set(R0);
   });
-  // Always update hotels from Gmail on first load if they're missing or outdated
-  db.ref('hotels').once('value').then(s=>{
-    const existing = s.val();
-    if(!existing || !existing.length || !existing.find(h=>h&&h.id===700)){
-      db.ref('hotels').set(GMAIL_HOTELS);
-    }
-  });
+  // ALWAYS force-update hotels from Gmail data (includes the b asakusa + Sunroute)
+  db.ref('hotels').set(GMAIL_HOTELS);
   db.ref('visited').once('value').then(s=>{
     if(!s.val()) db.ref('visited').set({});
   });
@@ -1425,6 +1426,13 @@ function startListeners(){
     visitedActs=vs.val()||{};flights=fs.val()||[];
     highlights=hls.val()||{};actNotes=ans.val()||{};
     mustRests=mrs.val()||{};dayPlans=dps.val()||{};
+    // Set nextId above all existing IDs to prevent duplicates
+    const allIds=[
+      ...(expenses||[]).map(e=>e&&e.id||0),
+      ...(flights||[]).map(f=>f&&f.id||0),
+      ...(hotels||[]).map(h=>h&&h.id||0)
+    ];
+    if(allIds.length) nextId=Math.max(...allIds)+1;
     loaded=true;
     buildDays();buildFilters();renderRests();buildTransTab();renderHotels();renderBudget();renderFlights();populateSelects();
     document.getElementById('hdr-hotels').textContent=hotels.length;
@@ -2316,138 +2324,188 @@ function toggleMustRest(id){
 
 
 // ===== DAY PLANNER DRAG =====
-let _planDragData = null;
+let _dragSrc = null;
 
 function planDragFromDay(event, text){
-  _planDragData = {type:'new', text};
+  _dragSrc = {type:'new', text};
   event.dataTransfer.effectAllowed='copy';
+  event.dataTransfer.setData('text/plain', text);
 }
 
 function planDragStart(event, dayId, slot, idx){
-  _planDragData = {type:'move', dayId, slot, idx};
+  _dragSrc = {type:'move', dayId, slot, idx};
   event.dataTransfer.effectAllowed='move';
+  event.dataTransfer.setData('text/plain', '');
+  event.currentTarget.style.opacity='0.5';
+}
+
+function planDragEnd(event){
+  event.currentTarget.style.opacity='1';
+}
+
+function planDragOver(event){
+  event.preventDefault();
+  event.dataTransfer.dropEffect=_dragSrc&&_dragSrc.type==='new'?'copy':'move';
+  const slot=event.currentTarget.closest('.ps-slot');
+  if(slot) slot.classList.add('drag-over');
+}
+
+function planDragLeave(event){
+  const slot=event.currentTarget.closest('.ps-slot');
+  if(slot) slot.classList.remove('drag-over');
 }
 
 function planDropSlot(event, dayId, toSlot){
   event.preventDefault();
-  if(!_planDragData) return;
-  const plan = {...(dayPlans[dayId]||{morning:[],afternoon:[],evening:[]})};
-  if(_planDragData.type==='new'){
-    plan[toSlot] = [...(plan[toSlot]||[]), _planDragData.text];
-  } else if(_planDragData.type==='move' && _planDragData.dayId===dayId){
-    const fromArr = [...(plan[_planDragData.slot]||[])];
-    const item = fromArr.splice(_planDragData.idx, 1)[0];
-    plan[_planDragData.slot] = fromArr;
-    plan[toSlot] = [...(plan[toSlot]||[]), item];
+  event.stopPropagation();
+  const el=event.currentTarget.closest('.ps-slot');
+  if(el) el.classList.remove('drag-over');
+  if(!_dragSrc) return;
+  const plan = JSON.parse(JSON.stringify(dayPlans[dayId]||{morning:[],afternoon:[],evening:[]}));
+  if(!plan.morning) plan.morning=[];
+  if(!plan.afternoon) plan.afternoon=[];
+  if(!plan.evening) plan.evening=[];
+  if(_dragSrc.type==='new'){
+    plan[toSlot].push(_dragSrc.text);
+  } else if(_dragSrc.type==='move'){
+    const fromArr=plan[_dragSrc.slot];
+    const [item]=fromArr.splice(_dragSrc.idx,1);
+    plan[toSlot].push(item);
   }
-  dayPlans[dayId] = plan;
-  save('dayPlans', dayPlans);
-  _planDragData = null;
+  dayPlans[dayId]=plan;
+  save('dayPlans',dayPlans);
+  _dragSrc=null;
 }
 
-function planDrop(event, dayId, toSlot, toIdx){
+function planDropBefore(event, dayId, toSlot, toIdx){
   event.preventDefault();
   event.stopPropagation();
-  if(!_planDragData || _planDragData.type!=='move') return;
-  if(_planDragData.dayId!==dayId) return;
-  const plan = {...(dayPlans[dayId]||{morning:[],afternoon:[],evening:[]})};
-  const fromArr = [...(plan[_planDragData.slot]||[])];
-  const item = fromArr.splice(_planDragData.idx, 1)[0];
-  plan[_planDragData.slot] = fromArr;
-  const toArr = [...(plan[toSlot]||[])];
-  toArr.splice(toIdx, 0, item);
-  plan[toSlot] = toArr;
-  dayPlans[dayId] = plan;
-  save('dayPlans', dayPlans);
-  _planDragData = null;
+  if(!_dragSrc||_dragSrc.type!=='move'||_dragSrc.dayId!==dayId) return;
+  const plan=JSON.parse(JSON.stringify(dayPlans[dayId]||{morning:[],afternoon:[],evening:[]}));
+  const fromArr=plan[_dragSrc.slot];
+  const [item]=fromArr.splice(_dragSrc.idx,1);
+  const actualIdx=(toSlot===_dragSrc.slot&&toIdx>_dragSrc.idx)?toIdx-1:toIdx;
+  plan[toSlot].splice(actualIdx,0,item);
+  dayPlans[dayId]=plan;
+  save('dayPlans',dayPlans);
+  _dragSrc=null;
 }
 
 // ===== DAY PLANNER =====
 function buildDayPlanner(dayId) {
-  const plan = dayPlans[dayId] || {morning:[], afternoon:[], evening:[]};
-  // Get all activities from the day for drag source
-  const dayObj = (DAYS||[]).find(d=>d&&d.d===dayId);
-  const allActs = [];
+  const plan = dayPlans[dayId]||{morning:[],afternoon:[],evening:[]};
+  const dayObj=(DAYS||[]).find(d=>d&&d.d===dayId);
+  
+  // Collect source activities from the day
+  const srcActs=[];
   if(dayObj){
     ['morning','afternoon','evening'].forEach(slot=>{
-      (dayObj[slot]||[]).forEach((item,i)=>{
-        const txt = typeof item==='object'?item.text:item;
-        if(txt) allActs.push({text:txt.replace(/<[^>]+>/g,'').substring(0,40), slot, idx:i});
+      (dayObj[slot]||[]).forEach((item)=>{
+        const raw=typeof item==='object'?item.text:item;
+        const txt=raw?raw.replace(/<[^>]+>/g,'').replace(/[🌟⛩️🛍️🎭🌉🎡📍🏛️🌿]/g,'').trim():'';
+        if(txt&&txt.length>2) srcActs.push(txt.substring(0,35)+(txt.length>35?'…':''));
       });
     });
   }
 
-  const slots = [
-    {k:'morning', ico:'☀️', lbl:'בוקר', col:'#f59e0b', bg:'#fffbeb'},
-    {k:'afternoon', ico:'🌤️', lbl:'צהריים', col:'#3b82f6', bg:'#eff6ff'},
-    {k:'evening', ico:'🌙', lbl:'ערב', col:'#8b5cf6', bg:'#faf5ff'}
+  const slots=[
+    {k:'morning',ico:'☀️',lbl:'בוקר',col:'#f59e0b',bg:'rgba(245,158,11,0.06)'},
+    {k:'afternoon',ico:'🌤️',lbl:'צהריים',col:'#3b82f6',bg:'rgba(59,130,246,0.06)'},
+    {k:'evening',ico:'🌙',lbl:'ערב',col:'#8b5cf6',bg:'rgba(139,92,246,0.06)'}
   ];
 
-  const slotHtml = slots.map(s => {
-    const items = (plan[s.k]||[]);
-    const itemsHtml = items.map((item,i) => {
-      const isFromDay = typeof item==='object' && item.fromDay;
-      return `<div class="planner-item" draggable="true"
+  // Build timeline display
+  const timelineItems=[];
+  slots.forEach(s=>{
+    (plan[s.k]||[]).forEach((item,i)=>{
+      timelineItems.push({slot:s.k,ico:s.ico,col:s.col,text:typeof item==='object'?item.text:item,idx:i,lbl:s.lbl});
+    });
+  });
+
+  const timelineHtml=timelineItems.length?
+    `<div style="margin-bottom:12px">
+      <div style="font-size:10px;font-weight:800;color:var(--gray2);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">📋 תוכנית היום לפי סדר</div>
+      ${timelineItems.map((item,i)=>`
+        <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:4px">
+          <div style="display:flex;flex-direction:column;align-items:center;width:28px;flex-shrink:0">
+            <div style="width:26px;height:26px;border-radius:50%;background:${item.col}18;border:2px solid ${item.col};display:flex;align-items:center;justify-content:center;font-size:11px;z-index:1">${item.ico}</div>
+            ${i<timelineItems.length-1?`<div style="width:2px;height:20px;background:${item.col}40;margin-top:2px"></div>`:''}
+          </div>
+          <div style="flex:1;background:#fff;border:1px solid var(--gray3);border-right:3px solid ${item.col};border-radius:8px;padding:6px 10px;margin-bottom:${i<timelineItems.length-1?'0':'0'}px">
+            <div style="font-size:10px;color:${item.col};font-weight:700;margin-bottom:1px">${item.lbl}</div>
+            <div style="font-size:12px;font-weight:600;color:var(--navy)">${item.text}</div>
+          </div>
+          <button onclick="removePlanItem('${dayId}','${item.slot}',${item.idx})" style="background:none;border:none;cursor:pointer;color:var(--gray3);font-size:12px;padding:6px 2px;flex-shrink:0">✕</button>
+        </div>`).join('')}
+    </div>`:'<div style="text-align:center;color:var(--gray2);font-size:11px;padding:8px 0 12px">גרור פעילויות לכאן לבניית תוכנית היום</div>';
+
+  const slotCols=slots.map(s=>{
+    const items=(plan[s.k]||[]);
+    const itemsHtml=items.map((item,i)=>{
+      const txt=typeof item==='object'?item.text:item;
+      return `<div class="ps-item" draggable="true"
         ondragstart="planDragStart(event,'${dayId}','${s.k}',${i})"
-        ondragover="event.preventDefault()"
-        ondrop="planDrop(event,'${dayId}','${s.k}',${i})">
-        <span class="pi-drag">⠿</span>
-        <span style="flex:1;font-size:11px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">${typeof item==='object'?item.text:item}</span>
+        ondragend="planDragEnd(event)"
+        ondragover="event.preventDefault();event.stopPropagation()"
+        ondrop="planDropBefore(event,'${dayId}','${s.k}',${i})">
+        <span style="color:var(--gray3);cursor:grab;font-size:10px">⠿</span>
+        <span style="flex:1;font-size:11px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">${txt}</span>
         <button class="pi-del" onclick="removePlanItem('${dayId}','${s.k}',${i})">✕</button>
       </div>`;
     }).join('');
 
-    return `<div class="planner-slot"
-      style="background:${s.bg};border-color:${s.col}40"
-      ondragover="event.preventDefault()"
+    return `<div class="ps-slot" style="background:${s.bg};border-color:${s.col}30"
+      ondragover="planDragOver(event)"
+      ondragleave="planDragLeave(event)"
       ondrop="planDropSlot(event,'${dayId}','${s.k}')">
-      <div class="planner-slot-lbl" style="color:${s.col}">${s.ico} ${s.lbl}</div>
-      ${itemsHtml||`<div style="font-size:10px;color:#9ca3af;text-align:center;padding:8px 0">גרור לכאן או הוסף</div>`}
-      <div class="planner-add">
-        <input class="planner-add-inp" id="pi-${dayId.replace('/','_')}-${s.k}" placeholder="הוסף פעילות...">
+      <div style="font-size:10px;font-weight:800;color:${s.col};margin-bottom:6px;display:flex;align-items:center;gap:4px">${s.ico} ${s.lbl}</div>
+      ${itemsHtml||`<div style="font-size:10px;color:#9ca3af;text-align:center;padding:10px 0">גרור לכאן</div>`}
+      <div style="display:flex;gap:5px;margin-top:6px">
+        <input class="planner-add-inp" id="pi-${dayId.replace('/','_')}-${s.k}" placeholder="+ הוסף...">
         <button class="planner-add-btn" onclick="addPlanItem('${dayId}','${s.k}')">+</button>
       </div>
     </div>`;
   }).join('');
 
-  // Activity source pills from the day
-  const sourcePills = allActs.map(a=>
-    `<div class="planner-source-pill" draggable="true"
-      ondragstart="planDragFromDay(event,'${a.text.replace(/'/g,'')}')"
-      style="cursor:grab">${a.text.substring(0,25)}${a.text.length>25?'…':''}</div>`
-  ).join('');
+  const pillsHtml=srcActs.length?
+    `<div style="margin-bottom:10px">
+      <div style="font-size:10px;font-weight:700;color:var(--gray2);margin-bottom:5px">גרור לתכנון ↓</div>
+      <div style="display:flex;flex-wrap:wrap;gap:5px">
+        ${srcActs.map(a=>`<div class="planner-source-pill" draggable="true"
+          ondragstart="planDragFromDay(event,${JSON.stringify(a)})">${a}</div>`).join('')}
+      </div>
+    </div>`:'';
 
   return `<div class="day-planner" id="planner-${dayId.replace('/','_')}">
     <div class="day-planner-hdr" onclick="this.closest('.day-planner').classList.toggle('open')">
-      <div class="day-planner-title">🗓️ תכנון סדר יום (גרור ושחרר)</div>
+      <div class="day-planner-title">🗓️ תכנון סדר יום${timelineItems.length?` · ${timelineItems.length} פעילויות`:''}</div>
       <span style="color:rgba(255,255,255,0.4);font-size:13px">›</span>
     </div>
     <div class="day-planner-body">
-      ${allActs.length?`<div style="margin-bottom:8px">
-        <div style="font-size:10px;font-weight:700;color:var(--gray2);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.8px">גרור פעילויות ביום לתוכנית:</div>
-        <div style="display:flex;flex-wrap:wrap;gap:5px">${sourcePills}</div>
-      </div>`:''}
-      <div class="planner-slots">${slotHtml}</div>
+      ${pillsHtml}
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:12px">${slotCols}</div>
+      ${timelineHtml}
     </div>
   </div>`;
 }
 
 
 function addPlanItem(dayId, slot){
-  const inp = document.getElementById(`pi-${dayId}-${slot}`);
+  const safeId=dayId.replace('/','_');
+  const inp = document.getElementById('pi-'+safeId+'-'+slot);
   if(!inp || !inp.value.trim()) return;
-  const plan = {...(dayPlans[dayId] || {morning:[], afternoon:[], evening:[]})};
-  plan[slot] = [...(plan[slot]||[]), inp.value.trim()];
+  const plan = JSON.parse(JSON.stringify(dayPlans[dayId]||{morning:[],afternoon:[],evening:[]}));
+  if(!plan[slot]) plan[slot]=[];
+  plan[slot].push(inp.value.trim());
   dayPlans[dayId] = plan;
   save('dayPlans', dayPlans);
   inp.value = '';
 }
 
 function removePlanItem(dayId, slot, idx){
-  const plan = {...(dayPlans[dayId] || {})};
-  const arr = [...(plan[slot]||[])];
-  arr.splice(idx, 1);
-  plan[slot] = arr;
+  const plan = JSON.parse(JSON.stringify(dayPlans[dayId]||{morning:[],afternoon:[],evening:[]}));
+  if(!plan[slot]) return;
+  plan[slot].splice(idx,1);
   dayPlans[dayId] = plan;
   save('dayPlans', dayPlans);
 }

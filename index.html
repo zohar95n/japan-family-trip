@@ -1466,7 +1466,10 @@ function startListeners(){
     ];
     if(allIds.length) nextId=Math.max(...allIds)+1;
     loaded=true;
-    buildDays();buildFilters();renderRests();buildTransTab();renderHotels();renderBudget();renderFlights();populateSelects();
+    // Run each tab build independently — one failure won't block the others
+    [buildDays,buildFilters,renderRests,buildTransTab,renderHotels,renderBudget,renderFlights,populateSelects].forEach(fn=>{
+      try{fn();}catch(e){console.error('Tab render failed:',fn.name,e);}
+    });
     document.getElementById('hdr-hotels').textContent=hotels.length;
     document.getElementById('ov-rests').textContent=(RESTS||[]).filter(Boolean).length;
   });
@@ -1925,7 +1928,14 @@ function renderRests(){
 function buildTransTab(){
   const tc=k=>k==='shin'?'tc-shin':k==='bus'?'tc-bus':'tc-train';
   const tl=k=>k==='shin'?'🚄 שינקנסן':k==='bus'?'🚌 אוטובוס':'🚃 רכבת';
-  document.getElementById('trans-list').innerHTML=TRANS_LIST.map(t=>`<div class="trans-card">
+  // Build the transport list from the days' trans segments (dedup by from+to+kind)
+  const seen=new Set();
+  const transList=(DAYS||[]).filter(Boolean).flatMap(d=>d.trans||[]).filter(t=>{
+    const key=t.f+'|'+t.t+'|'+t.k;
+    if(seen.has(key))return false;
+    seen.add(key);return true;
+  });
+  document.getElementById('trans-list').innerHTML=transList.map(t=>`<div class="trans-card">
     <div class="trans-route">
       <span class="trans-city">${t.f}</span>
       <span class="trans-arrow">→</span>

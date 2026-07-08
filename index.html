@@ -3,371 +3,323 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>🌸 יפן 2026 -- משפחת זוהר</title>
+<title>🌸 יפן 2026 – משפחת זוהר</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap');
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --pink:#e8628a;--pink-light:#fce4ec;--pink-dark:#c2185b;
-  --navy:#1a1a2e;--navy2:#16213e;
-  --gold:#f59e0b;--gold-light:#fef3c7;
-  --green:#10b981;--green-light:#d1fae5;
-  --blue:#3b82f6;--blue-light:#dbeafe;
-  --gray:#6b7280;--gray2:#9ca3af;--gray3:#e5e7eb;--gray4:#f9fafb;
-  --white:#ffffff;--bg:#f8f7f5;
-  --radius:16px;--radius-sm:10px;
-  --shadow:0 2px 12px rgba(0,0,0,0.08);
-  --shadow-lg:0 8px 32px rgba(0,0,0,0.12);
-}
-body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--navy);direction:rtl;min-height:100vh;font-size:14px;-webkit-font-smoothing:antialiased}
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
-/* TOAST */
-#toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 20px;border-radius:30px;font-size:12px;font-weight:700;z-index:9999;opacity:0;transition:opacity 0.25s;pointer-events:none;white-space:nowrap;box-shadow:var(--shadow-lg)}
+:root {
+  --purple:     #7C3AED;
+  --purple-mid: #8B5CF6;
+  --purple-soft:#EDE9FE;
+  --purple-text:#5B21B6;
+  --bg:         #F5F4FA;
+  --white:      #FFFFFF;
+  --text1:      #111118;
+  --text2:      #4B4B68;
+  --text3:      #9B9BB8;
+  --sep:        rgba(0,0,0,0.07);
+  --sep2:       rgba(0,0,0,0.12);
+  --green:      #059669;
+  --orange:     #D97706;
+  --red:        #DC2626;
+  --c-tokyo:    #3B82F6;
+  --c-alps:     #F59E0B;
+  --c-kyoto:    #059669;
+  --c-osaka:    #7C3AED;
+  --c-park:     #DC2626;
+  --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:20px; --r-xl:24px; --r-pill:100px;
+  --sh:    0 1px 4px rgba(0,0,0,0.06),0 2px 8px rgba(0,0,0,0.04);
+  --sh-md: 0 4px 16px rgba(0,0,0,0.09),0 1px 4px rgba(0,0,0,0.05);
+  --sh-purple: 0 6px 24px rgba(124,58,237,0.32);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text1);direction:rtl;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+
+#toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--text1);color:#fff;padding:10px 22px;border-radius:var(--r-pill);font-size:13px;font-weight:600;z-index:9999;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,.2)}
 #toast.show{opacity:1}
 
-/* ===== HERO HEADER ===== */
-.hero{background:linear-gradient(135deg,#1a1a2e 0%,#0f3460 50%,#533483 100%);position:relative;overflow:hidden;padding:0}
-.hero-bg{position:absolute;inset:0;opacity:0.06;background-image:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='1'%3E%3Cpath d='M40 0C29 0 20 9 20 20s9 20 20 20 20-9 20-20S51 0 40 0zm0 36c-8.8 0-16-7.2-16-16S31.2 4 40 4s16 7.2 16 16-7.2 16-16 16z'/%3E%3C/g%3E%3C/svg%3E")}
-.hero-content{position:relative;padding:20px 18px 0}
+/* HERO */
+.hero{background:linear-gradient(160deg,#5B21B6 0%,#7C3AED 45%,#8B5CF6 100%);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='400' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='350' cy='40' r='120' fill='rgba(255,255,255,0.05)'/%3E%3Ccircle cx='50' cy='160' r='80' fill='rgba(255,255,255,0.04)'/%3E%3C/svg%3E") no-repeat center/cover;pointer-events:none}
+.hero-content{position:relative;padding:20px 18px 16px}
 .hero-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
-.hero-left{flex:1}
-.trip-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(232,98,138,0.2);border:1px solid rgba(232,98,138,0.4);color:#f9a8c9;padding:4px 12px;border-radius:30px;font-size:10px;font-weight:700;letter-spacing:1.5px;margin-bottom:8px}
-.hero-title{color:#fff;font-size:26px;font-weight:900;line-height:1.1;margin-bottom:4px}
-.hero-title span{color:#f9a8c9}
-.hero-sub{color:rgba(255,255,255,0.5);font-size:12px;font-weight:400}
-.hero-emoji{font-size:52px;line-height:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3))}
+.trip-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.9);padding:5px 13px;border-radius:var(--r-pill);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.hero-title{font-size:30px;font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.5px;margin-top:8px}
+.hero-title em{font-style:normal;color:rgba(255,255,255,0.6)}
+.hero-sub{font-size:13px;color:rgba(255,255,255,0.55);margin-top:4px}
+.hero-flag{font-size:48px;line-height:1;flex-shrink:0}
+.countdown{display:flex;gap:8px;padding:0 18px 18px;overflow-x:auto;scrollbar-width:none}
+.countdown::-webkit-scrollbar{display:none}
+.cd-item{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.15);border-radius:var(--r-md);padding:11px 16px;text-align:center;flex-shrink:0;min-width:72px}
+.cd-num{display:block;font-size:22px;font-weight:800;color:#fff;line-height:1}
+.cd-lbl{display:block;font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px;font-weight:500}
+.sync-row{background:rgba(0,0,0,0.15);padding:5px 18px;display:flex;align-items:center;gap:6px;position:relative}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:#4ADE80;flex-shrink:0}
+.sync-dot.sync{background:#FCD34D;animation:blink 1s infinite}
+.sync-dot.off{background:#F87171}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.sync-txt{font-size:11px;color:rgba(255,255,255,.35);font-weight:500}
 
-/* COUNTDOWN ROW */
-.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:rgba(255,255,255,0.05);border-top:1px solid rgba(255,255,255,0.08);margin-top:4px}
-.cd-item{padding:12px 8px;text-align:center;border-left:1px solid rgba(255,255,255,0.06)}
-.cd-item:last-child{border-left:none}
-.cd-num{color:#f9a8c9;font-size:22px;font-weight:900;line-height:1;display:block}
-.cd-lbl{color:rgba(255,255,255,0.4);font-size:9px;margin-top:2px;display:block;font-weight:500}
-
-/* SYNC */
-.sync-row{background:rgba(0,0,0,0.2);padding:5px 18px;display:flex;align-items:center;gap:7px;border-top:1px solid rgba(255,255,255,0.06)}
-.sync-dot{width:6px;height:6px;border-radius:50%;background:#10b981;flex-shrink:0}
-.sync-dot.sync{background:#f59e0b;animation:blink 1s infinite}
-.sync-dot.off{background:#ef4444}
-.sync-txt{font-size:10px;color:rgba(255,255,255,0.4);font-weight:500}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
-
-/* ===== NAVIGATION ===== */
-.nav-wrap{background:#fff;position:sticky;top:0;z-index:100;box-shadow:0 1px 0 var(--gray3),var(--shadow)}
-.nav{display:flex;overflow-x:auto;scrollbar-width:none;padding:0 4px}
+/* NAV */
+.nav-wrap{background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);position:sticky;top:0;z-index:100;border-bottom:1px solid var(--sep)}
+.nav{display:flex;overflow-x:auto;scrollbar-width:none}
 .nav::-webkit-scrollbar{display:none}
-.nav-btn{flex:none;padding:13px 16px 11px;font-size:11px;font-weight:600;color:var(--gray2);border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all 0.2s;font-family:'Heebo',sans-serif;display:flex;flex-direction:column;align-items:center;gap:3px;position:relative}
-.nav-btn .nav-ico{font-size:16px;line-height:1}
-.nav-btn.on{color:var(--pink);border-bottom-color:var(--pink);font-weight:700}
-.nav-btn:hover:not(.on){color:var(--navy);border-bottom-color:var(--gray3)}
+.nav-btn{flex:1;min-width:56px;padding:10px 4px 9px;font-family:var(--font);font-size:11px;font-weight:600;color:var(--text3);border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;transition:color .15s;-webkit-tap-highlight-color:transparent;position:relative}
+.nav-btn .nav-ico{font-size:20px;line-height:1}
+.nav-btn.on{color:var(--purple);font-weight:700}
+.nav-btn.on::after{content:'';position:absolute;bottom:0;left:25%;right:25%;height:2px;background:var(--purple);border-radius:2px 2px 0 0}
 
-/* ===== PANELS ===== */
-.panel{display:none;padding:0 0 80px}
+/* PANELS */
+.panel{display:none;padding:0 0 100px}
 .panel.on{display:block}
-.section-pad{padding:16px 16px 0}
 .max-w{max-width:680px;margin:0 auto}
+.section-pad{padding:20px 16px 0}
+.sec-hdr{display:flex;align-items:center;justify-content:space-between}
+.sec-title{font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px}
 
-/* ===== SECTION HEADERS ===== */
-.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin:20px 0 10px}
-.sec-title{font-size:11px;font-weight:800;color:var(--gray);text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:6px}
-.sec-title::before{content:'';width:3px;height:14px;background:var(--pink);border-radius:2px;display:inline-block}
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px 16px}
+.stat-card{background:var(--white);border-radius:var(--r-lg);padding:16px 12px;text-align:center;box-shadow:var(--sh)}
+.stat-num{display:block;font-size:28px;font-weight:800;color:var(--purple);line-height:1;letter-spacing:-1px}
+.stat-lbl{display:block;font-size:11px;color:var(--text3);margin-top:3px;font-weight:500}
 
-/* ===== OVERVIEW STATS ===== */
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:16px}
-.stat-card{background:#fff;border-radius:var(--radius);padding:14px 10px;text-align:center;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.04)}
-.stat-num{font-size:28px;font-weight:900;color:var(--pink);line-height:1;display:block}
-.stat-lbl{font-size:10px;color:var(--gray2);margin-top:3px;font-weight:500}
-
-/* ===== ROUTE TIMELINE ===== */
-.route-card{background:#fff;margin:0 16px;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border:1px solid rgba(0,0,0,0.04)}
-.route-row{display:flex;gap:0;padding:0}
-.route-left{width:50px;display:flex;flex-direction:column;align-items:center;padding:16px 0;flex-shrink:0}
-.route-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;border:2px solid #fff;box-shadow:0 0 0 2px currentColor}
-.route-line{width:2px;flex:1;min-height:20px;margin:4px 0;opacity:0.3}
-.route-body{flex:1;padding:14px 14px 14px 0;border-bottom:1px solid var(--gray3)}
+/* ROUTE */
+.route-card{background:var(--white);margin:0 16px;border-radius:var(--r-xl);box-shadow:var(--sh);overflow:hidden}
+.route-row{display:flex}
+.route-left{width:42px;display:flex;flex-direction:column;align-items:center;padding:14px 0;flex-shrink:0}
+.route-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.route-line{width:2px;flex:1;min-height:18px;margin:3px 0;opacity:.2}
+.route-body{flex:1;padding:13px 13px 13px 0;border-bottom:1px solid var(--sep)}
 .route-row:last-child .route-body{border-bottom:none}
-.route-city{font-weight:800;font-size:14px;color:var(--navy)}
-.route-dates{font-size:11px;color:var(--gray2);margin-top:2px;font-weight:400}
-.route-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.route-city{font-weight:700;font-size:15px;color:var(--text1)}
+.route-dates{font-size:12px;color:var(--text3);margin-top:2px}
+.route-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:var(--r-pill)}
+.t-navy{background:#EFF6FF;color:#1D4ED8}.t-green{background:#ECFDF5;color:#065F46}.t-gold{background:#FFFBEB;color:#92400E}.t-pink{background:#FFF1F2;color:#BE123C}.t-dark{background:var(--text1);color:#fff}.t-purple{background:var(--purple-soft);color:var(--purple-text)}
+.tip-box{background:var(--white);border-radius:var(--r-lg);padding:14px 16px;margin:14px 16px;box-shadow:var(--sh);border-right:3px solid var(--orange)}
+.tip-title{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:8px}
+.tip-list{list-style:none;font-size:13px;color:var(--text2);line-height:2}
+.tip-list li{display:flex;align-items:flex-start;gap:7px}
+.tip-list li::before{content:'·';color:var(--purple);font-size:20px;line-height:1.25;flex-shrink:0;font-weight:700}
 
-/* ===== TAGS ===== */
-.tag{display:inline-block;font-size:10px;padding:3px 9px;border-radius:30px;font-weight:600}
-.t-navy{background:#e8eef8;color:#1a2f6e}
-.t-green{background:#d1fae5;color:#065f46}
-.t-gold{background:#fef3c7;color:#92400e}
-.t-pink{background:#fce4ec;color:#9d1343}
-.t-dark{background:var(--navy);color:#fff}
-.t-purple{background:#ede9fe;color:#5b21b6}
-
-/* ===== TIP BOX ===== */
-.tip-box{background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid rgba(245,158,11,0.3);border-radius:var(--radius);padding:14px 16px;margin:16px}
-.tip-title{font-size:10px;font-weight:800;color:#92400e;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;align-items:center;gap:5px}
-.tip-list{list-style:none;font-size:12px;color:#78350f;line-height:2}
-.tip-list li{display:flex;align-items:flex-start;gap:6px}
-.tip-list li::before{content:'💡';flex-shrink:0}
-
-/* ===== DAY CARDS – Wanderlog style ===== */
-.day-card{background:#fff;margin:0 16px 12px;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border:1px solid rgba(0,0,0,0.04);transition:box-shadow 0.2s}
-.day-card:hover{box-shadow:var(--shadow-lg)}
-
-/* Day header — colorful strip */
-.day-hdr{display:flex;align-items:stretch;cursor:pointer;user-select:none;position:relative}
-.day-color-bar{width:5px;flex-shrink:0}
-.day-hdr-inner{flex:1;padding:14px 14px 14px 12px;display:flex;align-items:center;gap:12px}
-.day-badge{min-width:48px;height:48px;border-radius:var(--radius-sm);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;font-weight:900}
-.day-badge-date{font-size:15px;line-height:1}
-.day-badge-lbl{font-size:8px;margin-top:1px;opacity:0.8;font-weight:600}
+/* DAY CARDS */
+.day-card{background:var(--white);margin:0 16px 10px;border-radius:var(--r-xl);box-shadow:var(--sh);overflow:hidden;transition:box-shadow .2s,transform .15s}
+.day-card:active{transform:scale(.99)}
+.day-card.open{box-shadow:var(--sh-md)}
+.day-color-bar{height:4px;width:100%}
+.day-hdr{display:flex;flex-direction:column;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
+.day-hdr-inner{display:flex;align-items:center;gap:12px;padding:14px 15px}
+.day-badge{width:52px;height:52px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.day-badge-date{font-size:16px;font-weight:800;line-height:1}
+.day-badge-lbl{font-size:9px;margin-top:2px;opacity:.75;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
 .day-info{flex:1;min-width:0}
-.day-title{font-weight:800;font-size:14px;color:var(--navy);line-height:1.2}
-.day-sub{font-size:11px;color:var(--gray2);margin-top:2px;font-weight:400}
-.day-meta{display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap}
-.day-meta-chip{display:flex;align-items:center;gap:3px;font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px}
-.day-arrow{color:var(--gray3);font-size:16px;transition:transform 0.2s;flex-shrink:0;align-self:center}
-.day-card.open .day-arrow{transform:rotate(90deg);color:var(--pink)}
-
-/* Day body */
-.day-body{display:none;border-top:1px solid var(--gray3)}
+.day-title{font-weight:700;font-size:16px;color:var(--text1);line-height:1.25}
+.day-sub{font-size:13px;color:var(--text3);margin-top:2px}
+.day-meta{display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap}
+.day-meta-chip{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:var(--r-pill)}
+.day-arrow{color:#D1D5DB;font-size:18px;transition:transform .2s,color .2s;flex-shrink:0;align-self:center}
+.day-card.open .day-arrow{transform:rotate(90deg);color:var(--purple)}
+.day-body{display:none;border-top:1px solid var(--sep);background:#FAFAFA}
 .day-card.open .day-body{display:block}
+.hotel-night-strip{background:linear-gradient(135deg,#1E1B4B,#312E81);padding:10px 15px;display:flex;align-items:center;gap:10px}
+.hotel-night-name{color:#C4B5FD;font-size:13px;font-weight:600}
+.hotel-night-sub{color:rgba(255,255,255,.35);font-size:11px;margin-top:1px}
 
-/* Hotel strip inside day */
-.hotel-night-strip{background:linear-gradient(135deg,var(--navy),#0f3460);padding:10px 16px;display:flex;align-items:center;gap:10px}
-.hotel-night-name{color:#f9a8c9;font-size:12px;font-weight:700}
-.hotel-night-sub{color:rgba(255,255,255,0.45);font-size:10px;margin-top:1px}
-
-/* Timeline inside day */
-.day-timeline{padding:14px 16px}
+/* TIMELINE */
+.day-timeline{padding:14px 15px}
 .timeline-section{margin-bottom:14px}
 .timeline-section:last-child{margin-bottom:0}
 .timeline-hdr{display:flex;align-items:center;gap:8px;margin-bottom:10px}
 .timeline-icon{font-size:14px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.timeline-lbl{font-size:11px;font-weight:800;color:var(--gray);text-transform:uppercase;letter-spacing:0.8px}
-.timeline-line{flex:1;height:1px;background:var(--gray3)}
-
-/* Activity items */
-.act-list{padding-right:8px}
-.act-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;position:relative;padding-right:4px}
+.timeline-lbl{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px}
+.timeline-line{flex:1;height:1px;background:var(--sep)}
+.act-list{padding-right:4px}
+.act-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:9px}
 .act-item:last-child{margin-bottom:0}
-.act-dot-wrap{display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding-top:4px}
-.act-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.act-connector{width:1px;flex:1;min-height:10px;margin-top:3px;opacity:0.3}
+.act-dot-wrap{display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding-top:5px}
+.act-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;transition:background .2s}
 .act-content{flex:1;min-width:0}
-.act-name{font-size:13px;font-weight:600;color:var(--navy);line-height:1.4}
-.act-name.visited{text-decoration:line-through;color:var(--gray2)}
-.act-note{font-size:11px;color:var(--gray2);margin-top:2px}
-.act-actions{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap;align-items:center}
-.act-btn{display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:700;border:none;cursor:pointer;font-family:'Heebo',sans-serif;transition:all 0.15s}
-.act-btn-visit{background:#d1fae5;color:#065f46}
-.act-btn-visit.done{background:#065f46;color:#fff}
-.act-btn-edit{background:#e0e7ff;color:#3730a3}
-.act-btn-del{background:#fee2e2;color:#991b1b}
-.act-new-tag{font-size:9px;font-weight:800;background:var(--pink-light);color:var(--pink-dark);padding:2px 6px;border-radius:20px;margin-right:4px;vertical-align:middle}
+/* NO strikethrough on visited — just green circle */
+.act-name{font-size:15px;font-weight:500;color:var(--text1);line-height:1.4;display:inline}
+.act-note{font-size:12px;color:var(--text3);margin-top:2px}
+.act-note-inline{font-size:11px;color:var(--text3);margin-top:3px;display:flex;align-items:flex-start;gap:4px;font-style:italic;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.act-actions{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;align-items:center}
+.act-btn{display:inline-flex;align-items:center;gap:3px;padding:4px 11px;border-radius:var(--r-pill);font-size:11px;font-weight:600;border:none;cursor:pointer;font-family:var(--font);transition:opacity .15s;-webkit-tap-highlight-color:transparent}
+.act-btn:active{opacity:.7}
+.act-btn-highlight{background:#FFFBEB;color:#92400E}
+.act-btn-highlight.on{background:var(--orange);color:#fff}
+.act-btn-note{background:#ECFDF5;color:#065F46}
+.act-btn-del{background:#FFF1F2;color:#BE123C}
 
-/* Add item row */
-.add-act-row{display:flex;gap:7px;padding:10px 16px;border-top:1px solid var(--gray3);background:var(--gray4)}
-.add-act-inp{flex:1;border:1px solid var(--gray3);border-radius:8px;padding:7px 11px;font-size:12px;font-family:'Heebo',sans-serif;direction:rtl;outline:none;background:#fff}
-.add-act-inp:focus{border-color:var(--pink)}
-.add-act-sel{border:1px solid var(--gray3);border-radius:8px;padding:7px 8px;font-size:12px;font-family:'Heebo',sans-serif;direction:rtl;outline:none;background:#fff;cursor:pointer}
-.add-act-btn{background:var(--pink);color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Heebo',sans-serif;white-space:nowrap}
+/* VISIT CIRCLE — green checkmark, NO strikethrough */
+.visit-circle{width:22px;height:22px;border-radius:50%;border:2px solid #D1D5DB;background:transparent;cursor:pointer;font-size:13px;font-weight:800;color:transparent;display:flex;align-items:center;justify-content:center;transition:all .18s;flex-shrink:0;padding:0;-webkit-tap-highlight-color:transparent;line-height:1}
+.visit-circle.done{background:var(--green);border-color:var(--green);color:#fff;box-shadow:0 0 0 3px rgba(5,150,105,0.15)}
+.visit-circle:hover:not(.done){border-color:var(--green);background:rgba(5,150,105,0.05)}
 
-/* Transport in day */
-.day-transport{background:#eff6ff;border-radius:var(--radius-sm);margin:0 16px 14px;padding:10px 12px}
-.day-transport-title{font-size:10px;font-weight:800;color:#1e40af;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;display:flex;align-items:center;gap:5px}
-.trans-seg{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.act-new-tag{font-size:10px;font-weight:700;background:var(--purple-soft);color:var(--purple-text);padding:2px 7px;border-radius:var(--r-pill);margin-left:4px;vertical-align:middle}
+.add-act-row{display:flex;gap:8px;padding:10px 14px;border-top:1px solid var(--sep);background:var(--bg)}
+.add-act-inp{flex:1;border:1.5px solid var(--sep2);border-radius:var(--r-xs);padding:9px 12px;font-size:14px;font-family:var(--font);direction:rtl;outline:none;background:var(--white);color:var(--text1)}
+.add-act-inp:focus{border-color:var(--purple)}
+.add-act-sel{border:1.5px solid var(--sep2);border-radius:var(--r-xs);padding:9px;font-size:13px;font-family:var(--font);background:var(--white);cursor:pointer;outline:none}
+.add-act-btn{background:var(--purple);color:#fff;border:none;border-radius:var(--r-xs);padding:9px 14px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font)}
+.day-note-strip{background:#FFFBEB;border-right:3px solid var(--orange);border-radius:var(--r-xs);margin:0 14px 12px;padding:9px 12px;font-size:13px;color:#78350F;display:flex;align-items:flex-start;gap:6px}
+.day-transport{background:var(--purple-soft);border-radius:var(--r-sm);margin:0 14px 12px;padding:10px 13px}
+.day-transport-title{font-size:10px;font-weight:700;color:var(--purple-text);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px;display:flex;align-items:center;gap:5px}
+.trans-seg{display:flex;align-items:center;gap:7px;margin-bottom:6px}
 .trans-seg:last-child{margin-bottom:0}
-.trans-from,.trans-to{font-size:11px;font-weight:700;color:#1e3a8a}
-.trans-arr{color:var(--pink);font-size:12px}
-.trans-chips{display:flex;gap:4px;margin-top:3px;flex-wrap:wrap}
-.tc{font-size:10px;padding:2px 7px;border-radius:8px;font-weight:700}
-.tc-shin{background:#ffe4e6;color:#9f1239}
-.tc-bus{background:#dbeafe;color:#1e3a8a}
-.tc-train{background:#eff6ff;color:#1e40af}
-.tc-note{background:#f1f5f9;color:#475569;border:1px solid #e2e8f0}
-
-/* Day note */
-.day-note-strip{background:linear-gradient(135deg,#fffbeb,#fef3c7);border-radius:var(--radius-sm);margin:0 16px 14px;padding:9px 12px;font-size:11px;color:#78350f;border:1px solid rgba(245,158,11,0.2);display:flex;align-items:flex-start;gap:6px}
-
-/* Restaurants in day */
-.day-rests-sec{padding:0 16px 14px}
-.day-rests-title{font-size:10px;font-weight:800;color:var(--pink);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;display:flex;align-items:center;gap:5px}
-.mini-rest-card{background:#fff;border:1px solid var(--gray3);border-radius:var(--radius-sm);padding:9px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
-.mini-rest-ico{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
-.mini-rest-name{font-size:12px;font-weight:700;color:var(--navy)}
-.mini-rest-sub{font-size:10px;color:var(--gray2);margin-top:1px}
-
-/* MAP section in day */
-.day-map-sec{margin:0 16px 14px}
-.day-map-title{font-size:10px;font-weight:800;color:#065f46;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;display:flex;align-items:center;gap:5px}
-.places-list{background:#fff;border:1px solid var(--gray3);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:8px}
-.place-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--gray3)}
+.trans-from,.trans-to{font-size:13px;font-weight:700;color:var(--text1)}
+.trans-arr{color:var(--purple);font-size:13px}
+.trans-chips{display:flex;gap:5px;margin-top:4px;flex-wrap:wrap}
+.tc{font-size:11px;padding:3px 9px;border-radius:8px;font-weight:600}
+.tc-shin{background:#FFF1F2;color:#BE123C}.tc-bus{background:#EFF6FF;color:#1D4ED8}.tc-train{background:var(--purple-soft);color:var(--purple-text)}.tc-note{background:rgba(0,0,0,.05);color:var(--text3)}
+.day-rests-sec{padding:0 14px 12px}
+.day-rests-title{font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.mini-rest-card{background:var(--white);border:1px solid var(--sep);border-radius:var(--r-sm);padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px;box-shadow:var(--sh)}
+.mini-rest-card.must{border-right:3px solid var(--purple)}
+.mini-rest-ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.mini-rest-name{font-size:13px;font-weight:600;color:var(--text1)}
+.mini-rest-sub{font-size:11px;color:var(--text3);margin-top:1px}
+.must-badge{background:var(--purple);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:var(--r-pill);margin-left:4px;vertical-align:middle}
+.day-map-sec{margin:0 14px 12px}
+.day-map-title{font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.places-list{background:var(--white);border:1px solid var(--sep);border-radius:var(--r-sm);overflow:hidden;margin-bottom:8px}
+.place-row{display:flex;align-items:center;gap:9px;padding:10px 13px;border-bottom:1px solid var(--sep)}
 .place-row:last-child{border-bottom:none}
-.place-num{background:var(--pink);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
-.place-name{font-size:12px;color:var(--navy);font-weight:500;flex:1}
-.place-nav{font-size:10px;font-weight:700;color:var(--blue);text-decoration:none;white-space:nowrap}
-.place-nav:hover{color:#1d4ed8}
-.map-btns-row{display:flex;gap:7px;flex-wrap:wrap}
-.map-btn-main{display:inline-flex;align-items:center;gap:5px;background:#1a73e8;color:#fff;border:none;border-radius:8px;padding:7px 13px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;font-family:'Heebo',sans-serif;transition:background 0.15s}
-.map-btn-main:hover{background:#1557b0}
-.map-btn-loc{display:inline-flex;align-items:center;gap:5px;background:#d1fae5;border:1px solid #6ee7b7;color:#065f46;border-radius:8px;padding:7px 13px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Heebo',sans-serif;transition:all 0.15s}
-.map-btn-loc:hover{background:#a7f3d0}
-.loc-pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--pink);animation:pulse3 1.5s infinite}
-@keyframes pulse3{0%,100%{box-shadow:0 0 0 0 rgba(232,98,138,0.4)}70%{box-shadow:0 0 0 6px rgba(232,98,138,0)}}
-
-/* ===== FILTERS ===== */
-.filter-row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:12px 16px 8px;flex-wrap:wrap}
-.filter-row::-webkit-scrollbar{display:none}
-.fb{padding:6px 14px;border-radius:30px;border:1.5px solid var(--gray3);background:#fff;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.15s;font-family:'Heebo',sans-serif;color:var(--gray)}
-.fb.on{background:var(--pink);border-color:var(--pink);color:#fff;box-shadow:0 2px 8px rgba(232,98,138,0.3)}
-.fb:hover:not(.on){border-color:var(--pink);color:var(--pink)}
-
-/* ===== RESTAURANT CARDS ===== */
-.rest-card{background:#fff;margin:0 16px 8px;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;align-items:stretch;border:1px solid rgba(0,0,0,0.04)}
-.rest-color-strip{width:4px;flex-shrink:0}
-.rest-inner{flex:1;padding:12px 14px;display:flex;align-items:center;gap:11px}
-.rest-ico{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.rest-name{font-size:13px;font-weight:800;color:var(--navy)}
-.rest-meta{font-size:10px;color:var(--gray2);margin-top:2px}
-.rest-price{font-size:14px;font-weight:900;flex-shrink:0}
-.pg{color:#10b981}.py{color:#f59e0b}.pr{color:#ef4444}
-
-/* ===== HOTEL CARDS ===== */
-.hotel-card{background:#fff;margin:0 16px 10px;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border:1px solid rgba(0,0,0,0.04)}
-.hotel-top{background:linear-gradient(135deg,var(--navy),#0f3460);padding:14px 16px;display:flex;align-items:center;gap:12px}
-.hotel-ico{font-size:24px}
-.hotel-name{color:#fff;font-size:15px;font-weight:800}
-.hotel-loc{color:#f9a8c9;font-size:11px;margin-top:2px}
-.hotel-dates-badge{background:rgba(232,98,138,0.2);border:1px solid rgba(232,98,138,0.4);color:#f9a8c9;font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;flex-shrink:0;margin-right:auto}
-.hotel-body{padding:12px 16px}
-.hotel-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--gray3);font-size:12px}
-.hotel-row:last-child{border:none}
-.hotel-row-l{color:var(--gray2)}
-.hotel-row-v{font-weight:700}
-.hotel-del{background:#fee2e2;border:1px solid #fca5a5;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;color:#991b1b;cursor:pointer;font-family:'Heebo',sans-serif;margin-top:10px}
-
-/* ===== TRANSPORT TAB ===== */
-.trans-card{background:#fff;margin:0 16px 8px;border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;border:1px solid rgba(0,0,0,0.04)}
-.trans-route{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.trans-city{font-weight:800;font-size:13px;color:var(--navy)}
-.trans-arrow{color:var(--pink);font-size:14px;flex:1;text-align:center}
-
-/* ===== BUDGET ===== */
-.budget-hero{background:linear-gradient(135deg,var(--navy),#533483);margin:16px;border-radius:var(--radius);padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.budget-num{font-size:22px;font-weight:900;color:#fff;line-height:1}
-.budget-lbl{font-size:10px;color:rgba(255,255,255,0.5);margin-top:3px;font-weight:500}
-.budget-divider{width:1px;background:rgba(255,255,255,0.1);margin:0 4px}
-.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 16px 12px}
-.cat-card{background:#fff;border-radius:var(--radius-sm);padding:10px 6px;text-align:center;box-shadow:var(--shadow);border:1.5px solid var(--gray3);cursor:pointer;transition:all 0.15s}
-.cat-card.act{border-color:var(--pink);background:var(--pink-light)}
-.cat-ico{font-size:18px;display:block;margin-bottom:3px}
-.cat-name{font-size:10px;font-weight:700;color:var(--navy)}
-.cat-total{font-size:11px;font-weight:800;color:var(--pink);margin-top:2px}
-.exp-add-card{background:#fff;margin:0 16px 12px;border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;border:1px solid rgba(0,0,0,0.04)}
-.exp-inp{width:100%;border:1.5px solid var(--gray3);border-radius:10px;padding:9px 12px;font-size:12px;font-family:'Heebo',sans-serif;direction:rtl;outline:none;background:#fff;color:var(--navy);margin-bottom:8px}
-.exp-inp:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(232,98,138,0.1)}
-.exp-row{display:flex;gap:7px;margin-bottom:8px}
-.exp-sel{border:1.5px solid var(--gray3);border-radius:10px;padding:9px 10px;font-size:12px;font-family:'Heebo',sans-serif;direction:rtl;outline:none;background:#fff;color:var(--navy);cursor:pointer;flex:1}
-.exp-sel:focus{border-color:var(--pink)}
-.exp-preview{font-size:11px;font-weight:700;color:var(--green);margin-bottom:8px;min-height:16px}
-.add-btn-main{background:var(--pink);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Heebo',sans-serif;width:100%;transition:background 0.15s}
-.add-btn-main:hover{background:var(--pink-dark)}
-.exp-list-card{background:#fff;margin:0 16px;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border:1px solid rgba(0,0,0,0.04)}
-.exp-list-row{display:flex;align-items:center;gap:9px;padding:10px 14px;border-bottom:1px solid var(--gray3)}
-.exp-list-row:last-child{border:none}
-.exp-del-btn{background:none;border:none;cursor:pointer;color:var(--gray3);font-size:13px;flex-shrink:0}
-.exp-del-btn:hover{color:#ef4444}
-.day-bar-row{padding:9px 0;border-bottom:1px solid var(--gray3)}
-.day-bar-row:last-child{border:none}
-.bar-bg{background:var(--gray3);border-radius:4px;height:5px;overflow:hidden;margin-top:4px}
-.bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--pink),#f59e0b);transition:width 0.6s}
-
-/* ===== ADD BUTTONS ===== */
-.add-row{display:flex;gap:8px;margin:12px 16px 4px}
-.add-dashed{flex:1;padding:10px;border-radius:var(--radius-sm);border:1.5px dashed var(--pink);background:var(--pink-light);color:var(--pink-dark);font-size:12px;font-weight:700;cursor:pointer;font-family:'Heebo',sans-serif;text-align:center;transition:all 0.15s}
-.add-dashed:hover{background:#f4b8cc;border-style:solid}
-
-/* ===== MODALS ===== */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;display:none;align-items:flex-end;justify-content:center;padding:0}
-.modal.open{display:flex}
-.modal-box{background:#fff;border-radius:var(--radius) var(--radius) 0 0;padding:20px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto;animation:slideUp 0.3s ease}
-@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
-.modal-handle{width:40px;height:4px;background:var(--gray3);border-radius:2px;margin:0 auto 16px}
-.modal-title{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
-.modal-close{background:none;border:none;cursor:pointer;font-size:20px;color:var(--gray2);line-height:1;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.modal-close:hover{background:var(--gray3)}
-.field-lbl{font-size:10px;font-weight:800;color:var(--gray2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px}
-.field-wrap{margin-bottom:12px}
-.type-chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
-.type-chip{padding:5px 10px;border-radius:20px;border:1.5px solid var(--gray3);background:#fff;font-size:11px;font-weight:700;color:var(--gray);cursor:pointer;transition:all 0.15s}
-.type-chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
-.time-seg{display:flex;border:1.5px solid var(--gray3);border-radius:10px;overflow:hidden;margin-bottom:12px}
-.time-opt{flex:1;padding:9px 4px;text-align:center;font-size:11px;font-weight:700;color:var(--gray2);cursor:pointer;border:none;background:#fff;font-family:'Heebo',sans-serif;transition:all 0.15s;border-left:1px solid var(--gray3);line-height:1.3}
-.time-opt:first-child{border-left:none}
-.time-opt.on{background:var(--pink);color:#fff}
-
-
-/* ===== HIGHLIGHTS & NOTES ===== */
-.act-item.highlight .act-name{color:#d97706;font-weight:800}
-.act-item.highlight .act-dot{background:#f59e0b;box-shadow:0 0 0 3px rgba(245,158,11,0.25)}
-.act-item.highlight .act-content{background:linear-gradient(135deg,#fffbeb,#fef3c7);border-radius:8px;padding:6px 8px;border:1px solid rgba(245,158,11,0.3)}
-.highlight-star{font-size:11px;margin-left:4px;vertical-align:middle}
-.act-note-text{font-size:11px;color:#6b7280;margin-top:3px;font-style:italic;display:flex;align-items:flex-start;gap:4px}
-.act-note-text::before{content:'📝';font-style:normal;flex-shrink:0}
-.act-btn-highlight{background:#fef3c7;color:#d97706;border:1px solid #f59e0b}
-.act-btn-highlight.on{background:#f59e0b;color:#fff}
-.act-btn-note{background:#f0fdf4;color:#16a34a;border:1px solid #86efac}
-
-/* MANDATORY RESTAURANT */
-.must-badge{background:#e8628a;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:20px;margin-right:4px;vertical-align:middle;text-transform:uppercase;letter-spacing:0.5px}
-.rest-card.must{border-right:4px solid #e8628a}
-.mini-rest-card.must{border-right:3px solid #e8628a}
-
-/* DAY PLANNER */
-.day-planner{margin:0 16px 14px;background:#fff;border:1px solid var(--gray3);border-radius:var(--radius);overflow:hidden}
-.day-planner-hdr{background:linear-gradient(135deg,#1a1a2e,#0f3460);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
-.day-planner-title{color:#f9a8c9;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:6px}
-.day-planner-body{padding:12px 14px;display:none}
+.place-num{background:var(--purple);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.place-name{font-size:13px;color:var(--text1);font-weight:500;flex:1}
+.place-nav{font-size:11px;font-weight:600;color:var(--purple);text-decoration:none}
+.map-btns-row{display:flex;gap:8px;flex-wrap:wrap}
+.map-btn-main{display:inline-flex;align-items:center;gap:6px;background:var(--purple);color:#fff;border:none;border-radius:var(--r-sm);padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;font-family:var(--font);box-shadow:var(--sh-purple)}
+.map-btn-loc{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;border:1px solid rgba(5,150,105,.2);color:#065F46;border-radius:var(--r-sm);padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)}
+.loc-pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--red);animation:lp 1.5s infinite}
+@keyframes lp{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.4)}70%{box-shadow:0 0 0 6px rgba(220,38,38,0)}}
+.day-planner{margin:0 14px 12px;background:var(--white);border:1px solid var(--sep);border-radius:var(--r-sm);overflow:hidden;box-shadow:var(--sh)}
+.day-planner-hdr{background:linear-gradient(135deg,#4C1D95,#6D28D9);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.day-planner-title{color:rgba(255,255,255,.6);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+.day-planner-body{display:none;padding:13px}
 .day-planner.open .day-planner-body{display:block}
-.planner-slots{display:flex;gap:8px;margin-bottom:10px}
-.planner-slot{flex:1;background:var(--gray4);border-radius:8px;padding:8px;min-height:70px;border:1.5px dashed var(--gray3);transition:all 0.15s}
-.planner-slot-lbl{font-size:10px;font-weight:800;color:var(--gray2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;display:flex;align-items:center;gap:4px}
-.planner-item{background:#fff;border:1px solid var(--gray3);border-radius:6px;padding:5px 8px;margin-bottom:4px;font-size:11px;color:var(--navy);font-weight:600;display:flex;align-items:center;gap:5px;cursor:move}
-.planner-item .pi-drag{color:var(--gray3);font-size:12px;cursor:grab}
-.planner-item .pi-del{background:none;border:none;cursor:pointer;color:var(--gray3);font-size:11px;margin-right:auto}
-.planner-item .pi-del:hover{color:#ef4444}
-.planner-add{display:flex;gap:6px;margin-top:6px}
-.planner-add-inp{flex:1;border:1px solid var(--gray3);border-radius:7px;padding:6px 10px;font-size:11px;font-family:Heebo,sans-serif;direction:rtl;outline:none}
-.planner-add-inp:focus{border-color:var(--pink)}
-.planner-add-btn{background:var(--pink);color:#fff;border:none;border-radius:7px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:Heebo,sans-serif}
-.planner-time-lbl{font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;margin-bottom:6px;display:inline-block}
+.planner-add-inp{flex:1;border:1.5px solid var(--sep2);border-radius:var(--r-xs);padding:7px 10px;font-size:13px;font-family:var(--font);direction:rtl;outline:none;background:var(--white)}
+.planner-add-inp:focus{border-color:var(--purple)}
+.planner-add-btn{background:var(--purple);color:#fff;border:none;border-radius:var(--r-xs);padding:7px 12px;font-size:13px;font-weight:700;cursor:pointer}
+.planner-source-pill{background:var(--white);border:1px solid var(--sep2);border-radius:var(--r-pill);padding:5px 12px;font-size:12px;font-weight:500;color:var(--text1);white-space:nowrap;cursor:grab;transition:all .15s}
+.planner-source-pill:hover{border-color:var(--purple);color:var(--purple)}
+.ps-slot{border:1.5px dashed rgba(0,0,0,.1);border-radius:var(--r-sm);padding:9px;min-height:60px;transition:all .15s}
+.ps-slot.drag-over{border-color:var(--purple);background:var(--purple-soft)}
+.ps-item{display:flex;align-items:center;gap:7px;background:var(--white);border:1px solid var(--sep);border-radius:var(--r-xs);padding:6px 9px;margin-bottom:5px;cursor:grab;font-size:13px;font-weight:500;color:var(--text1)}
 
-/* VISIT CIRCLE */
-.visit-circle{width:22px;height:22px;border-radius:50%;border:2px solid var(--gray3);background:#fff;cursor:pointer;font-size:13px;font-weight:800;color:transparent;display:flex;align-items:center;justify-content:center;transition:all 0.15s;flex-shrink:0;padding:0;line-height:1}
-.visit-circle.done{background:#10b981;border-color:#10b981;color:#fff}
-.visit-circle:hover:not(.done){border-color:#10b981;background:#f0fdf4}
+/* FILTERS */
+.filter-row{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding:10px 16px 8px;flex-wrap:wrap}
+.filter-row::-webkit-scrollbar{display:none}
+.fb{padding:8px 18px;border-radius:var(--r-pill);border:1.5px solid var(--sep2);background:var(--white);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .15s;font-family:var(--font);color:var(--text2);-webkit-tap-highlight-color:transparent}
+.fb.on{background:var(--purple);border-color:var(--purple);color:#fff;box-shadow:0 4px 14px rgba(124,58,237,.3)}
+.fb:active{opacity:.7}
 
-/* ACT HIGHLIGHT */
-.act-item.highlight .act-name{font-weight:800}
-.act-btn-highlight{background:#fef3c7;color:#d97706;border:1px solid #fde68a}
-.act-btn-highlight.on{background:#f59e0b;color:#fff;border-color:#f59e0b}
+/* RESTAURANT CARDS */
+.rest-card{background:var(--white);margin:0 16px 8px;border-radius:var(--r-lg);box-shadow:var(--sh);overflow:hidden;display:flex;align-items:stretch;transition:box-shadow .15s}
+.rest-card.must{box-shadow:var(--sh),inset -4px 0 0 var(--purple)}
+.rest-color-strip{width:4px;flex-shrink:0}
+.rest-inner{flex:1;padding:13px 14px;display:flex;align-items:center;gap:12px}
+.rest-ico{width:46px;height:46px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.rest-name{font-size:15px;font-weight:700;color:var(--text1)}
+.rest-meta{font-size:12px;color:var(--text3);margin-top:2px}
+.rest-price{font-size:16px;font-weight:800;flex-shrink:0}
+.pg{color:var(--green)}.py{color:var(--orange)}.pr{color:var(--red)}
 
-/* PLANNER SOURCE PILLS */
-.planner-source-pill{background:#fff;border:1px solid var(--gray3);border-radius:20px;padding:4px 10px;font-size:11px;font-weight:600;color:var(--navy);white-space:nowrap;cursor:grab;transition:all 0.15s}
-.planner-source-pill:hover{border-color:var(--pink);color:var(--pink);background:#fce4ec}
-.planner-source-pill:active{cursor:grabbing}
-.planner-item[draggable='true']{cursor:grab}
-.planner-item[draggable='true']:active{cursor:grabbing;opacity:0.7}
+/* HOTEL CARDS */
+.hotel-card{background:var(--white);margin:0 16px 10px;border-radius:var(--r-xl);box-shadow:var(--sh);overflow:hidden}
+.hotel-top{background:linear-gradient(135deg,#4C1D95,#6D28D9);padding:14px 16px;display:flex;align-items:center;gap:12px}
+.hotel-ico{font-size:24px}.hotel-name{color:#fff;font-size:15px;font-weight:700}.hotel-loc{color:rgba(255,255,255,.4);font-size:12px;margin-top:2px}
+.hotel-dates-badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:#E9D5FF;font-size:11px;font-weight:600;padding:4px 10px;border-radius:var(--r-pill);flex-shrink:0;margin-right:auto}
+.hotel-body{padding:13px 16px}
+.hotel-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--sep);font-size:14px}
+.hotel-row:last-child{border:none}.hotel-row-l{color:var(--text3)}.hotel-row-v{font-weight:600}
+.hotel-del{background:#FFF1F2;border:1px solid rgba(220,38,38,.15);border-radius:var(--r-xs);padding:7px 14px;font-size:13px;font-weight:600;color:var(--red);cursor:pointer;font-family:var(--font);margin-top:10px}
 
-/* DRAG OVER */
-.ps-slot{border:1.5px dashed #d1d5db;border-radius:9px;padding:8px;transition:all 0.15s;min-height:60px}
-.ps-slot.drag-over{border-color:var(--pink);background:rgba(232,98,138,0.05)!important}
-.ps-item{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--gray3);border-radius:6px;padding:5px 8px;margin-bottom:4px;cursor:grab;transition:opacity 0.15s;font-size:11px}
-.ps-item:active{cursor:grabbing}
-/* LOADING */
-.loading{text-align:center;padding:50px 20px;color:var(--gray2)}
-.spinner{width:32px;height:32px;border:3px solid var(--gray3);border-top-color:var(--pink);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px}
+/* TRANSPORT TAB */
+.trans-card{background:var(--white);margin:0 16px 8px;border-radius:var(--r-lg);box-shadow:var(--sh);padding:14px}
+.trans-route{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.trans-city{font-weight:700;font-size:14px;color:var(--text1)}
+.trans-arrow{color:var(--purple);font-size:14px;flex:1;text-align:center}
+
+/* BUDGET */
+.budget-top-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 16px 0}
+.budget-big-card{background:var(--white);border-radius:var(--r-xl);padding:18px 16px;box-shadow:var(--sh)}
+.budget-label{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.budget-amount{font-size:32px;font-weight:800;color:var(--text1);letter-spacing:-1px;line-height:1}
+.budget-sub{font-size:12px;color:var(--text3);margin-top:4px}
+.budget-avg-card{background:var(--purple);border-radius:var(--r-xl);padding:18px 16px;box-shadow:var(--sh-purple)}
+.budget-avg-label{font-size:11px;font-weight:700;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.budget-avg-amount{font-size:28px;font-weight:800;color:#fff;letter-spacing:-1px;line-height:1}
+.budget-avg-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:4px}
+.exp-add-card{background:var(--white);margin:0 16px 12px;border-radius:var(--r-xl);box-shadow:var(--sh);padding:16px}
+.exp-inp{width:100%;border:1.5px solid var(--sep2);border-radius:var(--r-sm);padding:11px 13px;font-size:15px;font-family:var(--font);direction:rtl;outline:none;background:var(--bg);color:var(--text1);margin-bottom:9px;transition:border-color .15s}
+.exp-inp:focus{border-color:var(--purple);background:var(--white)}
+.exp-row{display:flex;gap:8px;margin-bottom:9px}
+.exp-sel{border:1.5px solid var(--sep2);border-radius:var(--r-sm);padding:11px 10px;font-size:14px;font-family:var(--font);direction:rtl;outline:none;background:var(--bg);color:var(--text1);cursor:pointer;flex:1;transition:border-color .15s}
+.exp-sel:focus{border-color:var(--purple)}
+.exp-preview{font-size:13px;font-weight:700;color:var(--green);margin-bottom:9px;min-height:18px}
+.add-btn-main{background:var(--purple);color:#fff;border:none;border-radius:var(--r-md);padding:14px 16px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--font);width:100%;box-shadow:var(--sh-purple);-webkit-tap-highlight-color:transparent}
+.add-btn-main:active{opacity:.88}
+.exp-list-card{background:var(--white);margin:0 16px;border-radius:var(--r-xl);box-shadow:var(--sh);overflow:hidden;margin-bottom:16px}
+.exp-list-row{display:flex;align-items:center;gap:9px;padding:12px 15px;border-bottom:1px solid var(--sep)}
+.exp-list-row:last-child{border-bottom:none}
+.exp-del-btn{background:none;border:none;cursor:pointer;color:#D1D5DB;font-size:16px;flex-shrink:0}
+.exp-del-btn:hover{color:var(--red)}
+
+/* Daily breakdown */
+.day-bar-row{padding:9px 0;border-bottom:1px solid var(--sep);cursor:pointer}
+.day-bar-row:last-child{border:none}
+.bar-bg{background:#F3F4F6;border-radius:4px;height:5px;overflow:hidden;margin-top:5px}
+.bar-fill{height:100%;border-radius:4px;background:var(--purple);transition:width .6s}
+.day-exp-detail{display:none;padding:6px 0 4px}
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 16px 12px}
+.cat-card{background:var(--white);border-radius:var(--r-lg);padding:12px 6px;text-align:center;box-shadow:var(--sh);border:1.5px solid transparent;cursor:pointer;transition:all .15s}
+.cat-card.act{border-color:var(--purple);background:var(--purple-soft)}
+.cat-ico{font-size:20px;display:block;margin-bottom:4px}.cat-name{font-size:11px;font-weight:600;color:var(--text2)}.cat-total{font-size:12px;font-weight:700;color:var(--purple);margin-top:2px}
+
+/* ADD BUTTONS */
+.add-row{display:flex;gap:8px;margin:12px 16px 4px}
+.add-dashed{flex:1;padding:13px;border-radius:var(--r-lg);border:1.5px dashed rgba(124,58,237,.3);background:var(--purple-soft);color:var(--purple-text);font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font);text-align:center;transition:all .15s;-webkit-tap-highlight-color:transparent}
+.add-dashed:active{opacity:.7}
+
+/* MODALS */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);z-index:1000;display:none;align-items:flex-end;justify-content:center}
+.modal.open{display:flex}
+.modal-box{background:var(--white);border-radius:28px 28px 0 0;padding:20px 20px 36px;width:100%;max-width:540px;max-height:88vh;overflow-y:auto;animation:slideUp .25s ease}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-handle{width:40px;height:5px;background:#E5E7EB;border-radius:3px;margin:0 auto 18px}
+.modal-title{font-size:18px;font-weight:700;color:var(--text1);margin-bottom:18px;display:flex;justify-content:space-between;align-items:center}
+.modal-close{background:#F3F4F6;border:none;cursor:pointer;font-size:16px;color:var(--text3);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
+.field-lbl{font-size:12px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.field-wrap{margin-bottom:14px}
+.type-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.type-chip{padding:7px 13px;border-radius:var(--r-pill);border:1.5px solid var(--sep2);background:var(--white);font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;transition:all .15s}
+.type-chip.on{background:var(--purple);border-color:var(--purple);color:#fff}
+.time-seg{display:flex;border:1.5px solid var(--sep2);border-radius:var(--r-md);overflow:hidden;margin-bottom:14px}
+.time-opt{flex:1;padding:10px 4px;text-align:center;font-size:12px;font-weight:600;color:var(--text3);cursor:pointer;border:none;background:var(--white);font-family:var(--font);transition:all .15s;border-left:1px solid var(--sep2);line-height:1.3}
+.time-opt:first-child{border-left:none}
+.time-opt.on{background:var(--purple);color:#fff}
+
+/* FAB */
+.fab{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);width:58px;height:58px;border-radius:50%;background:var(--purple);color:#fff;border:none;font-size:30px;font-weight:300;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--sh-purple);z-index:500;transition:transform .2s,box-shadow .2s;-webkit-tap-highlight-color:transparent;line-height:1}
+.fab:active{transform:translateX(-50%) scale(.92)}
+.fab.open{transform:translateX(-50%) rotate(45deg)}
+.fab-menu{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:10px;align-items:center;z-index:499;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;transform:translateX(-50%) translateY(10px)}
+.fab-menu.open{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
+.fab-item{display:flex;align-items:center;gap:10px}
+.fab-item-btn{width:46px;height:46px;border-radius:50%;background:var(--white);border:none;font-size:20px;cursor:pointer;box-shadow:var(--sh-md);display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;transition:transform .15s}
+.fab-item-btn:active{transform:scale(.9)}
+.fab-item-label{background:rgba(0,0,0,.75);backdrop-filter:blur(12px);color:#fff;font-size:13px;font-weight:600;padding:6px 14px;border-radius:var(--r-pill);white-space:nowrap}
+.fab-backdrop{position:fixed;inset:0;z-index:498;display:none}
+.fab-backdrop.open{display:block}
+
+/* MISC */
+.visited-count{background:#ECFDF5;color:#065F46;border-radius:var(--r-pill);font-size:11px;font-weight:600;padding:2px 9px;display:inline-flex;align-items:center;gap:3px}
+.loading{text-align:center;padding:50px 20px;color:var(--text3)}
+.spinner{width:30px;height:30px;border:3px solid #E5E7EB;border-top-color:var(--purple);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* VISITED BADGE ON DAY */
-.visited-count{background:#d1fae5;color:#065f46;border-radius:20px;font-size:10px;font-weight:700;padding:2px 8px;display:inline-flex;align-items:center;gap:3px}
 </style>
 </head>
 <body>
@@ -377,12 +329,12 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--navy);direc
 <div class="hero">
   <div class="hero-content">
     <div class="hero-top">
-      <div class="hero-left">
-        <div class="trip-pill">✈️ JAPAN FAMILY TRIP 2026</div>
-        <div class="hero-title">יפן <span>2026</span> 🌸</div>
+      <div>
+        <div class="trip-pill">🇯🇵 JAPAN FAMILY TRIP 2026</div>
+        <div class="hero-title">יפן <em>2026</em></div>
         <div class="hero-sub">זוהר + משפחה · 16.9 – 1.10.2026</div>
       </div>
-      <div class="hero-emoji">🗾</div>
+      <div class="hero-avatar">🌸</div>
     </div>
   </div>
   <div class="countdown">
@@ -395,7 +347,7 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--navy);direc
     <div class="sync-dot" id="sync-dot"></div>
     <span class="sync-txt" id="sync-txt">מתחבר...</span>
   </div>
-</div>
+</div></div>
 
 <!-- NAV -->
 <div class="nav-wrap">
@@ -516,166 +468,80 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--navy);direc
 <!-- BUDGET -->
 <div class="panel" id="pnl-bg">
   <div class="max-w">
-    <div style="background:#eff6ff;margin:16px 16px 8px;border-radius:var(--radius-sm);padding:9px 14px;font-size:11px;color:#1e40af;font-weight:600;border:1px solid #bfdbfe">💱 שערי המרה: 100¥ = ₪2 &nbsp;·&nbsp; $1 = ₪3 &nbsp;·&nbsp; כל הסכומים בשקלים</div>
-
-    <!-- SUMMARY CARDS -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 16px 4px">
-      <div class="stat-card"><span class="stat-num" id="total-spent">₪0</span><span class="stat-lbl">סה"כ כולל</span></div>
-      <div class="stat-card"><span class="stat-num" id="exp-count" style="font-size:14px;margin-top:4px">0</span><span class="stat-lbl">הוצאות</span></div>
-      <div class="stat-card"><span class="stat-num" id="avg-per-day" style="font-size:18px">₪0</span><span class="stat-lbl">ממוצע יומי</span></div>
+    <div style="background:#EEF2FF;margin:12px 16px 0;border-radius:var(--r-sm);padding:9px 14px;font-size:11px;color:#3730A3;font-weight:600;border:1px solid #C7D2FE">
+      💱 שערי המרה: 100¥ = ₪2 &nbsp;·&nbsp; $1 = ₪3
     </div>
-    <!-- AVERAGES -->
-    <div style="padding:8px 16px 0" id="budget-averages"></div>
 
-    <!-- VIEW TOGGLE -->
-    <div style="display:flex;gap:7px;padding:12px 16px 0">
-      <button class="type-chip on" id="bg-view-all" onclick="setBgView('all',this)">📊 הכל</button>
-      <button class="type-chip" id="bg-view-daily" onclick="setBgView('daily',this)">📅 לפי יום</button>
-      <button class="type-chip" id="bg-view-cat" onclick="setBgView('cat',this)">🏷️ קטגוריות</button>
+    <!-- TOP CARDS: Total + Daily avg -->
+    <div class="budget-top-cards">
+      <div class="budget-big-card">
+        <div class="budget-label">סה"כ הוצאות</div>
+        <div class="budget-amount" id="total-spent">₪0</div>
+        <div class="budget-sub" id="exp-count-lbl">0 רשומות</div>
+      </div>
+      <div class="budget-avg-card">
+        <div class="budget-avg-label">ממוצע יומי</div>
+        <div class="budget-avg-amount" id="avg-per-day">₪0</div>
+        <div class="budget-avg-sub">ללא טיסות ומלונות</div>
+      </div>
     </div>
 
     <!-- ADD EXPENSE -->
     <div class="section-pad"><div class="sec-hdr"><div class="sec-title">הוסף הוצאה</div></div></div>
-    <div class="exp-add-card">
-      <input class="exp-inp" id="exp-desc" placeholder="תיאור (למשל: ארוחת ערב, כרטיסים...)">
+    <div class="exp-add-card" style="margin-top:10px">
+      <input class="exp-inp" id="exp-desc" placeholder="תיאור (ארוחת ערב, כרטיסים...)">
       <div class="exp-row">
-        <input class="exp-sel" id="exp-amt" placeholder="סכום" type="number" style="max-width:90px">
-        <select class="exp-sel" id="exp-cur"><option value="ILS">₪ שקל</option><option value="JPY">¥ יין</option><option value="USD">$ דולר</option></select>
-        <select class="exp-sel" id="exp-cat"><option value="food">🍜 אוכל</option><option value="attractions">🎡 אתרים</option><option value="transport">🚄 תחבורה</option><option value="hotel">🏨 מלון</option><option value="flights">✈️ טיסות</option><option value="shopping">🛍️ שופינג</option><option value="other">📦 אחר</option></select>
+        <input class="exp-sel" id="exp-amt" placeholder="סכום" type="number" style="max-width:90px;flex:none">
+        <select class="exp-sel" id="exp-cur">
+          <option value="ILS">₪ שקל</option>
+          <option value="JPY">¥ יין</option>
+          <option value="USD">$ דולר</option>
+        </select>
+        <select class="exp-sel" id="exp-cat">
+          <option value="food">🍜 אוכל</option>
+          <option value="attractions">🎡 אתרים</option>
+          <option value="transport">🚄 תחבורה</option>
+          <option value="hotel">🏨 מלון</option>
+          <option value="flights">✈️ טיסות</option>
+          <option value="shopping">🛍️ שופינג</option>
+          <option value="other">📦 אחר</option>
+        </select>
       </div>
       <select class="exp-sel" id="exp-day" style="width:100%;margin-bottom:8px"></select>
       <div class="exp-preview" id="exp-preview"></div>
       <button class="add-btn-main" id="add-exp-btn">+ הוסף הוצאה</button>
     </div>
 
-    <!-- FILTER BY CATEGORY -->
-    <div id="bg-cat-section">
-      <div class="section-pad"><div class="sec-hdr"><div class="sec-title">לפי קטגוריה</div></div></div>
-      <div class="filter-row" id="exp-cat-filter">
-        <button class="fb on" data-cf="all">הכל</button>
-        <button class="fb" data-cf="food">🍜 אוכל</button>
-        <button class="fb" data-cf="attractions">🎡 אתרים</button>
-        <button class="fb" data-cf="transport">🚄 תחבורה</button>
-        <button class="fb" data-cf="hotel">🏨 מלון</button>
-        <button class="fb" data-cf="flights">✈️ טיסות</button>
-        <button class="fb" data-cf="shopping">🛍️ שופינג</button>
-        <button class="fb" data-cf="other">📦 אחר</button>
-      </div>
-      <div class="cat-grid" id="cat-grid"></div>
+    <!-- CATEGORY FILTER -->
+    <div class="section-pad"><div class="sec-hdr"><div class="sec-title">לפי קטגוריה</div></div></div>
+    <div class="filter-row" id="exp-cat-filter">
+      <button class="fb on" data-cf="all">הכל</button>
+      <button class="fb" data-cf="food">🍜 אוכל</button>
+      <button class="fb" data-cf="attractions">🎡 אתרים</button>
+      <button class="fb" data-cf="transport">🚄 תחבורה</button>
+      <button class="fb" data-cf="hotel">🏨 מלון</button>
+      <button class="fb" data-cf="flights">✈️ טיסות</button>
+      <button class="fb" data-cf="shopping">🛍️ שופינג</button>
+      <button class="fb" data-cf="other">📦 אחר</button>
     </div>
+    <div class="cat-grid" id="cat-grid"></div>
 
-    <!-- DAILY VIEW -->
-    <div id="bg-daily-section" style="display:none">
-      <div class="section-pad"><div class="sec-hdr"><div class="sec-title">הוצאות לפי יום</div></div></div>
-      <div style="background:#fff;margin:0 16px 12px;border-radius:var(--radius);box-shadow:var(--shadow);padding:12px 16px;border:1px solid rgba(0,0,0,0.04)"><div id="day-breakdown"></div></div>
+    <!-- DAILY BREAKDOWN — always visible -->
+    <div class="section-pad"><div class="sec-hdr"><div class="sec-title">הוצאות לפי יום</div></div></div>
+    <div style="background:var(--white);margin:10px 16px 12px;border-radius:var(--r-xl);box-shadow:var(--sh);padding:12px 16px">
+      <div id="day-breakdown"><div style="text-align:center;color:var(--text3);font-size:13px;padding:12px">עדיין אין הוצאות</div></div>
     </div>
 
     <!-- ALL EXPENSES -->
-    <div class="section-pad"><div class="sec-hdr" style="justify-content:space-between"><div class="sec-title">כל ההוצאות</div><span id="exp-filter-lbl" style="font-size:10px;color:var(--gray2)"></span></div></div>
-    <div class="exp-list-card" style="margin-bottom:16px"><div id="exp-list"><div style="text-align:center;color:var(--gray2);font-size:12px;padding:16px">הוסף את ההוצאה הראשונה!</div></div></div>
+    <div class="section-pad"><div class="sec-hdr">
+      <div class="sec-title">כל ההוצאות</div>
+      <span id="exp-filter-lbl" style="font-size:11px;color:var(--text3)"></span>
+    </div></div>
+    <div class="exp-list-card" style="margin-top:10px;margin-bottom:16px">
+      <div id="exp-list"><div style="text-align:center;color:var(--text3);font-size:13px;padding:16px">הוסף את ההוצאה הראשונה!</div></div>
+    </div>
   </div>
 </div>
-
-<!-- MODAL: ADD PLACE -->
-<div class="modal" id="modal-place">
-  <div class="modal-box">
-    <div class="modal-handle"></div>
-    <div class="modal-title">📍 הוסף אתר ליום <button class="modal-close" onclick="closeModal('modal-place')">✕</button></div>
-    <div class="field-wrap"><div class="field-lbl">יום</div><select class="exp-sel" id="np-day" style="width:100%"></select></div>
-    <div class="field-wrap"><div class="field-lbl">שם האתר</div><input class="exp-inp" id="np-name" placeholder="למשל: Shinjuku Gyoen..." style="margin-bottom:0"></div>
-    <div class="field-wrap"><div class="field-lbl">הערה (אופציונלי)</div><input class="exp-inp" id="np-note" placeholder="חינם / להזמין מראש / ¥..." style="margin-bottom:0"></div>
-    <div class="field-wrap">
-      <div class="field-lbl">סוג</div>
-      <div class="type-chips" id="np-chips">
-        <button class="type-chip on" data-t="⛩️">⛩️ מקדש</button><button class="type-chip" data-t="🏛️">🏛️ מוזיאון</button>
-        <button class="type-chip" data-t="🌿">🌿 טבע</button><button class="type-chip" data-t="🛍️">🛍️ שופינג</button>
-        <button class="type-chip" data-t="🎭">🎭 תרבות</button><button class="type-chip" data-t="🌉">🌉 תצפית</button>
-        <button class="type-chip" data-t="🎡">🎡 בידור</button><button class="type-chip" data-t="📍">📍 אחר</button>
-      </div>
-    </div>
-    <div class="field-wrap">
-      <div class="field-lbl">היכן להוסיף</div>
-      <div class="time-seg" id="np-slots">
-        <button class="time-opt" data-s="title" onclick="pickSlot(this)">🏷️<br><span style="font-size:10px">כותרת</span></button>
-        <button class="time-opt on" data-s="morning" onclick="pickSlot(this)">☀️<br><span style="font-size:10px">בוקר</span></button>
-        <button class="time-opt" data-s="afternoon" onclick="pickSlot(this)">🌤️<br><span style="font-size:10px">צהריים</span></button>
-        <button class="time-opt" data-s="evening" onclick="pickSlot(this)">🌙<br><span style="font-size:10px">ערב</span></button>
-      </div>
-    </div>
-    <button class="add-btn-main" onclick="addPlace()">+ הוסף לתוכנית</button>
-  </div>
-</div>
-
-<!-- MODAL: REST TO DAY -->
-<div class="modal" id="modal-rest-day">
-  <div class="modal-box">
-    <div class="modal-handle"></div>
-    <div class="modal-title">🍜 הוסף מסעדה ליום <button class="modal-close" onclick="closeModal('modal-rest-day')">✕</button></div>
-    <select class="exp-sel" id="rd-day" style="width:100%;margin-bottom:8px"></select>
-    <input class="exp-inp" id="rd-name" placeholder="שם המסעדה">
-    <input class="exp-inp" id="rd-style" placeholder="סגנון אוכל">
-    <div class="exp-row" style="margin-bottom:8px">
-      <select class="exp-sel" id="rd-price"><option value="cheap">🟢 זול</option><option value="mid">🟡 בינוני</option><option value="exp">🔴 יקר</option></select>
-      <select class="exp-sel" id="rd-emoji"><option value="🍜">🍜</option><option value="🍣">🍣</option><option value="🥩">🥩</option><option value="🥘">🥘</option><option value="🍱">🍱</option><option value="🍡">🍡</option><option value="☕">☕</option><option value="🍵">🍵</option><option value="🐙">🐙</option></select>
-    </div>
-    <button class="add-btn-main" onclick="addRestToDay()">+ הוסף ליום</button>
-  </div>
-</div>
-
-<!-- MODAL: REST -->
-<div class="modal" id="modal-rest">
-  <div class="modal-box">
-    <div class="modal-handle"></div>
-    <div class="modal-title">🍜 הוסף מסעדה <button class="modal-close" onclick="closeModal('modal-rest')">✕</button></div>
-    <input class="exp-inp" id="nr-name" placeholder="שם המסעדה">
-    <input class="exp-inp" id="nr-style" placeholder="סגנון">
-    <input class="exp-inp" id="nr-note" placeholder="הערה (אופציונלי)">
-    <div class="exp-row" style="margin-bottom:6px">
-      <select class="exp-sel" id="nr-price"><option value="cheap">🟢 זול</option><option value="mid">🟡 בינוני</option><option value="exp">🔴 יקר</option></select>
-      <select class="exp-sel" id="nr-emoji"><option value="🍜">🍜</option><option value="🍣">🍣</option><option value="🥩">🥩</option><option value="🥘">🥘</option><option value="🍱">🍱</option><option value="🍡">🍡</option><option value="🐙">🐙</option><option value="☕">☕</option><option value="🍵">🍵</option><option value="🫕">🫕</option><option value="🐟">🐟</option><option value="🍺">🍺</option></select>
-    </div>
-    <div class="exp-row" style="margin-bottom:8px">
-      <select class="exp-sel" id="nr-city"><option value="tokyo-asakusa">טוקיו – אסאקוסה</option><option value="tokyo-shibuya">טוקיו – שיבויה</option><option value="tokyo-ginza">טוקיו – גינזה</option><option value="alps">האלפים</option><option value="kyoto">קיוטו</option><option value="osaka">אוסקה</option></select>
-      <select class="exp-sel" id="nr-day"></select>
-    </div>
-    <button class="add-btn-main" onclick="addRest()">+ הוסף מסעדה</button>
-  </div>
-</div>
-
-<!-- MODAL: HOTEL -->
-<div class="modal" id="modal-hotel">
-  <div class="modal-box">
-    <div class="modal-handle"></div>
-    <div class="modal-title">🏨 הוסף מלון / לינה <button class="modal-close" onclick="closeModal('modal-hotel')">✕</button></div>
-    <input class="exp-inp" id="ht-name" placeholder="שם המלון / Ryokan">
-    <input class="exp-inp" id="ht-area" placeholder="אזור / עיר">
-    <input class="exp-inp" id="ht-addr" placeholder="כתובת (אופציונלי)">
-    <div class="exp-row" style="margin-bottom:6px">
-      <div style="flex:1"><div class="field-lbl" style="margin-bottom:3px">כניסה</div><select class="exp-sel" id="ht-in" style="width:100%"></select></div>
-      <div style="flex:1"><div class="field-lbl" style="margin-bottom:3px">יציאה</div><select class="exp-sel" id="ht-out" style="width:100%"></select></div>
-    </div>
-    <div class="exp-row" style="margin-bottom:8px">
-      <select class="exp-sel" id="ht-type"><option value="🏨">🏨 מלון</option><option value="♨️">♨️ ריוקאן</option><option value="🛖">🛖 Guesthouse</option><option value="🏡">🏡 Airbnb</option></select>
-      <input class="exp-sel" id="ht-price" placeholder="מחיר/לילה (¥)" type="number">
-    </div>
-    <input class="exp-inp" id="ht-note" placeholder="הערה (אופציונלי)">
-    <button class="add-btn-main" onclick="addHotel()">+ הוסף מלון</button>
-  </div>
-</div>
-
-<!-- MODAL: EDIT ACTIVITY -->
-<div class="modal" id="modal-edit-act">
-  <div class="modal-box">
-    <div class="modal-handle"></div>
-    <div class="modal-title">✏️ ערוך פעילות <button class="modal-close" onclick="closeModal('modal-edit-act')">✕</button></div>
-    <input class="exp-inp" id="ea-text" placeholder="שם הפעילות / האתר">
-    <input class="exp-inp" id="ea-note" placeholder="הערה (אופציונלי)">
-    <input type="hidden" id="ea-day"><input type="hidden" id="ea-slot"><input type="hidden" id="ea-idx">
-    <button class="add-btn-main" onclick="saveEditAct()">💾 שמור שינויים</button>
-  </div>
-</div>
-
-
 
 <!-- MODAL: EDIT EXPENSE -->
 <div class="modal" id="modal-edit-exp">
@@ -1359,6 +1225,24 @@ const R0 = [
 
 
 
+const TRANS_LIST = [
+  {f:"הנדה/נריטה",t:"אסאקוסה",k:"train",d:"40-90 דק",n:"Monorail + Yamanote + Ginza Line"},
+  {f:"אסאקוסה",t:"אודאיבה",k:"train",d:"40-45 דק",n:"Ginza + Yurikamome"},
+  {f:"אסאקוסה",t:"שיבויה",k:"train",d:"30-35 דק",n:"Ginza Line + JR Yamanote"},
+  {f:"אסאקוסה",t:"טוקיו",k:"train",d:"30 דק",n:"Ginza Line + JR"},
+  {f:"טוקיו",t:"נגויה",k:"shin",d:"90 דק",n:"Shinkansen"},
+  {f:"נגויה",t:"טאקיאמה",k:"train",d:"2:30 שעות",n:"Limited Express Hida"},
+  {f:"טאקיאמה",t:"קמיקוצי",k:"bus",d:"1.5-2 שעות",n:"Nohi Bus - להזמין מראש!"},
+  {f:"טאקיאמה",t:"שירקאווה-גו",k:"bus",d:"50 דק",n:"להזמין מראש!"},
+  {f:"נגויה",t:"קיוטו",k:"shin",d:"35 דק",n:"Shinkansen"},
+  {f:"קיוטו",t:"ארשיאמה",k:"train",d:"25-35 דק",n:"JR Sagano / Randen"},
+  {f:"קיוטו",t:"נארה",k:"train",d:"60 דק",n:"JR Nara Line"},
+  {f:"קיוטו",t:"Fushimi Inari",k:"train",d:"10-15 דק",n:"JR Nara Line"},
+  {f:"קיוטו",t:"אוסקה Namba",k:"train",d:"20-30 דק",n:"Kintetsu / Hankyu"},
+  {f:"Namba",t:"Universal City",k:"train",d:"25-35 דק",n:"JR Osaka Loop"},
+  {f:"שין-אוסקה",t:"טוקיו",k:"shin",d:"2:30 שעות",n:"Nozomi Shinkansen"}
+];
+
 const CATS=[{id:'food',e:'🍜',n:'אוכל'},{id:'attractions',e:'🎡',n:'אתרים'},{id:'transport',e:'🚄',n:'תחבורה'},{id:'hotel',e:'🏨',n:'מלון'},{id:'flights',e:'✈️',n:'טיסות'},{id:'shopping',e:'🛍️',n:'שופינג'},{id:'other',e:'📦',n:'אחר'}];
 const TOILS={JPY:0.02,USD:3,ILS:1};
 const TYPE_COLORS={tokyo:'#3b82f6',hakone:'#10b981',alps:'#f59e0b',kyoto:'#e8628a',osaka:'#8b5cf6',park:'#1a1a2e'};
@@ -1434,10 +1318,7 @@ function initData(){
   db.ref('rests').once('value').then(s=>{
     if(!s.val()) db.ref('rests').set(R0);
   });
-  // Hotels: only seed if completely empty (user manages via sync button)
-  db.ref('hotels').once('value').then(s=>{
-    if(!s.val()||!s.val().length) db.ref('hotels').set(GMAIL_HOTELS);
-  });
+  // Hotels: never auto-import — user manages manually or via sync button
   db.ref('visited').once('value').then(s=>{
     if(!s.val()) db.ref('visited').set({});
   });
@@ -1466,10 +1347,7 @@ function startListeners(){
     ];
     if(allIds.length) nextId=Math.max(...allIds)+1;
     loaded=true;
-    // Run each tab build independently — one failure won't block the others
-    [buildDays,buildFilters,renderRests,buildTransTab,renderHotels,renderBudget,renderFlights,populateSelects].forEach(fn=>{
-      try{fn();}catch(e){console.error('Tab render failed:',fn.name,e);}
-    });
+    buildDays();buildFilters();renderRests();buildTransTab();renderHotels();renderBudget();renderFlights();populateSelects();
     document.getElementById('hdr-hotels').textContent=hotels.length;
     document.getElementById('ov-rests').textContent=(RESTS||[]).filter(Boolean).length;
   });
@@ -1530,7 +1408,7 @@ function buildActItem(item,dayId,slot,idx){
         </button>
         <button class="act-btn${hl?' act-btn-highlight on':' act-btn-highlight'}" onclick="toggleHighlight('${dayId}','${slot}',${idx})" title="סמן כחובה">⭐</button>
         <button class="act-btn act-btn-note" onclick="saveActNote('${dayId}','${slot}',${idx})" title="הוסף הערה">📝</button>
-        <button class="act-btn act-btn-edit" onclick="openEditAct('${dayId}','${slot}',${idx},'${text.replace(/'/g,String.fromCharCode(39))}','${an.replace(/'/g,String.fromCharCode(39))}')">✏️</button>
+
         <button class="act-btn act-btn-del" onclick="deleteAct('${dayId}','${slot}',${idx})">🗑</button>
       </div>
     </div>
@@ -1928,14 +1806,7 @@ function renderRests(){
 function buildTransTab(){
   const tc=k=>k==='shin'?'tc-shin':k==='bus'?'tc-bus':'tc-train';
   const tl=k=>k==='shin'?'🚄 שינקנסן':k==='bus'?'🚌 אוטובוס':'🚃 רכבת';
-  // Build the transport list from the days' trans segments (dedup by from+to+kind)
-  const seen=new Set();
-  const transList=(DAYS||[]).filter(Boolean).flatMap(d=>d.trans||[]).filter(t=>{
-    const key=t.f+'|'+t.t+'|'+t.k;
-    if(seen.has(key))return false;
-    seen.add(key);return true;
-  });
-  document.getElementById('trans-list').innerHTML=transList.map(t=>`<div class="trans-card">
+  document.getElementById('trans-list').innerHTML=TRANS_LIST.map(t=>`<div class="trans-card">
     <div class="trans-route">
       <span class="trans-city">${t.f}</span>
       <span class="trans-arrow">→</span>
@@ -2031,12 +1902,22 @@ function saveHotelPrice(id){
 // BUDGET
 function toILS(a,c){return a*(TOILS[c]||1);}
 function fmtILS(v){return'₪'+Math.round(v).toLocaleString();}
+function getTodayTripDay(){
+  const now = new Date();
+  const tripStart = new Date('2026-09-16');
+  const diff = Math.floor((now-tripStart)/(1000*60*60*24));
+  if(diff<0||diff>=16) return 'general';
+  const d = (DAYS||[])[diff];
+  return d?d.d:'general';
+}
+
 function addExpense(){
   const desc=document.getElementById('exp-desc').value.trim();
   const amt=parseFloat(document.getElementById('exp-amt').value);
   const cur=document.getElementById('exp-cur').value;
   const cat=document.getElementById('exp-cat').value;
-  const day=document.getElementById('exp-day').value;
+  const dayEl=document.getElementById('exp-day');
+  const day=dayEl?dayEl.value:'general';
   if(!desc||!amt||amt<=0){alert('אנא מלא תיאור וסכום');return;}
   const catObj=CATS.find(c=>c.id===cat)||CATS[0];
   const amtILS=toILS(amt,cur);
@@ -2048,288 +1929,118 @@ function addExpense(){
 function delExpense(id){save('expenses',(expenses||[]).filter(e=>e&&e.id!==id));}
 function renderBudget(){
   const all=(expenses||[]).filter(Boolean);
-  const hotelList=(hotels||[]).filter(Boolean);
+  const tot=all.reduce((s,e)=>s+(e.amt||0),0);
 
-  // Calculate hotel costs from hotel entries (¥ → ILS)
-  const hotelExpenses=hotelList.filter(h=>h.price&&parseInt(h.price)>0).map(h=>({
-    id:'hotel_'+h.id, desc:h.name, amt:parseInt(h.price)*h.nights*0.02,
-    origAmt:parseInt(h.price)*h.nights, origCur:'JPY',
-    cat:'hotel', day:h.ci, e:'🏨', fromHotel:true
-  }));
+  // Daily avg excludes flights + hotels
+  const dailyOnly=all.filter(e=>e.cat!=='flights'&&e.cat!=='hotel');
+  const dailyTot=dailyOnly.reduce((s,e)=>s+(e.amt||0),0);
+  const daysWithExp=new Set(dailyOnly.map(e=>e.day).filter(d=>d&&d!=='general')).size||1;
+  const avgDaily=dailyTot/daysWithExp;
 
-  // Merged for display totals (expenses + hotel derived)
-  const allWithHotels=[...all, ...hotelExpenses];
-  const tot=allWithHotels.reduce((s,e)=>s+(e.amt||0),0);
-  const manualTot=all.reduce((s,e)=>s+(e.amt||0),0);
-
-  // Averages
-  const totalNights=16;
-  const totalDays=16;
-  const foodExp=all.filter(e=>e.cat==='food');
-  const foodTot=foodExp.reduce((s,e)=>s+(e.amt||0),0);
-  const foodDays=new Set(foodExp.map(e=>e.day)).size||1;
-  const hotelTot=hotelExpenses.reduce((s,e)=>s+(e.amt||0),0);
-  const avgPerNight=totalNights>0?hotelTot/totalNights:0;
-  const avgFoodPerDay=foodDays>0?foodTot/foodDays:0;
-  const avgDailyTotal=totalDays>0?tot/totalDays:0;
-
-  // Update summary cards
+  // Update top cards
   document.getElementById('total-spent').textContent=fmtILS(tot);
-  document.getElementById('exp-count').textContent=all.length+' ידניות';
+  const countLbl=document.getElementById('exp-count-lbl');
+  if(countLbl)countLbl.textContent=all.length+' רשומות';
   const avgEl=document.getElementById('avg-per-day');
-  if(avgEl)avgEl.textContent=fmtILS(avgDailyTotal);
+  if(avgEl)avgEl.textContent=all.length?fmtILS(avgDaily):'₪0';
 
-  // Add averages section
-  const avgSection=document.getElementById('budget-averages');
-  if(avgSection){
-    avgSection.innerHTML=`
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px">
-        <div class="stat-card" style="padding:10px 6px">
-          <span class="stat-num" style="font-size:16px">${fmtILS(avgPerNight)}</span>
-          <span class="stat-lbl">ממוצע ללילה 🏨</span>
-        </div>
-        <div class="stat-card" style="padding:10px 6px">
-          <span class="stat-num" style="font-size:16px">${fmtILS(avgFoodPerDay)}</span>
-          <span class="stat-lbl">ממוצע אוכל יומי 🍜</span>
-        </div>
-        <div class="stat-card" style="padding:10px 6px">
-          <span class="stat-num" style="font-size:16px">${fmtILS(avgDailyTotal)}</span>
-          <span class="stat-lbl">ממוצע יומי כולל</span>
-        </div>
-      </div>
-      <div style="font-size:10px;color:var(--gray2);margin-top:6px">* כולל מלונות (¥→₪ לפי 100¥=₪2) · ${totalNights} לילות · ${totalDays} ימים</div>
-    `;
-  }
-
-  // Category cards (all expenses including hotels)
-  document.getElementById('cat-grid').innerHTML=CATS.map(cat=>{
-    const t=allWithHotels.filter(e=>e.cat===cat.id).reduce((s,e)=>s+(e.amt||0),0);
+  // Category grid
+  const catEl=document.getElementById('cat-grid');
+  if(catEl)catEl.innerHTML=CATS.map(cat=>{
+    const t=all.filter(e=>e.cat===cat.id).reduce((s,e)=>s+(e.amt||0),0);
     return`<div class="cat-card${t>0?' act':''}"><span class="cat-ico">${cat.e}</span><div class="cat-name">${cat.n}</div><div class="cat-total">${t>0?fmtILS(t):'—'}</div></div>`;
   }).join('');
 
-  // Filter for list (manual expenses only for editing)
-  const v=activeCatFilter==='all'?all:all.filter(e=>e.cat===activeCatFilter);
+  // Filter label
   const filterLbl=document.getElementById('exp-filter-lbl');
-  if(filterLbl)filterLbl.textContent=activeCatFilter!=='all'?`${CATS.find(ct=>ct.id===activeCatFilter)?.n||''} (${v.length})`:`${all.length} הוצאות ידניות`;
+  if(filterLbl)filterLbl.textContent=activeCatFilter!=='all'
+    ?(CATS.find(ct=>ct.id===activeCatFilter)?.n||'')+' ('+all.filter(e=>e.cat===activeCatFilter).length+')'
+    :all.length+' הוצאות';
 
-  // Day breakdown (manual expenses)
-  const dm={};all.forEach(e=>{dm[e.day]=(dm[e.day]||0)+(e.amt||0);});
-  const dk=Object.keys(dm).sort();
+  // Filtered list
+  const filtered=activeCatFilter==='all'?all:all.filter(e=>e.cat===activeCatFilter);
+
+  // Day breakdown — sorted by trip order
+  const dm={};
+  all.forEach(e=>{const d=e.day||'general';dm[d]=(dm[d]||0)+(e.amt||0);});
+  const dk=Object.keys(dm).sort((a,b)=>{
+    const ai=(DAYS||[]).findIndex(d=>d&&d.d===a);
+    const bi=(DAYS||[]).findIndex(d=>d&&d.d===b);
+    if(ai>=0&&bi>=0)return ai-bi;
+    if(ai>=0)return-1;if(bi>=0)return 1;return 0;
+  });
   const mx=dk.length?Math.max(...dk.map(k=>dm[k])):1;
-  const dayBreakEl=document.getElementById('day-breakdown');
-  if(dayBreakEl){
-    dayBreakEl.innerHTML=!dk.length
-      ?'<div style="text-align:center;color:var(--gray2);font-size:12px;padding:8px">עדיין אין הוצאות</div>'
-      :dk.map(k=>{
+  const dbEl=document.getElementById('day-breakdown');
+  if(dbEl){
+    if(!dk.length){
+      dbEl.innerHTML='<div style="text-align:center;color:var(--text3);font-size:13px;padding:12px">עדיין אין הוצאות</div>';
+    } else {
+      dbEl.innerHTML=dk.map(k=>{
         const pct=Math.round(dm[k]/mx*100);
         const dObj=(DAYS||[]).find(d=>d&&d.d===k);
-        const dayExps=all.filter(e=>e.day===k);
-        return`<div class="day-bar-row" style="cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
-          <div style="display:flex;justify-content:space-between;align-items:baseline">
-            <div><span style="font-size:12px;font-weight:700">${k}</span>${dObj?`<span style="font-size:10px;color:var(--gray2);margin-right:5px">${dObj.title}</span>`:''}</div>
-            <span style="font-size:13px;font-weight:800;color:var(--pink)">${fmtILS(dm[k])}</span>
+        const dayExps=all.filter(e=>(e.day||'general')===k);
+        const id='dbr-'+k.replace('/','_');
+        return`<div class="day-bar-row" onclick="toggleEl('${id}')">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="display:flex;align-items:center;gap:7px">
+              <span style="font-size:13px;font-weight:700;color:var(--text1)">${k==='general'?'כללי':k}</span>
+              ${dObj?`<span style="font-size:11px;color:var(--text3)">${dObj.title}</span>`:''}
+            </div>
+            <span style="font-size:14px;font-weight:800;color:var(--purple)">${fmtILS(dm[k])}</span>
           </div>
           <div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div>
         </div>
-        <div style="display:none;padding:4px 0 8px;border-bottom:1px solid var(--gray3)">
+        <div id="${id}" class="day-exp-detail">
           ${dayExps.map(ex=>{
             const co=CATS.find(ct=>ct.id===ex.cat)||CATS[0];
-            return`<div style="display:flex;align-items:center;gap:7px;padding:5px 4px;font-size:11px">
-              <span>${ex.e}</span><span style="flex:1;color:var(--navy)">${ex.desc}</span>
-              <span style="color:var(--gray2)">${co.n}</span>
-              <span style="font-weight:700;color:var(--pink)">${fmtILS(ex.amt||0)}</span>
-              <button onclick="event.stopPropagation();openEditExpense(${ex.id})" style="background:#e0e7ff;border:none;border-radius:5px;padding:2px 6px;cursor:pointer;font-size:10px">✏️</button>
-              <button onclick="event.stopPropagation();delExpense(${ex.id})" style="background:#fee2e2;border:none;border-radius:5px;padding:2px 6px;cursor:pointer;font-size:10px">🗑</button>
+            const orig=ex.origCur&&ex.origCur!=='ILS'?` (${ex.origCur==='JPY'?'¥':'$'}${Number(ex.origAmt||0).toLocaleString()})`:'';
+            return`<div style="display:flex;align-items:center;gap:8px;padding:5px 0 5px 4px;border-bottom:1px solid var(--sep);font-size:12px">
+              <span style="font-size:15px">${ex.e||co.e}</span>
+              <div style="flex:1;min-width:0">
+                <div style="font-weight:600;color:var(--text1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${ex.desc}</div>
+                <div style="color:var(--text3);font-size:11px">${co.n}</div>
+              </div>
+              <span style="font-weight:700;color:var(--text1);flex-shrink:0">${fmtILS(ex.amt||0)}${orig}</span>
+              <button onclick="event.stopPropagation();openEditExpense(${ex.id})" style="background:var(--purple-soft);border:none;border-radius:6px;padding:3px 8px;cursor:pointer;font-size:11px;color:var(--purple-text);flex-shrink:0">✏️</button>
+              <button onclick="event.stopPropagation();delExpense(${ex.id})" style="background:#FFF1F2;border:none;border-radius:6px;padding:3px 8px;cursor:pointer;font-size:11px;color:var(--red);flex-shrink:0">🗑</button>
             </div>`;
           }).join('')}
         </div>`;
-      }).join('')+`<div style="display:flex;justify-content:space-between;padding:10px 0 2px;font-size:13px;font-weight:800;border-top:2px solid var(--gray3);margin-top:4px"><span>סה"כ ידני</span><span style="color:var(--pink)">${fmtILS(manualTot)}</span></div>`;
-  }
-
-  // Hotel costs section
-  const hotelBreakEl=document.getElementById('hotel-cost-breakdown');
-  if(hotelBreakEl&&hotelList.length){
-    const sorted=hotelList.filter(h=>h.price&&parseInt(h.price)>0).sort((a,b)=>d2i(a.ci)-d2i(b.ci));
-    hotelBreakEl.innerHTML=sorted.length?sorted.map(h=>{
-      const tot2=parseInt(h.price)*h.nights*0.02;
-      return`<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--gray3);font-size:12px">
-        <span style="font-size:15px">${h.type}</span>
-        <div style="flex:1;min-width:0"><div style="font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${h.name}</div>
-        <div style="font-size:10px;color:var(--gray2)">${h.ci}→${h.co} · ${h.nights} לילות · ¥${parseInt(h.price).toLocaleString()}/לילה</div></div>
-        <span style="font-weight:800;color:var(--pink);flex-shrink:0">${fmtILS(tot2)}</span>
+      }).join('')+`<div style="display:flex;justify-content:space-between;padding:10px 0 2px;font-size:14px;font-weight:800;border-top:2px solid var(--sep2);margin-top:4px">
+        <span>סה"כ</span><span style="color:var(--purple)">${fmtILS(tot)}</span>
       </div>`;
-    }).join('')+`<div style="display:flex;justify-content:space-between;padding:8px 0 2px;font-size:13px;font-weight:800;border-top:2px solid var(--gray3);margin-top:2px">
-      <span>סה"כ מלונות</span><span style="color:var(--pink)">${fmtILS(hotelTot)}</span>
-    </div>`:'<div style="text-align:center;color:var(--gray2);font-size:12px;padding:8px">הוסף מחיר למלונות כדי לראות עלויות</div>';
+    }
   }
 
   // Expense list
-  if(!v.length){
-    document.getElementById('exp-list').innerHTML='<div style="text-align:center;color:var(--gray2);font-size:12px;padding:16px">'+(activeCatFilter!=='all'?'אין הוצאות בקטגוריה זו':'הוסף את ההוצאה הראשונה!')+'</div>';
+  const expEl=document.getElementById('exp-list');
+  if(!expEl)return;
+  if(!filtered.length){
+    expEl.innerHTML='<div style="text-align:center;color:var(--text3);font-size:13px;padding:16px">'+(activeCatFilter!=='all'?'אין הוצאות בקטגוריה זו':'הוסף את ההוצאה הראשונה!')+'</div>';
   } else {
-    document.getElementById('exp-list').innerHTML=v.slice().reverse().map(ex=>{
+    expEl.innerHTML=filtered.slice().reverse().map(ex=>{
       const co=CATS.find(ct=>ct.id===ex.cat)||CATS[0];
-      const orig=ex.origCur&&ex.origCur!=='ILS'?` <span style="font-size:10px;color:var(--gray2)">(${ex.origCur==='JPY'?'¥':'$'}${Number(ex.origAmt).toLocaleString()})</span>`:'';
+      const orig=ex.origCur&&ex.origCur!=='ILS'?` <span style="font-size:10px;color:var(--text3)">(${ex.origCur==='JPY'?'¥':'$'}${Number(ex.origAmt||0).toLocaleString()})</span>`:'';
       return`<div class="exp-list-row">
-        <span style="font-size:16px;width:24px;text-align:center">${ex.e}</span>
+        <span style="font-size:17px;width:26px;text-align:center;flex-shrink:0">${ex.e||co.e}</span>
         <div style="flex:1;min-width:0">
-          <div style="font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${ex.desc}</div>
-          <div style="font-size:10px;color:var(--gray2)">${co.n} · ${ex.day}</div>
+          <div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${ex.desc}</div>
+          <div style="font-size:11px;color:var(--text3)">${co.n} · ${ex.day||'כללי'}</div>
         </div>
-        <span style="font-size:12px;font-weight:800;flex-shrink:0;margin-left:4px">${fmtILS(ex.amt||0)}${orig}</span>
-        <button onclick="openEditExpense(${ex.id})" style="background:#e0e7ff;border:none;border-radius:6px;padding:3px 7px;cursor:pointer;font-size:11px;margin-left:4px">✏️</button>
+        <span style="font-size:13px;font-weight:700;flex-shrink:0">${fmtILS(ex.amt||0)}${orig}</span>
+        <button onclick="openEditExpense(${ex.id})" style="background:var(--purple-soft);border:none;border-radius:7px;padding:4px 8px;cursor:pointer;font-size:12px;margin-right:4px;color:var(--purple-text)">✏️</button>
         <button class="exp-del-btn" onclick="delExpense(${ex.id})">✕</button>
       </div>`;
     }).join('');
   }
 }
 
-// PLACE / REST ADD
-let placeTypeVal='⛩️';
-function pickSlot(btn){document.querySelectorAll('#np-slots .time-opt').forEach(x=>x.classList.remove('on'));btn.classList.add('on');placeSlot=btn.dataset.s;}
-document.querySelectorAll('#np-chips .type-chip').forEach(c=>c.addEventListener('click',function(){document.querySelectorAll('#np-chips .type-chip').forEach(x=>x.classList.remove('on'));this.classList.add('on');placeTypeVal=this.dataset.t;}));
-
-function addPlace(){
-  const dayId=document.getElementById('np-day').value;
-  const name=document.getElementById('np-name').value.trim();
-  const note=document.getElementById('np-note').value.trim();
-  if(!name){alert('אנא הכנס שם אתר');return;}
-  const full=placeTypeVal+' '+name+(note?' ('+note+')':'');
-  const days=[...(DAYS||[])];const i=days.findIndex(d=>d&&d.d===dayId);if(i===-1)return;
-  if(placeSlot==='title'){days[i]={...days[i],_te:full};}
-  else{const arr=[...(days[i][placeSlot]||[]),{text:full,_new:true}];days[i]={...days[i],[placeSlot]:arr};}
-  save('days',days);
-  document.getElementById('np-name').value='';document.getElementById('np-note').value='';
-  closeModal('modal-place');toast('✅ אתר נוסף ונשמר!');
+// toggle daily breakdown row
+function toggleEl(id){
+  const el=document.getElementById(id);
+  if(el)el.style.display=el.style.display==='block'?'none':'block';
 }
 
-function addRestToDay(){
-  const day=document.getElementById('rd-day').value;
-  const name=document.getElementById('rd-name').value.trim();
-  if(!name){alert('אנא הכנס שם');return;}
-  const dObj=(DAYS||[]).find(d=>d&&d.d===day);
-  const nr={id:nextId++,n:name,c:dObj?dObj.area:'other',cl:dObj?dObj.al:'',day,s:document.getElementById('rd-style').value||'מסעדה',p:document.getElementById('rd-price').value,e:document.getElementById('rd-emoji').value,note:''};
-  const rests=[...(RESTS||[]),nr];
-  const days=[...(DAYS||[])];const i=days.findIndex(d=>d&&d.d===day);
-  if(i!==-1){days[i]={...days[i],ri:[...(days[i].ri||[]),nr.id]};}
-  save('rests',rests);save('days',days);
-  ['rd-name','rd-style'].forEach(id=>document.getElementById(id).value='');
-  closeModal('modal-rest-day');toast('✅ מסעדה נוספה!');
-}
-
-function addRest(){
-  const name=document.getElementById('nr-name').value.trim();if(!name){alert('אנא הכנס שם');return;}
-  const CL={'tokyo-asakusa':'אסאקוסה','tokyo-shibuya':'שיבויה','tokyo-ginza':'גינזה','alps':'האלפים','kyoto':'קיוטו','osaka':'אוסקה'};
-  const c=document.getElementById('nr-city').value;const day=document.getElementById('nr-day').value;
-  const nr={id:nextId++,n:name,c,cl:CL[c]||c,day:day==='general'?'—':day,s:document.getElementById('nr-style').value||'מסעדה',p:document.getElementById('nr-price').value,e:document.getElementById('nr-emoji').value,note:document.getElementById('nr-note').value.trim()};
-  const rests=[...(RESTS||[]),nr];
-  const days=[...(DAYS||[])];const i=days.findIndex(d=>d&&d.d===day);
-  if(i!==-1&&day!=='general'){days[i]={...days[i],ri:[...(days[i].ri||[]),nr.id]};}
-  save('rests',rests);if(i!==-1&&day!=='general')save('days',days);
-  ['nr-name','nr-style','nr-note'].forEach(id=>document.getElementById(id).value='');
-  closeModal('modal-rest');toast('✅ מסעדה נוספה!');
-}
-
-// SELECTS
-function populateSelects(){
-  const base='<option value="general">כללי</option>'+(DAYS||[]).filter(Boolean).map(d=>`<option value="${d.d}">${d.d} – ${d.title}</option>`).join('');
-  const dayOnly=(DAYS||[]).filter(Boolean).map(d=>`<option value="${d.d}">${d.d} – ${d.title}</option>`).join('');
-  ['exp-day','nr-day'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=base;});
-  ['np-day','rd-day','ht-in','ht-out'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=dayOnly;});
-}
-
-// MODALS
-function openModal(id){
-  document.getElementById(id).classList.add('open');
-  if(id==='modal-place'){
-    placeSlot='morning';placeTypeVal='⛩️';
-    document.querySelectorAll('#np-slots .time-opt').forEach(x=>x.classList.remove('on'));
-    document.querySelector('#np-slots [data-s="morning"]').classList.add('on');
-    document.querySelectorAll('#np-chips .type-chip').forEach(x=>x.classList.remove('on'));
-    document.querySelector('#np-chips [data-t="⛩️"]').classList.add('on');
-  }
-}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
-
-// BUDGET LISTENERS
-document.getElementById('exp-amt').addEventListener('input',()=>{
-  const a=parseFloat(document.getElementById('exp-amt').value);
-  const c=document.getElementById('exp-cur').value;
-  const p=document.getElementById('exp-preview');
-  if(!a||a<=0||c==='ILS'){p.textContent='';return;}
-  p.textContent=(c==='JPY'?'¥':'$')+a.toLocaleString()+' = '+fmtILS(toILS(a,c));
-});
-document.getElementById('exp-cur').addEventListener('change',()=>document.getElementById('exp-amt').dispatchEvent(new Event('input')));
-document.getElementById('add-exp-btn').addEventListener('click',addExpense);
-document.getElementById('exp-amt').addEventListener('keydown',e=>{if(e.key==='Enter')addExpense();});
-
-
-// ===== FLIGHTS =====
-let flights=[];
-let flightDir='out';
-
-function setFlightDir(dir){
-  flightDir=dir;
-  document.getElementById('ft-dir-out').classList.toggle('on',dir==='out');
-  document.getElementById('ft-dir-back').classList.toggle('on',dir==='back');
-}
-
-function saveFlight(){
-  const editId=document.getElementById('ft-edit-id').value;
-  const f={
-    id:editId?parseInt(editId):nextId++,
-    dir:flightDir,
-    date:document.getElementById('ft-date').value,
-    dep:document.getElementById('ft-dep').value,
-    arr:document.getElementById('ft-arr').value,
-    from:document.getElementById('ft-from').value.trim().toUpperCase(),
-    to:document.getElementById('ft-to').value.trim().toUpperCase(),
-    airline:document.getElementById('ft-airline').value.trim(),
-    num:document.getElementById('ft-num').value.trim(),
-    price:document.getElementById('ft-price').value,
-    note:document.getElementById('ft-note').value.trim()
-  };
-  if(!f.date||!f.from||!f.to){alert('אנא מלא לפחות תאריך, נמל המראה ויעד');return;}
-  if(editId){
-    flights=(flights||[]).map(x=>x&&x.id===parseInt(editId)?f:x);
-  } else {
-    flights=[...(flights||[]),f];
-  }
-  save('flights',flights);
-  ['ft-date','ft-dep','ft-arr','ft-from','ft-to','ft-airline','ft-num','ft-price','ft-note'].forEach(id=>{
-    const el=document.getElementById(id); if(el)el.value='';
-  });
-  document.getElementById('ft-edit-id').value='';
-  setModalTitle('flight-modal-title','✈️ הוסף טיסה','modal-flight');
-  closeModal('modal-flight');
-  toast('✅ טיסה נשמרה!');
-}
-
-function editFlight(id){
-  const f=(flights||[]).find(x=>x&&x.id===id);
-  if(!f)return;
-  setFlightDir(f.dir||'out');
-  document.getElementById('ft-edit-id').value=id;
-  document.getElementById('ft-date').value=f.date||'';
-  document.getElementById('ft-dep').value=f.dep||'';
-  document.getElementById('ft-arr').value=f.arr||'';
-  document.getElementById('ft-from').value=f.from||'';
-  document.getElementById('ft-to').value=f.to||'';
-  document.getElementById('ft-airline').value=f.airline||'';
-  document.getElementById('ft-num').value=f.num||'';
-  document.getElementById('ft-price').value=f.price||'';
-  document.getElementById('ft-note').value=f.note||'';
-  setModalTitle('flight-modal-title','✏️ ערוך טיסה','modal-flight');
-  openModal('modal-flight');
-}
-
-function delFlight(id){
-  if(!confirm('למחוק טיסה זו?'))return;
-  flights=(flights||[]).filter(x=>x&&x.id!==id);
-  save('flights',flights);
-  toast('🗑 טיסה נמחקה');
-}
 
 function renderFlights(){
   const v=(flights||[]).filter(Boolean).sort((a,b)=>a.date>b.date?1:-1);
@@ -2728,11 +2439,78 @@ function setModalTitle2(selector, title, modalId){
   el.appendChild(btn);
 }
 
+
+// ===== FAB =====
+function toggleFab(){
+  const btn=document.getElementById('fab-btn');
+  const menu=document.getElementById('fab-menu');
+  const back=document.getElementById('fab-backdrop');
+  const isOpen=menu.classList.contains('open');
+  if(isOpen){ closeFab(); } else {
+    btn.classList.add('open');
+    menu.classList.add('open');
+    back.classList.add('open');
+  }
+}
+
+function closeFab(){
+  document.getElementById('fab-btn').classList.remove('open');
+  document.getElementById('fab-menu').classList.remove('open');
+  document.getElementById('fab-backdrop').classList.remove('open');
+}
+
+// Quick expense from FAB — opens a lightweight modal
+function quickAddExpMode(){
+  // Just open the budget modal-edit-exp as a quick-add
+  // Actually we have a dedicated add flow — open modal-edit-exp
+  // But better: just navigate to budget tab and scroll to add form
+  closeFab();
+  // Switch to budget tab
+  document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('on'));
+  const bgBtn=document.querySelector('[data-tab="bg"]');
+  const bgPanel=document.getElementById('pnl-bg');
+  if(bgBtn) bgBtn.classList.add('on');
+  if(bgPanel){
+    bgPanel.classList.add('on');
+    setTimeout(()=>{
+      const inp=document.getElementById('exp-desc');
+      if(inp){ inp.scrollIntoView({behavior:'smooth',block:'center'}); inp.focus(); }
+    },100);
+  }
+}
+
 // COUNTDOWN
 document.getElementById('cnt').textContent=Math.max(0,Math.ceil((new Date('2026-09-16')-new Date())/86400000))||'🎌';
 
 // START
 initData();startListeners();
 </script>
+
+<!-- FAB BACKDROP -->
+<div class="fab-backdrop" id="fab-backdrop" onclick="closeFab()"></div>
+
+<!-- FAB MENU -->
+<div class="fab-menu" id="fab-menu">
+  <div class="fab-item">
+    <button class="fab-item-btn" onclick="closeFab();openModal('modal-place')" title="הוסף אתר">📍</button>
+    <span class="fab-item-label">הוסף אתר</span>
+  </div>
+  <div class="fab-item">
+    <button class="fab-item-btn" onclick="closeFab();openModal('modal-rest-day')" title="הוסף מסעדה">🍜</button>
+    <span class="fab-item-label">הוסף מסעדה</span>
+  </div>
+  <div class="fab-item">
+    <button class="fab-item-btn" onclick="quickAddExpMode()" title="הוסף הוצאה">💴</button>
+    <span class="fab-item-label">הוסף הוצאה</span>
+  </div>
+  <div class="fab-item">
+    <button class="fab-item-btn" onclick="closeFab();openModal('modal-hotel')" title="הוסף מלון">🏨</button>
+    <span class="fab-item-label">הוסף מלון</span>
+  </div>
+</div>
+
+<!-- FAB MAIN BUTTON -->
+<button class="fab" id="fab-btn" onclick="toggleFab()" aria-label="הוסף">+</button>
 </body>
 </html>

@@ -341,7 +341,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text1);direction:r
   </div>
   <div class="countdown">
     <div class="cd-item"><span class="cd-num" id="cnt">—</span><span class="cd-lbl">ימים</span></div>
-    <div class="cd-item"><span class="cd-num">16</span><span class="cd-lbl">לילות</span></div>
+    <div class="cd-item"><span class="cd-num">17</span><span class="cd-lbl">לילות</span></div>
     <div class="cd-item"><span class="cd-num" id="hdr-hotels">0</span><span class="cd-lbl">מלונות</span></div>
     <div class="cd-item"><span class="cd-num">5</span><span class="cd-lbl">ערים</span></div>
   </div>
@@ -404,7 +404,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text1);direction:r
       <div class="route-row"><div class="route-left"><div class="route-dot" style="color:#f59e0b;background:#f59e0b"></div><div class="route-line" style="background:#f59e0b"></div></div><div class="route-body"><div class="route-city">🏔️ האלפים – טאקיאמה</div><div class="route-dates">19.9–22.9 · 3 לילות</div><div class="route-tags"><span class="tag t-gold">טאקיאמה</span><span class="tag t-gold">קמיקוצ'י</span><span class="tag t-gold">שירקאווה-גו</span></div></div></div>
       <div class="route-row"><div class="route-left"><div class="route-dot" style="color:#e8628a;background:#e8628a"></div><div class="route-line" style="background:#e8628a"></div></div><div class="route-body"><div class="route-city">⛩️ קיוטו</div><div class="route-dates">22.9–26.9 · 4 לילות</div><div class="route-tags"><span class="tag t-pink">גיון</span><span class="tag t-pink">קיומיזו</span><span class="tag t-pink">ארשיאמה</span><span class="tag t-pink">נארה</span></div></div></div>
       <div class="route-row"><div class="route-left"><div class="route-dot" style="color:#8b5cf6;background:#8b5cf6"></div><div class="route-line" style="background:#8b5cf6"></div></div><div class="route-body"><div class="route-city">🎡 אוסקה</div><div class="route-dates">26.9–28.9 · 2 לילות</div><div class="route-tags"><span class="tag t-purple">דוטונבורי</span><span class="tag t-dark">Universal 🎮</span></div></div></div>
-      <div class="route-row"><div class="route-left"><div class="route-dot" style="color:#3b82f6;background:#3b82f6"></div></div><div class="route-body" style="border:none"><div class="route-city">🗼 טוקיו – שיבויה/שינג'וקו</div><div class="route-dates">28.9–2.10 · 4 לילות + ✈️ 2.10</div><div class="route-tags"><span class="tag t-navy">שיבויה</span><span class="tag t-navy">שינג'וקו</span><span class="tag t-navy">גינזה</span><span class="tag t-navy">הרג'וקו</span></div></div></div>
+      <div class="route-row"><div class="route-left"><div class="route-dot" style="color:#3b82f6;background:#3b82f6"></div></div><div class="route-body" style="border:none"><div class="route-city">🗼 טוקיו – שיבויה/שינג'וקו</div><div class="route-dates">28.9–2.10 · 4 לילות + ✈️</div><div class="route-tags"><span class="tag t-navy">שיבויה</span><span class="tag t-navy">שינג'וקו</span><span class="tag t-navy">גינזה</span><span class="tag t-navy">הרג'וקו</span></div></div></div>
     </div>
     <div class="tip-box">
       <div class="tip-title">💡 טיפים מרכזיים</div>
@@ -549,18 +549,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text1);direction:r
       </button>
     </div>
 
-    <!-- CATEGORY FILTER -->
+    <!-- CATEGORY FILTER — single row with cards -->
     <div style="padding:14px 16px 4px;font-size:11px;font-weight:700;color:#9B9BB8;text-transform:uppercase;letter-spacing:.8px">לפי קטגוריה</div>
-    <div id="exp-cat-filter" style="display:flex;gap:6px;overflow-x:auto;padding:4px 16px 8px;scrollbar-width:none">
-      <button class="fb on" data-cf="all" onclick="setCatFilter('all')">הכל</button>
-      <button class="fb" data-cf="food" onclick="setCatFilter('food')">🍜 אוכל</button>
-      <button class="fb" data-cf="attractions" onclick="setCatFilter('attractions')">🎡 אתרים</button>
-      <button class="fb" data-cf="transport" onclick="setCatFilter('transport')">🚄 תחבורה</button>
-      <button class="fb" data-cf="hotel" onclick="setCatFilter('hotel')">🏨 מלון</button>
-      <button class="fb" data-cf="flights" onclick="setCatFilter('flights')">✈️ טיסות</button>
-      <button class="fb" data-cf="shopping" onclick="setCatFilter('shopping')">🛍️ שופינג</button>
-      <button class="fb" data-cf="other" onclick="setCatFilter('other')">📦 אחר</button>
-    </div>
     <div id="cat-grid" style="display:flex;flex-wrap:wrap;gap:8px;margin:0 16px 12px"></div>
 
     <!-- DAY FILTER -->
@@ -1145,7 +1135,25 @@ const D0 = [
      '✈️ טיסה חזרה לישראל! שלום יפן 🇯🇵'
    ],
    trans:[{f:'מלון שיבויה/שינג\'וקו',t:'שדה התעופה',k:'train',d:'60-90 דק\'',n:'Monorail (הנדה) / Narita Express (נריטה) – לצאת בזמן!'}],
-   note:'יום שלם! לצאת לשדה התעופה לפחות 3 שעות לפני הטיסה. Duty Free לפני הטיסה!',ri:[0,37,38,39]}
+   note:'יום שלם! לצאת לשדה התעופה לפחות 3 שעות לפני הטיסה. Duty Free לפני הטיסה!',ri:[0,37,38,39]},
+
+  // יום 17 — 2/10 — יום טיסה
+  {d:'2/10',title:'טיסה הביתה 🛫',sub:'טוקיו · שדה התעופה · ביי ביי יפן',type:'tokyo',area:'tokyo-shibuya',al:'שינגוקו → נריטה',e:'✈️',
+   morning:[
+     'קום מוקדם — ארוז ובדוק את החדר',
+     'ארוחת בוקר אחרונה ביפן — בית קפה שכונתי',
+     'קנייה אחרונה בקונבייני — Kit Kat, Pocky, מתנות'
+   ],
+   afternoon:[
+     'נסיעה לשדה התעופה נריטה (Narita Express ~90 דק)',
+     'Yamato — שלח מזוודות מהמלון יום קודם אם אפשר',
+     'שדה התעופה — duty free, ארוחה אחרונה'
+   ],
+   evening:[
+     'טיסה חזרה לישראל ✈️',
+     'זכרונות, תמונות, וכבר מתגעגעים...'
+   ],
+   trans:"נריטה אקספרס מתחנת שינגוקו",note:'להגיע לשדה התעופה לפחות 3 שעות לפני! — Duty Free סגור לפני הביטחון',ri:[]}
 ]
 const R0 = [
   // 16/9 – אסאקוסה ערב
@@ -1395,12 +1403,12 @@ function startListeners(){
     if(allIds.length) nextId=Math.max(...allIds)+1;
     loaded=true;
     buildDays();buildFilters();renderRests();buildTransTab();renderHotels();renderBudget();renderFlights();populateSelects();
-    document.getElementById('hdr-hotels').textContent=hotels.length;
+    document.querySelectorAll('#hdr-hotels').forEach(function(el){el.textContent=hotels.length;});
     document.getElementById('ov-rests').textContent=(RESTS||[]).filter(Boolean).length;
   });
   db.ref('days').on('value',s=>{DAYS=s.val()||D0;if(loaded){buildDays();buildFilters();renderRests();}});
   db.ref('rests').on('value',s=>{RESTS=s.val()||R0;if(loaded){buildFilters();renderRests();}});
-  db.ref('hotels').on('value',s=>{hotels=s.val()||[];document.getElementById('hdr-hotels').textContent=hotels.length;if(loaded){renderHotels();buildDays();renderBudget();}});
+  db.ref('hotels').on('value',s=>{hotels=s.val()||[];document.querySelectorAll('#hdr-hotels').forEach(function(el){el.textContent=hotels.length;});if(loaded){renderHotels();buildDays();renderBudget();}});
   db.ref('expenses').on('value',s=>{
   var val=s.val();
   if(!val){ expenses=[]; }
@@ -2052,13 +2060,18 @@ function renderBudget(){
 
   // Category grid
   var catEl = document.getElementById('cat-grid');
-  if(catEl) catEl.innerHTML = (CATS||[]).map(function(cat){
-    var t = all.filter(function(e){return e.cat===cat.id;}).reduce(function(s,e){return s+(e.amt||0);},0);
-    return '<div class="cat-card'+(t>0?' act':'')+'" onclick="setCatFilter(\''+cat.id+'\')">'
-      +'<span class="cat-ico">'+cat.e+'</span>'
-      +'<div class="cat-name">'+cat.n+'</div>'
-      +'<div class="cat-total">'+(t>0?fmtILS(t):'—')+'</div></div>';
-  }).join('');
+  if(catEl){
+    var allCard = '<div class="cat-card'+(activeCatFilter==='all'?' act':'')+'" onclick="setCatFilter(\'all\')" style="min-width:60px">'
+      +'<span class="cat-ico">🔍</span><div class="cat-name">הכל</div>'
+      +'<div class="cat-total">'+fmtILS(tot)+'</div></div>';
+    catEl.innerHTML = allCard + (CATS||[]).map(function(cat){
+      var t=all.filter(function(e){return e.cat===cat.id;}).reduce(function(s,e){return s+(e.amt||0);},0);
+      var isActive = activeCatFilter===cat.id;
+      return '<div class="cat-card'+(isActive?' act':'')+'" onclick="setCatFilter(\''+cat.id+'\')" style="min-width:60px">'
+        +'<span class="cat-ico">'+cat.e+'</span><div class="cat-name">'+cat.n+'</div>'
+        +'<div class="cat-total">'+(t>0?fmtILS(t):'—')+'</div></div>';
+    }).join('');
+  }
 
   // Populate day filter
   var daysSeen = {};
@@ -2644,7 +2657,10 @@ function fabAddExpense(){
 
 
 // COUNTDOWN
-document.getElementById('cnt').textContent=Math.max(0,Math.ceil((new Date('2026-09-16')-new Date())/86400000))||'🎌';
+var _tripStart=new Date('2026-09-16');
+var _daysLeft=Math.ceil((_tripStart-new Date())/86400000);
+var _cntEl=document.getElementById('cnt');
+if(_cntEl) _cntEl.textContent=_daysLeft>0?_daysLeft:'🎌 יצאנו!';
 
 // START
 initData();startListeners();

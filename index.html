@@ -1364,8 +1364,23 @@ function populateSelects(){
 // INIT
 function initData(){
   // Smart init: seed content only if missing, NEVER wipe expenses/flights
-  db.ref('days').once('value').then(s=>{
-    if(!s.val()) db.ref('days').set(D0);
+  // Add missing days (e.g. 2/10) without wiping user's added activities
+  db.ref('days').once('value').then(function(s){
+    var existing = s.val() || [];
+    var arr = Array.isArray(existing) ? existing : Object.values(existing);
+    // Check if last day (2/10) is missing
+    var has2Oct = arr.some(function(d){ return d && d.d === '2/10'; });
+    if(!has2Oct){
+      // Append missing days from D0
+      D0.forEach(function(d){
+        if(!arr.some(function(e){ return e && e.d === d.d; })){
+          arr.push(d);
+        }
+      });
+      db.ref('days').set(arr);
+    } else if(arr.length === 0){
+      db.ref('days').set(D0);
+    }
   });
   db.ref('rests').once('value').then(s=>{
     if(!s.val()) db.ref('rests').set(R0);
@@ -1618,7 +1633,9 @@ function buildDayRests(ri){
 
 // TRANSPORT in day
 function buildDayTrans(trans){
-  if(!trans||!trans.length)return'';
+  if(!trans)return'';
+  if(typeof trans==='string') trans=[trans];
+  if(!Array.isArray(trans)||!trans.length)return'';
   const tc=k=>k==='shin'?'tc-shin':k==='bus'?'tc-bus':'tc-train';
   const tl=k=>k==='shin'?'🚄 שינקנסן':k==='bus'?'🚌 אוטובוס':'🚃 רכבת';
   return`<div class="day-transport">
@@ -2659,8 +2676,8 @@ function fabAddExpense(){
 // COUNTDOWN
 var _tripStart=new Date('2026-09-16');
 var _daysLeft=Math.ceil((_tripStart-new Date())/86400000);
-var _cntEl=document.getElementById('cnt');
-if(_cntEl) _cntEl.textContent=_daysLeft>0?_daysLeft:'🎌 יצאנו!';
+var _cntText=_daysLeft>0?String(_daysLeft):'🎌';
+document.querySelectorAll('#cnt,[id="cnt"]').forEach(function(el){el.textContent=_cntText;});
 
 // START
 initData();startListeners();

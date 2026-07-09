@@ -454,7 +454,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text1);direction:r
         📧 סנכרן מ-Gmail
       </button>
     </div>
-    <div id="hotel-list"><div class="loading"><div class="spinner"></div>טוען מלונות...</div></div>
+    <div id="hotel-list"><div style="padding:20px;text-align:center;color:var(--text3)">טוען מלונות...</div></div>
   </div>
 </div>
 
@@ -1402,7 +1402,10 @@ function startListeners(){
     db.ref('mustRests').once('value'),db.ref('dayPlans').once('value')
   ]).then(([ds,rs,hs,es,vs,fs,hls,ans,mrs,dps])=>{
     DAYS=ds.val()||D0;RESTS=rs.val()||R0;
-    hotels=hs.val()||[];var esVal=es.val();
+    var hsVal=hs.val();
+    if(!hsVal){ hotels=[]; }
+    else if(Array.isArray(hsVal)){ hotels=hsVal.filter(Boolean); }
+    else { hotels=Object.values(hsVal).filter(Boolean); }var esVal=es.val();
     if(!esVal){ expenses=[]; }
     else if(Array.isArray(esVal)){ expenses=esVal.filter(Boolean); }
     else { expenses=Object.values(esVal).filter(Boolean); }
@@ -1921,7 +1924,7 @@ function delHotel(id){if(!confirm('למחוק?'))return;save('hotels',(hotels||[
 function renderHotels(){
   const v=(hotels||[]).filter(Boolean).sort((a,b)=>d2i(a.ci)-d2i(b.ci));
   if(!v.length){
-    document.getElementById('hotel-list').innerHTML='<div style="text-align:center;color:var(--gray2);padding:40px 20px;font-size:13px">טוען... אם אין מלונות לאחר שנייה, רענן את הדף.</div>';
+    document.getElementById('hotel-list').innerHTML='<div style="text-align:center;color:var(--gray2);padding:40px 20px;font-size:13px">עדיין לא הוספת מלונות. לחץ סנכרן מ-Gmail או הוסף מלון.</div>';
     return;
   }
   document.getElementById('hotel-list').innerHTML=v.map(h=>{

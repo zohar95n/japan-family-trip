@@ -2251,21 +2251,38 @@ function closeModal(id){
 }
 
 function openEditExpense(id){
-  const ex = (expenses||[]).find(function(e){ return e && e.id===id; });
-  if(!ex){ alert('לא נמצאה הוצאה'); return; }
-  var idEl = document.getElementById('ee-id');
-  var descEl = document.getElementById('ee-desc');
-  var amtEl = document.getElementById('ee-amt');
-  var curEl = document.getElementById('ee-cur');
-  var catEl = document.getElementById('ee-cat');
-  var dateEl = document.getElementById('ee-date');
-  if(idEl) idEl.value = ex.id;
-  if(descEl) descEl.value = ex.desc || '';
-  if(amtEl) amtEl.value = ex.origAmt || ex.amt || '';
-  if(curEl) curEl.value = ex.origCur || 'ILS';
-  if(catEl) catEl.value = ex.cat || 'food';
-  if(dateEl) dateEl.value = ex.date || ex.day || '';
+  console.log('[edit] looking for id='+id+' in '+expenses.length+' expenses');
+  var ex = null;
+  for(var i=0;i<(expenses||[]).length;i++){
+    if(expenses[i] && String(expenses[i].id)===String(id)){
+      ex = expenses[i]; break;
+    }
+  }
+  if(!ex){
+    // Try without string conversion
+    ex = (expenses||[]).find(function(e){ return e && e.id==id; });
+    console.log('[edit] fallback find:', ex ? 'found' : 'not found');
+    if(!ex){
+      console.log('[edit] all IDs:', (expenses||[]).map(function(e){return e&&e.id;}));
+      toast('⚠️ לא נמצאה הוצאה');
+      return;
+    }
+  }
+  console.log('[edit] found:', ex.desc);
+  var idEl=document.getElementById('ee-id');
+  var descEl=document.getElementById('ee-desc');
+  var amtEl=document.getElementById('ee-amt');
+  var curEl=document.getElementById('ee-cur');
+  var catEl=document.getElementById('ee-cat');
+  var dateEl=document.getElementById('ee-date');
+  if(idEl) idEl.value=String(ex.id);
+  if(descEl) descEl.value=ex.desc||'';
+  if(amtEl) amtEl.value=ex.origAmt||ex.amt||'';
+  if(curEl) curEl.value=ex.origCur||'ILS';
+  if(catEl) catEl.value=ex.cat||'food';
+  if(dateEl) dateEl.value=ex.date||ex.day||'';
   openModal('modal-edit-exp');
+  console.log('[edit] modal opened');
 }
 
 

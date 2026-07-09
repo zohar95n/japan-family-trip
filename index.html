@@ -2033,6 +2033,131 @@ function delExpense(id){
 }
 
 
+function renderBudget(){
+  var all = (expenses||[]).filter(Boolean);
+  var tot = all.reduce(function(s,e){return s+(e.amt||0);},0);
+
+  // Daily avg - exclude flights and hotels
+  var forAvg = all.filter(function(e){return e.cat!=='flights'&&e.cat!=='hotel';});
+  var totAvg = forAvg.reduce(function(s,e){return s+(e.amt||0);},0);
+  var dates = {};
+  forAvg.forEach(function(e){if(e.date)dates[e.date]=true;});
+  var numDays = Object.keys(dates).length || 1;
+  var avgDaily = totAvg / numDays;
+
+  // Update summary cards
+  var totEl = document.getElementById('total-spent');
+  if(totEl) totEl.textContent = fmtILS(tot);
+  var cntEl = document.getElementById('exp-count-lbl');
+  if(cntEl) cntEl.textContent = all.length + ' רשומות';
+  var avgEl = document.getElementById('avg-per-day');
+  if(avgEl) avgEl.textContent = forAvg.length ? fmtILS(avgDaily) : '₪0';
+
+  // Category grid
+  var catEl = document.getElementById('cat-grid');
+  if(catEl) catEl.innerHTML = (CATS||[]).map(function(cat){
+    var t = all.filter(function(e){return e.cat===cat.id;}).reduce(function(s,e){return s+(e.amt||0);},0);
+    return '<div class="cat-card'+(t>0?' act':'')+'" onclick="setCatFilter(\''+cat.id+'\')">'
+      +'<span class="cat-ico">'+cat.e+'</span>'
+      +'<div class="cat-name">'+cat.n+'</div>'
+      +'<div class="cat-total">'+(t>0?fmtILS(t):'—')+'</div></div>';
+  }).join('');
+
+  // Populate day filter
+  var daysSeen = {};
+  all.forEach(function(e){if(e.date) daysSeen[e.date]=true;});
+  var datesArr = Object.keys(daysSeen).sort(function(a,b){
+    function p(s){var x=s.split('/');return x.length===3?new Date(x[2],x[1]-1,x[0]):new Date(0);}
+    return p(a)-p(b);
+  });
+  var daySel = document.getElementById('day-filter-sel');
+  if(daySel){
+    var prev = daySel.value;
+    daySel.innerHTML = '<option value="all">כל הימים</option>'
+      + datesArr.map(function(d){return '<option value="'+d+'">'+d+'</option>';}).join('');
+    if(prev && prev!=='all') daySel.value = prev;
+  }
+
+  // Filter by active category and day
+  var filtered = activeCatFilter==='all' ? all : all.filter(function(e){return e.cat===activeCatFilter;});
+  if(activeDayFilter!=='all') filtered = filtered.filter(function(e){return e.date===activeDayFilter;});
+
+  // Filter label
+  var lblEl = document.getElementById('exp-filter-lbl');
+  if(lblEl) lblEl.textContent = filtered.length + ' הוצאות';
+
+  // Daily breakdown
+  var dm = {};
+  var toGroup = activeDayFilter==='all' ? all : filtered;
+  toGroup.forEach(function(e){
+    var k = e.date||'ללא תאריך';
+    dm[k] = (dm[k]||0)+(e.amt||0);
+  });
+  var dk = Object.keys(dm).sort(function(a,b){
+    function p(s){var x=s.split('/');return x.length===3?new Date(x[2],x[1]-1,x[0]):new Date(0);}
+    return p(a)-p(b);
+  });
+  var mx = dk.length ? Math.max.apply(null,dk.map(function(k){return dm[k];})) : 1;
+
+  var dbEl = document.getElementById('day-breakdown');
+  if(dbEl){
+    if(!dk.length){
+      dbEl.innerHTML='<div style="text-align:center;color:#9B9BB8;font-size:13px;padding:12px">עדיין אין הוצאות</div>';
+    } else {
+      dbEl.innerHTML = dk.map(function(k){
+        var pct = Math.round(dm[k]/mx*100);
+        var dayExps = toGroup.filter(function(e){return (e.date||'ללא תאריך')===k;});
+        var rowId = 'dbr-'+k.replace(/\//g,'_');
+        var detail = dayExps.map(function(ex){
+          var co=(CATS||[]).filter(function(ct){return ct.id===ex.cat;})[0]||{e:'📦',n:'אחר'};
+          var orig=(ex.origCur&&ex.origCur!=='ILS')?' ('+((ex.origCur==='JPY'?'¥':'$')+Number(ex.origAmt||0).toLocaleString())+')':'';
+          return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #e5e5ef;font-size:12px">'
+            +'<span style="font-size:16px">'+(ex.e||co.e)+'</span>'
+            +'<div style="flex:1;min-width:0"><div style="font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+ex.desc+'</div>'
+            +'<div style="color:#9B9BB8;font-size:11px">'+co.n+'</div></div>'
+            +'<span style="font-weight:700">'+fmtILS(ex.amt||0)+orig+'</span>'
+            +'<button onclick="event.stopPropagation();openEditExpense(\''+ex.id+'\')" style="background:#EDE9FE;border:none;border-radius:6px;padding:3px 8px;cursor:pointer;font-size:11px;color:#5B21B6">✏️</button>'
+            +'<button onclick="event.stopPropagation();delExpense(\''+ex.id+'\')" style="background:#FFF1F2;border:none;border-radius:6px;padding:3px 8px;cursor:pointer;font-size:11px;color:#BE123C">🗑</button>'
+            +'</div>';
+        }).join('');
+        return '<div class="day-bar-row" onclick="toggleEl(\''+rowId+'\') ">'
+          +'<div style="display:flex;justify-content:space-between;align-items:center">'
+          +'<span style="font-size:13px;font-weight:700">'+k+'</span>'
+          +'<span style="font-size:14px;font-weight:800;color:#7C3AED">'+fmtILS(dm[k])+'</span></div>'
+          +'<div class="bar-bg"><div class="bar-fill" style="width:'+pct+'%"></div></div></div>'
+          +'<div id="'+rowId+'" style="display:'+(activeDayFilter!=='all'?'block':'none')+';padding:4px 0">'+detail+'</div>';
+      }).join('')
+      +'<div style="display:flex;justify-content:space-between;padding:10px 0 2px;font-size:14px;font-weight:800;border-top:2px solid #e5e5ef;margin-top:4px">'
+      +'<span>סה"כ</span><span style="color:#7C3AED">'+fmtILS(tot)+'</span></div>';
+    }
+  }
+
+  // Expense list
+  var expEl = document.getElementById('exp-list');
+  if(!expEl) return;
+  if(!filtered.length){
+    expEl.innerHTML='<div style="text-align:center;color:#9B9BB8;font-size:13px;padding:20px">'
+      +(activeCatFilter!=='all'||activeDayFilter!=='all'?'אין הוצאות בסינון זה':'הוסף את ההוצאה הראשונה!')+'</div>';
+    return;
+  }
+  expEl.innerHTML = filtered.slice().reverse().map(function(ex){
+    var co=(CATS||[]).filter(function(ct){return ct.id===ex.cat;})[0]||{e:'📦',n:'אחר'};
+    var orig=(ex.origCur&&ex.origCur!=='ILS')
+      ?' <span style="font-size:10px;color:#9B9BB8">('+((ex.origCur==='JPY'?'¥':'$')+Number(ex.origAmt||0).toLocaleString())+')</span>':'';
+    return '<div class="exp-list-row">'
+      +'<span style="font-size:17px;width:26px;text-align:center;flex-shrink:0">'+(ex.e||co.e)+'</span>'
+      +'<div style="flex:1;min-width:0">'
+        +'<div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+ex.desc+'</div>'
+        +'<div style="font-size:11px;color:#9B9BB8">'+co.n+(ex.date?' · '+ex.date:'')+'</div>'
+      +'</div>'
+      +'<span style="font-size:13px;font-weight:700;flex-shrink:0">'+fmtILS(ex.amt||0)+orig+'</span>'
+      +'<button onclick="openEditExpense(\''+ex.id+'\')" style="background:#EDE9FE;border:none;border-radius:7px;padding:4px 8px;cursor:pointer;font-size:12px;margin-right:4px;color:#5B21B6">✏️</button>'
+      +'<button class="exp-del-btn" onclick="delExpense(\''+ex.id+'\')">✕</button>'
+      +'</div>';
+  }).join('');
+}
+
+
 function setCatFilter(cat){
   activeCatFilter = activeCatFilter===cat ? 'all' : cat;
   document.querySelectorAll('#exp-cat-filter .fb').forEach(b=>{

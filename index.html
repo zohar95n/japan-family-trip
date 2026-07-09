@@ -2015,18 +2015,15 @@ function addExpense(){
 
 function delExpense(id){
   if(!confirm('למחוק הוצאה זו?')) return;
-  // Handle both push-keys (strings) and numeric ids
-  db.ref('expenses').once('value', function(s){
-    var val = s.val();
-    if(!val) return;
-    if(Array.isArray(val)){
-      // Legacy array format
-      db.ref('expenses').set(val.filter(function(e){ return e && e.id!==id; }));
-    } else {
-      // Find and remove the push key
+  db.ref('expenses').once('value', function(snap){
+    var val = snap.val();
+    if(!val){ return; }
+    if(typeof val==='object'&&!Array.isArray(val)){
       Object.keys(val).forEach(function(k){
-        if(val[k] && val[k].id===id) db.ref('expenses/'+k).remove();
+        if(val[k]&&String(val[k].id)===String(id)) db.ref('expenses/'+k).remove();
       });
+    } else {
+      db.ref('expenses').set((val||[]).filter(function(e){return e&&String(e.id)!==String(id);}));
     }
   });
   toast('🗑 נמחק');
@@ -2243,6 +2240,16 @@ document.querySelectorAll('#exp-cat-filter .fb').forEach(b=>b.addEventListener('
 }));
 
 // Edit expense
+
+function openModal(id){
+  var el = document.getElementById(id);
+  if(el) el.classList.add('open');
+}
+function closeModal(id){
+  var el = document.getElementById(id);
+  if(el) el.classList.remove('open');
+}
+
 function openEditExpense(id){
   const ex = (expenses||[]).find(function(e){ return e && e.id===id; });
   if(!ex){ alert('לא נמצאה הוצאה'); return; }
@@ -2263,30 +2270,49 @@ function openEditExpense(id){
 
 
 function saveEditExpense(){
-  var idEl = document.getElementById('ee-id');
-  var descEl = document.getElementById('ee-desc');
-  var amtEl = document.getElementById('ee-amt');
-  var curEl = document.getElementById('ee-cur');
-  var catEl = document.getElementById('ee-cat');
-  var dateEl = document.getElementById('ee-date');
-  if(!idEl||!descEl||!amtEl) return;
-  var id = parseInt(idEl.value);
-  var desc = descEl.value.trim();
-  var amt = parseFloat(amtEl.value);
-  var cur = curEl ? curEl.value : 'ILS';
-  var cat = catEl ? catEl.value : 'other';
-  var date = dateEl ? dateEl.value.trim() : '';
-  if(!desc){ alert('אנא הכנס תיאור'); return; }
-  if(!amt || amt<=0){ alert('אנא הכנס סכום תקין'); return; }
-  var catObj = CATS.find(function(ct){ return ct.id===cat; }) || CATS[0];
+  var id = document.getElementById('ee-id') ? document.getElementById('ee-id').value : '';
+  var desc = document.getElementById('ee-desc') ? document.getElementById('ee-desc').value.trim() : '';
+  var amt = parseFloat(document.getElementById('ee-amt') ? document.getElementById('ee-amt').value : 0);
+  var cur = document.getElementById('ee-cur') ? document.getElementById('ee-cur').value : 'ILS';
+  var cat = document.getElementById('ee-cat') ? document.getElementById('ee-cat').value : 'food';
+  var date = document.getElementById('ee-date') ? document.getElementById('ee-date').value.trim() : '';
+
+  if(!desc){ toast('⚠️ נא להכניס תיאור'); return; }
+  if(!amt || amt<=0){ toast('⚠️ נא להכניס סכום'); return; }
+
+  var catObj = (CATS||[]).filter(function(ct){return ct.id===cat;})[0]||{e:'📦',n:'אחר'};
   var amtILS = toILS(amt, cur);
-  expenses = (expenses||[]).map(function(e){
-    if(!e || e.id!==id) return e;
-    return Object.assign({}, e, {desc:desc, amt:amtILS, origAmt:amt, origCur:cur, cat:cat, date:date, e:catObj.e});
+
+  // Update in Firebase - find by id in the push object
+  db.ref('expenses').once('value', function(snap){
+    var val = snap.val();
+    if(!val){ toast('❌ לא נמצאו הוצאות'); return; }
+    var pushKey = null;
+    if(typeof val === 'object' && !Array.isArray(val)){
+      Object.keys(val).forEach(function(k){
+        if(val[k] && String(val[k].id)===String(id)) pushKey=k;
+      });
+    }
+    if(pushKey){
+      // Update the specific push entry
+      db.ref('expenses/'+pushKey).update({
+        desc:desc, amt:amtILS, origAmt:amt, origCur:cur, cat:cat, date:date, e:catObj.e
+      }, function(err){
+        if(err){ toast('❌ '+err.message); }
+        else { toast('✅ עודכן!'); closeModal('modal-edit-exp'); }
+      });
+    } else {
+      // Fallback: update in array format
+      expenses = (expenses||[]).map(function(e){
+        if(!e||String(e.id)!==String(id)) return e;
+        return Object.assign({},e,{desc:desc,amt:amtILS,origAmt:amt,origCur:cur,cat:cat,date:date,e:catObj.e});
+      });
+      db.ref('expenses').set(expenses, function(err){
+        if(err){ toast('❌ '+err.message); }
+        else { toast('✅ עודכן!'); closeModal('modal-edit-exp'); }
+      });
+    }
   });
-  save('expenses', expenses);
-  closeModal('modal-edit-exp');
-  toast('✅ הוצאה עודכנה!');
 }
 
 

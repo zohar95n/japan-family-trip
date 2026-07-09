@@ -274,7 +274,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text1);direction:r
 .bar-bg{background:#F3F4F6;border-radius:4px;height:5px;overflow:hidden;margin-top:5px}
 .bar-fill{height:100%;border-radius:4px;background:var(--purple);transition:width .6s}
 .day-exp-detail{display:none;padding:6px 0 4px}
-.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 16px 12px}
+.cat-grid{display:flex;flex-wrap:wrap;gap:8px;margin:0 16px 12px}
 .cat-card{background:var(--white);border-radius:var(--r-lg);padding:12px 6px;text-align:center;box-shadow:var(--sh);border:1.5px solid transparent;cursor:pointer;transition:all .15s}
 .cat-card.act{border-color:var(--purple);background:var(--purple-soft)}
 .cat-ico{font-size:20px;display:block;margin-bottom:4px}.cat-name{font-size:11px;font-weight:600;color:var(--text2)}.cat-total{font-size:12px;font-weight:700;color:var(--purple);margin-top:2px}
@@ -321,6 +321,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text1);direction:r
 .spinner{width:30px;height:30px;border:3px solid #E5E7EB;border-top-color:var(--purple);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
 @keyframes spin{to{transform:rotate(360deg)}}
 </style>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 <body>
 <div id="toast"></div>
@@ -497,59 +499,59 @@ body{font-family:var(--font);background:var(--bg);color:var(--text1);direction:r
 
     <!-- SUMMARY -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 16px 0">
-      <div style="background:var(--white);border-radius:var(--r-xl);padding:16px;box-shadow:var(--sh)">
-        <div style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">סה"כ הוצאות</div>
-        <div id="total-spent" style="font-size:26px;font-weight:800;color:var(--text1);letter-spacing:-1px;line-height:1">₪0</div>
-        <div id="exp-count-lbl" style="font-size:11px;color:var(--text3);margin-top:4px">0 רשומות</div>
+      <div style="background:var(--white);border-radius:20px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,0.06)">
+        <div style="font-size:10px;font-weight:700;color:#9B9BB8;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">סה"כ הוצאות</div>
+        <div id="total-spent" style="font-size:26px;font-weight:800;color:#111118;letter-spacing:-1px;line-height:1">₪0</div>
+        <div id="exp-count-lbl" style="font-size:11px;color:#9B9BB8;margin-top:4px">0 רשומות</div>
       </div>
-      <div style="background:var(--purple);border-radius:var(--r-xl);padding:16px;box-shadow:0 6px 20px rgba(124,58,237,0.3)">
+      <div style="background:#7C3AED;border-radius:20px;padding:16px;box-shadow:0 6px 20px rgba(124,58,237,0.3)">
         <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">ממוצע יומי</div>
         <div id="avg-per-day" style="font-size:26px;font-weight:800;color:#fff;letter-spacing:-1px;line-height:1">₪0</div>
         <div style="font-size:10px;color:rgba(255,255,255,0.45);margin-top:4px">ללא טיסות ומלונות</div>
       </div>
     </div>
 
-    <!-- ADD EXPENSE FORM -->
-    <div style="margin:14px 16px 0">
-      <div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">הוסף הוצאה</div>
-      <div style="background:var(--white);border-radius:var(--r-xl);box-shadow:var(--sh);padding:14px">
-        <input type="text" id="exp-desc" placeholder="תיאור (ארוחת ערב, כרטיסים...)"
-          style="width:100%;border:1.5px solid var(--sep2);border-radius:var(--r-sm);padding:11px 13px;font-size:15px;font-family:var(--font);direction:rtl;outline:none;background:var(--bg);color:var(--text1);margin-bottom:9px">
-        <div style="display:flex;gap:8px;margin-bottom:9px">
-          <input type="number" id="exp-amt" placeholder="סכום"
-            style="width:90px;flex:none;border:1.5px solid var(--sep2);border-radius:var(--r-sm);padding:11px 10px;font-size:14px;font-family:var(--font);direction:rtl;outline:none;background:var(--bg);color:var(--text1)">
-          <select id="exp-cur"
-            style="flex:1;border:1.5px solid var(--sep2);border-radius:var(--r-sm);padding:11px 10px;font-size:14px;font-family:var(--font);direction:rtl;outline:none;background:var(--bg);color:var(--text1);cursor:pointer">
-            <option value="ILS">₪ שקל</option>
-            <option value="JPY">¥ יין</option>
-            <option value="USD">$ דולר</option>
-          </select>
-          <select id="exp-cat"
-            style="flex:1;border:1.5px solid var(--sep2);border-radius:var(--r-sm);padding:11px 10px;font-size:14px;font-family:var(--font);direction:rtl;outline:none;background:var(--bg);color:var(--text1);cursor:pointer">
-            <option value="food">🍜 אוכל</option>
-            <option value="attractions">🎡 אתרים</option>
-            <option value="transport">🚄 תחבורה</option>
-            <option value="hotel">🏨 מלון</option>
-            <option value="flights">✈️ טיסות</option>
-            <option value="shopping">🛍️ שופינג</option>
-            <option value="other">📦 אחר</option>
-          </select>
-        </div>
-        <div id="exp-date-display" style="font-size:12px;color:var(--text3);margin-bottom:9px;padding:8px 12px;background:var(--bg);border-radius:var(--r-sm)">
-          📅 תאריך: <strong id="exp-date-lbl">טוען...</strong>
-        </div>
-        <button onclick="addExpense()"
-          style="background:var(--purple);color:#fff;border:none;border-radius:var(--r-md);padding:14px 16px;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--font);width:100%;box-shadow:0 6px 20px rgba(124,58,237,0.3)">
-          + הוסף הוצאה
-        </button>
+    <!-- ADD EXPENSE - SUPER SIMPLE -->
+    <div style="margin:14px 16px 0;background:#fff;border-radius:20px;box-shadow:0 2px 10px rgba(0,0,0,0.06);padding:16px">
+      <div style="font-size:11px;font-weight:700;color:#9B9BB8;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px">הוסף הוצאה</div>
+
+      <input type="text" id="exp-desc"
+        placeholder="תיאור (ארוחת ערב, כרטיסים...)"
+        style="width:100%;border:1.5px solid #e5e5ef;border-radius:12px;padding:12px 14px;font-size:15px;font-family:inherit;direction:rtl;outline:none;margin-bottom:10px;box-sizing:border-box">
+
+      <div style="display:flex;gap:8px;margin-bottom:10px">
+        <input type="number" id="exp-amt" placeholder="סכום"
+          style="width:90px;flex:none;border:1.5px solid #e5e5ef;border-radius:12px;padding:12px 10px;font-size:15px;font-family:inherit;direction:rtl;outline:none;box-sizing:border-box">
+        <select id="exp-cur"
+          style="flex:1;border:1.5px solid #e5e5ef;border-radius:12px;padding:12px 10px;font-size:14px;font-family:inherit;background:#fff;outline:none;cursor:pointer">
+          <option value="ILS">₪ שקל</option>
+          <option value="JPY">¥ יין</option>
+          <option value="USD">$ דולר</option>
+        </select>
+        <select id="exp-cat"
+          style="flex:1;border:1.5px solid #e5e5ef;border-radius:12px;padding:12px 10px;font-size:14px;font-family:inherit;background:#fff;outline:none;cursor:pointer">
+          <option value="food">🍜 אוכל</option>
+          <option value="attractions">🎡 אתרים</option>
+          <option value="transport">🚄 תחבורה</option>
+          <option value="hotel">🏨 מלון</option>
+          <option value="flights">✈️ טיסות</option>
+          <option value="shopping">🛍️ שופינג</option>
+          <option value="other">📦 אחר</option>
+        </select>
       </div>
+
+      <div id="exp-date-lbl" style="font-size:12px;color:#9B9BB8;margin-bottom:10px;padding:8px 12px;background:#F5F4FA;border-radius:8px"></div>
+      <div id="exp-preview" style="font-size:13px;font-weight:700;color:#059669;min-height:16px;margin-bottom:8px"></div>
+
+      <button onclick="addExpense()"
+        style="width:100%;background:#7C3AED;color:#fff;border:none;border-radius:14px;padding:14px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit">
+        + הוסף הוצאה
+      </button>
     </div>
 
     <!-- CATEGORY FILTER -->
-    <div style="padding:16px 16px 4px">
-      <div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px">לפי קטגוריה</div>
-    </div>
-    <div style="display:flex;gap:7px;overflow-x:auto;padding:6px 16px 8px;scrollbar-width:none;flex-wrap:nowrap" id="exp-cat-filter">
+    <div style="padding:14px 16px 4px;font-size:11px;font-weight:700;color:#9B9BB8;text-transform:uppercase;letter-spacing:.8px">לפי קטגוריה</div>
+    <div id="exp-cat-filter" style="display:flex;gap:6px;overflow-x:auto;padding:4px 16px 8px;scrollbar-width:none">
       <button class="fb on" data-cf="all" onclick="setCatFilter('all')">הכל</button>
       <button class="fb" data-cf="food" onclick="setCatFilter('food')">🍜 אוכל</button>
       <button class="fb" data-cf="attractions" onclick="setCatFilter('attractions')">🎡 אתרים</button>
@@ -559,27 +561,27 @@ body{font-family:var(--font);background:var(--bg);color:var(--text1);direction:r
       <button class="fb" data-cf="shopping" onclick="setCatFilter('shopping')">🛍️ שופינג</button>
       <button class="fb" data-cf="other" onclick="setCatFilter('other')">📦 אחר</button>
     </div>
-    <div class="cat-grid" id="cat-grid"></div>
+    <div id="cat-grid" style="display:flex;flex-wrap:wrap;gap:8px;margin:0 16px 12px"></div>
 
-    <!-- DAY FILTER + BREAKDOWN -->
+    <!-- DAY FILTER -->
     <div style="padding:4px 16px 8px;display:flex;align-items:center;justify-content:space-between">
-      <div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px">הוצאות לפי יום</div>
+      <div style="font-size:11px;font-weight:700;color:#9B9BB8;text-transform:uppercase;letter-spacing:.8px">לפי יום</div>
       <select id="day-filter-sel" onchange="setDayFilter(this.value)"
-        style="border:1.5px solid var(--sep2);border-radius:var(--r-pill);padding:5px 12px;font-size:12px;font-family:var(--font);background:var(--white);cursor:pointer;color:var(--text2);outline:none">
+        style="border:1.5px solid #e5e5ef;border-radius:20px;padding:5px 12px;font-size:12px;font-family:inherit;background:#fff;cursor:pointer;outline:none">
         <option value="all">כל הימים</option>
       </select>
     </div>
-    <div style="background:var(--white);margin:0 16px 14px;border-radius:var(--r-xl);box-shadow:var(--sh);padding:12px 16px">
-      <div id="day-breakdown"><div style="text-align:center;color:var(--text3);font-size:13px;padding:12px">עדיין אין הוצאות</div></div>
+    <div style="background:#fff;margin:0 16px 14px;border-radius:20px;box-shadow:0 2px 10px rgba(0,0,0,0.06);padding:12px 16px">
+      <div id="day-breakdown"><div style="text-align:center;color:#9B9BB8;font-size:13px;padding:12px">עדיין אין הוצאות</div></div>
     </div>
 
-    <!-- ALL EXPENSES LIST -->
-    <div style="padding:0 16px 8px;display:flex;align-items:center;justify-content:space-between">
-      <div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px">כל ההוצאות</div>
-      <span id="exp-filter-lbl" style="font-size:11px;color:var(--text3)"></span>
+    <!-- LIST -->
+    <div style="padding:0 16px 8px;display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:11px;font-weight:700;color:#9B9BB8;text-transform:uppercase;letter-spacing:.8px">כל ההוצאות</div>
+      <span id="exp-filter-lbl" style="font-size:11px;color:#9B9BB8"></span>
     </div>
-    <div style="background:var(--white);margin:0 16px 20px;border-radius:var(--r-xl);box-shadow:var(--sh);overflow:hidden">
-      <div id="exp-list"><div style="text-align:center;color:var(--text3);font-size:13px;padding:20px">הוסף את ההוצאה הראשונה!</div></div>
+    <div style="background:#fff;margin:0 16px 20px;border-radius:20px;box-shadow:0 2px 10px rgba(0,0,0,0.06);overflow:hidden">
+      <div id="exp-list"><div style="text-align:center;color:#9B9BB8;font-size:13px;padding:20px">הוסף את ההוצאה הראשונה!</div></div>
     </div>
 
   </div>
@@ -658,8 +660,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text1);direction:r
     <input class="exp-inp" id="ft-note" placeholder="למשל: כבודה 23 ק״ג, ארוחה כלולה...">
     <button class="add-btn-main" onclick="saveFlight()">+ שמור טיסה</button>
   </div>
-</div><script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</div>
+
 <script>
 const firebaseConfig={apiKey:"AIzaSyAOtaa5CH4AHxz0xzBqSGI8A3j6yWXav9k",authDomain:"japan-trip-2026-4113b.firebaseapp.com",databaseURL:"https://japan-trip-2026-4113b-default-rtdb.europe-west1.firebasedatabase.app",projectId:"japan-trip-2026-4113b",storageBucket:"japan-trip-2026-4113b.firebasestorage.app",messagingSenderId:"677088933535",appId:"1:677088933535:web:37a88f9390a9b83c55d4aa"};
 firebase.initializeApp(firebaseConfig);
@@ -1377,7 +1379,10 @@ function startListeners(){
     db.ref('mustRests').once('value'),db.ref('dayPlans').once('value')
   ]).then(([ds,rs,hs,es,vs,fs,hls,ans,mrs,dps])=>{
     DAYS=ds.val()||D0;RESTS=rs.val()||R0;
-    hotels=hs.val()||[];expenses=es.val()||[];
+    hotels=hs.val()||[];var esVal=es.val();
+    if(!esVal){ expenses=[]; }
+    else if(Array.isArray(esVal)){ expenses=esVal.filter(Boolean); }
+    else { expenses=Object.values(esVal).filter(Boolean); }
     visitedActs=vs.val()||{};flights=fs.val()||[];
     highlights=hls.val()||{};actNotes=ans.val()||{};
     mustRests=mrs.val()||{};dayPlans=dps.val()||{};
@@ -1396,7 +1401,13 @@ function startListeners(){
   db.ref('days').on('value',s=>{DAYS=s.val()||D0;if(loaded){buildDays();buildFilters();renderRests();}});
   db.ref('rests').on('value',s=>{RESTS=s.val()||R0;if(loaded){buildFilters();renderRests();}});
   db.ref('hotels').on('value',s=>{hotels=s.val()||[];document.getElementById('hdr-hotels').textContent=hotels.length;if(loaded){renderHotels();buildDays();renderBudget();}});
-  db.ref('expenses').on('value',s=>{if(!_savingExpenses){expenses=s.val()||[];if(loaded)renderBudget();}});
+  db.ref('expenses').on('value',s=>{
+  var val=s.val();
+  if(!val){ expenses=[]; }
+  else if(Array.isArray(val)){ expenses=val.filter(Boolean); }
+  else { expenses=Object.values(val).filter(Boolean); }
+  if(loaded) renderBudget();
+});
   db.ref('flights').on('value',s=>{flights=s.val()||[];if(loaded)renderFlights();});
   db.ref('visited').on('value',s=>{visitedActs=s.val()||{};if(loaded)updateActItems();});
   db.ref('highlights').on('value',s=>{highlights=s.val()||{};if(loaded)updateActItems();});
@@ -1957,170 +1968,64 @@ function getTodayTripDay(){
 
 
 function addExpense(){
-  const descEl = document.getElementById('exp-desc');
-  const amtEl  = document.getElementById('exp-amt');
-  const curEl  = document.getElementById('exp-cur');
-  const catEl  = document.getElementById('exp-cat');
-  const prevEl = document.getElementById('exp-preview');
+  var descEl = document.getElementById('exp-desc');
+  var amtEl  = document.getElementById('exp-amt');
+  var curEl  = document.getElementById('exp-cur');
+  var catEl  = document.getElementById('exp-cat');
+  var prevEl = document.getElementById('exp-preview');
 
-  const desc = descEl ? descEl.value.trim() : '';
-  const amt  = parseFloat(amtEl ? amtEl.value : '0');
-  const cur  = curEl ? curEl.value : 'ILS';
-  const cat  = catEl ? catEl.value : 'other';
+  var desc = descEl ? descEl.value.trim() : '';
+  var amt  = parseFloat(amtEl ? amtEl.value : 0);
+  var cur  = (curEl ? curEl.value : null) || 'ILS';
+  var cat  = (catEl ? catEl.value : null) || 'food';
 
-  if(!desc){ toast('⚠️ אנא הכנס תיאור'); return; }
-  if(!amt || amt <= 0){ toast('⚠️ אנא הכנס סכום תקין'); return; }
+  if(!desc){ toast('⚠️ נא להכניס תיאור'); return; }
+  if(!amt || amt <= 0){ toast('⚠️ נא להכניס סכום'); return; }
 
-  const today = new Date();
-  const dateStr = today.getDate() + '/' + (today.getMonth()+1) + '/' + today.getFullYear();
-  const catObj = CATS.find(function(ct){ return ct.id===cat; }) || CATS[0];
-  const amtILS = toILS(amt, cur);
+  var today = new Date();
+  var dateStr = today.getDate() + '/' + (today.getMonth()+1) + '/' + today.getFullYear();
+  var catObj = (CATS||[]).filter(function(ct){ return ct.id===cat; })[0] || {e:'📦',n:'אחר',id:'other'};
+  var amtILS = toILS(amt, cur);
+  var expId = 'e_' + Date.now();
 
-  // Update local array immediately (don't wait for Firebase)
-  if(!expenses) expenses = [];
-  const newExp = {id: Date.now(), desc: desc, amt: amtILS, origAmt: amt, origCur: cur, cat: cat, date: dateStr, e: catObj.e};
-  expenses = expenses.concat([newExp]);
-
-  // Save to Firebase (flag prevents listener overwrite)
-  _savingExpenses = true;
-  db.ref('expenses').set(expenses)
-    .then(function(){
-      _savingExpenses = false;
-      toast('✅ ' + desc + ' נשמר! ' + dateStr);
-    })
-    .catch(function(err){
-      _savingExpenses = false;
-      toast('❌ שגיאה: ' + err.message);
-    });
+  var newExp = {id:expId, desc:desc, amt:amtILS, origAmt:amt, origCur:cur, cat:cat, date:dateStr, e:catObj.e};
 
   // Clear form
   if(descEl) descEl.value = '';
   if(amtEl)  amtEl.value = '';
   if(prevEl) prevEl.textContent = '';
 
-  // Re-render immediately
-  renderBudget();
+  toast('💾 שומר...');
+
+  // Use push() - atomic, no race conditions
+  db.ref('expenses').push(newExp, function(err){
+    if(err){
+      toast('❌ ' + err.message);
+    } else {
+      toast('✅ ' + desc + ' (' + dateStr + ')');
+    }
+  });
 }
 
 
-function delExpense(id){save('expenses',(expenses||[]).filter(e=>e&&e.id!==id));}
-function renderBudget(){
-  const all = (expenses||[]).filter(Boolean);
 
-  // Populate day filter dropdown
-  populateDayFilter(all);
-
-  // Summary totals (always all expenses)
-  const tot = all.reduce((s,e)=>s+(e.amt||0), 0);
-  const forAvg = all.filter(e=>e.cat!=='flights'&&e.cat!=='hotel');
-  const totForAvg = forAvg.reduce((s,e)=>s+(e.amt||0), 0);
-  const datesWithExp = new Set(forAvg.map(e=>e.date||e.day||'').filter(Boolean));
-  const avgDaily = datesWithExp.size ? totForAvg/datesWithExp.size : 0;
-
-  var totalEl = document.getElementById('total-spent');
-  if(totalEl) totalEl.textContent = fmtILS(tot);
-  var countEl = document.getElementById('exp-count-lbl');
-  if(countEl) countEl.textContent = all.length + ' רשומות';
-  var avgEl = document.getElementById('avg-per-day');
-  if(avgEl) avgEl.textContent = forAvg.length ? fmtILS(avgDaily) : '₪0';
-
-  // Category grid (all expenses)
-  var catEl = document.getElementById('cat-grid');
-  if(catEl) catEl.innerHTML = CATS.map(function(cat){
-    var t = all.filter(function(e){return e.cat===cat.id;}).reduce(function(s,e){return s+(e.amt||0);},0);
-    return '<div class="cat-card'+(t>0?' act':'')+'" onclick="setCatFilter(\''+cat.id+'\')">'
-      +'<span class="cat-ico">'+cat.e+'</span>'
-      +'<div class="cat-name">'+cat.n+'</div>'
-      +'<div class="cat-total">'+(t>0?fmtILS(t):'—')+'</div></div>';
-  }).join('');
-
-  // Apply filters for list view
-  var filtered = activeCatFilter==='all' ? all : all.filter(function(e){return e.cat===activeCatFilter;});
-  if(activeDayFilter!=='all') filtered = filtered.filter(function(e){return (e.date||e.day||'')=== activeDayFilter;});
-
-  var filterLbl = document.getElementById('exp-filter-lbl');
-  if(filterLbl){
-    var parts = [];
-    if(activeCatFilter!=='all') parts.push(CATS.find(function(ct){return ct.id===activeCatFilter;})||{n:''}).n||'';
-    if(activeDayFilter!=='all') parts.push(activeDayFilter);
-    filterLbl.textContent = parts.length ? parts.join(' · ')+' ('+filtered.length+')' : all.length+' הוצאות';
-  }
-
-  // Daily breakdown — filter by activeDayFilter
-  var toGroup = activeDayFilter==='all' ? all : all.filter(function(e){return (e.date||e.day||'')=== activeDayFilter;});
-  var dm = {};
-  toGroup.forEach(function(e){
-    var key = e.date||e.day||'ללא תאריך';
-    dm[key] = (dm[key]||0)+(e.amt||0);
-  });
-  var dk = Object.keys(dm).sort(function(a,b){
-    function p(s){var x=s.split('/');return x.length===3?new Date(x[2],x[1]-1,x[0]):new Date(0);}
-    return p(a)-p(b);
-  });
-  var mx = dk.length ? Math.max.apply(null,dk.map(function(k){return dm[k];})) : 1;
-
-  var dbEl = document.getElementById('day-breakdown');
-  if(dbEl){
-    if(!dk.length){
-      dbEl.innerHTML = '<div style="text-align:center;color:var(--text3);font-size:13px;padding:12px">עדיין אין הוצאות</div>';
+function delExpense(id){
+  if(!confirm('למחוק הוצאה זו?')) return;
+  // Handle both push-keys (strings) and numeric ids
+  db.ref('expenses').once('value', function(s){
+    var val = s.val();
+    if(!val) return;
+    if(Array.isArray(val)){
+      // Legacy array format
+      db.ref('expenses').set(val.filter(function(e){ return e && e.id!==id; }));
     } else {
-      var rows = dk.map(function(k){
-        var pct = Math.round(dm[k]/mx*100);
-        var dayExps = toGroup.filter(function(e){return (e.date||e.day||'ללא תאריך')===k;});
-        var rowId = 'dbr-'+k.replace(/\//g,'_');
-        var exHtml = dayExps.map(function(ex){
-          var co = CATS.find(function(ct){return ct.id===ex.cat;})||CATS[0];
-          var orig = (ex.origCur&&ex.origCur!=='ILS')?' ('+((ex.origCur==='JPY'?'¥':'$')+Number(ex.origAmt||0).toLocaleString())+')':'';
-          return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--sep);font-size:12px">'
-            +'<span style="font-size:16px">'+(ex.e||co.e)+'</span>'
-            +'<div style="flex:1;min-width:0">'
-              +'<div style="font-weight:600;color:var(--text1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+ex.desc+'</div>'
-              +'<div style="color:var(--text3);font-size:11px">'+co.n+'</div>'
-            +'</div>'
-            +'<span style="font-weight:700;flex-shrink:0">'+fmtILS(ex.amt||0)+orig+'</span>'
-            +'<button onclick="event.stopPropagation();openEditExpense('+ex.id+')" style="background:var(--purple-soft);border:none;border-radius:7px;padding:3px 8px;cursor:pointer;font-size:11px;color:var(--purple-text)">✏️</button>'
-            +'<button onclick="event.stopPropagation();delExpense('+ex.id+')" style="background:#FFF1F2;border:none;border-radius:7px;padding:3px 8px;cursor:pointer;font-size:11px;color:var(--red)">🗑</button>'
-            +'</div>';
-        }).join('');
-        return '<div class="day-bar-row" onclick="toggleEl(\''+rowId+'\')"> '
-          +'<div style="display:flex;justify-content:space-between;align-items:center">'
-            +'<span style="font-size:13px;font-weight:700;color:var(--text1)">'+k+'</span>'
-            +'<span style="font-size:14px;font-weight:800;color:var(--purple)">'+fmtILS(dm[k])+'</span>'
-          +'</div>'
-          +'<div class="bar-bg"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
-          +'</div>'
-          +'<div id="'+rowId+'" style="display:'+(activeDayFilter!=='all'?'block':'none')+';padding:4px 0">'
-          +exHtml+'</div>';
+      // Find and remove the push key
+      Object.keys(val).forEach(function(k){
+        if(val[k] && val[k].id===id) db.ref('expenses/'+k).remove();
       });
-      dbEl.innerHTML = rows.join('')
-        +'<div style="display:flex;justify-content:space-between;padding:10px 0 2px;font-size:14px;font-weight:800;border-top:2px solid var(--sep2);margin-top:4px">'
-        +'<span>סה"כ</span><span style="color:var(--purple)">'+fmtILS(dk.reduce(function(s,k){return s+dm[k];},0))+'</span></div>';
     }
-  }
-
-  // Expense list (filtered)
-  var expEl = document.getElementById('exp-list');
-  if(!expEl) return;
-  if(!filtered.length){
-    expEl.innerHTML = '<div style="text-align:center;color:var(--text3);font-size:13px;padding:20px">'+(activeCatFilter!=='all'||activeDayFilter!=='all'?'אין הוצאות עם הסינון הזה':'הוסף את ההוצאה הראשונה!')+'</div>';
-    return;
-  }
-  expEl.innerHTML = filtered.slice().reverse().map(function(ex){
-    var co = CATS.find(function(ct){return ct.id===ex.cat;})||CATS[0];
-    var orig = (ex.origCur&&ex.origCur!=='ILS')
-      ?' <span style="font-size:10px;color:var(--text3)">('+((ex.origCur==='JPY'?'¥':'$')+Number(ex.origAmt||0).toLocaleString())+')</span>':'';
-    var dateShow = ex.date||ex.day||'';
-    return '<div class="exp-list-row">'
-      +'<span style="font-size:17px;width:26px;text-align:center;flex-shrink:0">'+(ex.e||co.e)+'</span>'
-      +'<div style="flex:1;min-width:0">'
-        +'<div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+ex.desc+'</div>'
-        +'<div style="font-size:11px;color:var(--text3)">'+co.n+(dateShow?' · '+dateShow:'')+'</div>'
-      +'</div>'
-      +'<span style="font-size:13px;font-weight:700;flex-shrink:0">'+fmtILS(ex.amt||0)+orig+'</span>'
-      +'<button onclick="openEditExpense('+ex.id+')" style="background:var(--purple-soft);border:none;border-radius:7px;padding:4px 8px;cursor:pointer;font-size:12px;margin-right:4px;color:var(--purple-text)">✏️</button>'
-      +'<button class="exp-del-btn" onclick="delExpense('+ex.id+')">✕</button>'
-      +'</div>';
-  }).join('');
+  });
+  toast('🗑 נמחק');
 }
 
 
@@ -2570,7 +2475,25 @@ function fabAddExpense(){
 document.getElementById('cnt').textContent=Math.max(0,Math.ceil((new Date('2026-09-16')-new Date())/86400000))||'🎌';
 
 // START
-initData();startListeners();setupBudgetListeners();
+initData();startListeners();
+
+function setupBudgetListeners(){
+  var today = new Date();
+  var dateStr = today.getDate() + '/' + (today.getMonth()+1) + '/' + today.getFullYear();
+  var lblEl = document.getElementById('exp-date-lbl');
+  if(lblEl) lblEl.textContent = '📅 תאריך: ' + dateStr;
+  var amtEl = document.getElementById('exp-amt');
+  var curEl = document.getElementById('exp-cur');
+  var prevEl = document.getElementById('exp-preview');
+  if(amtEl) amtEl.addEventListener('input', function(){
+    if(!prevEl) return;
+    var a = parseFloat(amtEl.value);
+    var cur = curEl ? curEl.value : 'ILS';
+    if(!a||a<=0||cur==='ILS'){prevEl.textContent='';return;}
+    prevEl.textContent=(cur==='JPY'?'¥':'$')+a.toLocaleString()+' = '+fmtILS(toILS(a,cur));
+  });
+}
+setupBudgetListeners();setupBudgetListeners();
 </script>
 
 <!-- FAB — add expense only -->

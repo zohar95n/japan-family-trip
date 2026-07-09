@@ -543,7 +543,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text1);direction:r
       <div id="exp-date-lbl" style="font-size:12px;color:#9B9BB8;margin-bottom:10px;padding:8px 12px;background:#F5F4FA;border-radius:8px"></div>
       <div id="exp-preview" style="font-size:13px;font-weight:700;color:#059669;min-height:16px;margin-bottom:8px"></div>
 
-      <button onclick="addExpense()"
+      <button id="do-add-expense"
         style="width:100%;background:#7C3AED;color:#fff;border:none;border-radius:14px;padding:14px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit">
         + הוסף הוצאה
       </button>
@@ -1995,13 +1995,17 @@ function addExpense(){
   if(amtEl)  amtEl.value = '';
   if(prevEl) prevEl.textContent = '';
 
+  console.log('[addExpense] desc='+desc+' amt='+amt+' cat='+cat+' date='+dateStr);
+  console.log('[addExpense] newExp=', JSON.stringify(newExp));
   toast('💾 שומר...');
 
   // Use push() - atomic, no race conditions
   db.ref('expenses').push(newExp, function(err){
+    console.log('[addExpense] push result: err=', err);
     if(err){
       toast('❌ ' + err.message);
     } else {
+      console.log('[addExpense] SUCCESS');
       toast('✅ ' + desc + ' (' + dateStr + ')');
     }
   });
@@ -2478,6 +2482,18 @@ document.getElementById('cnt').textContent=Math.max(0,Math.ceil((new Date('2026-
 initData();startListeners();
 
 function setupBudgetListeners(){
+  // Wire add button
+  var addBtn = document.getElementById('do-add-expense');
+  if(addBtn){
+    addBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      console.log('[btn] clicked!');
+      addExpense();
+    });
+    console.log('[setup] add button wired');
+  } else {
+    console.error('[setup] add button NOT FOUND');
+  }
   var today = new Date();
   var dateStr = today.getDate() + '/' + (today.getMonth()+1) + '/' + today.getFullYear();
   var lblEl = document.getElementById('exp-date-lbl');

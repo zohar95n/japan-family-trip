@@ -356,6 +356,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text1);direction:r
   <div class="nav">
     <button class="nav-btn on" data-tab="ov"><span class="nav-ico">🗾</span>סקירה</button>
     <button class="nav-btn" data-tab="dy"><span class="nav-ico">📅</span>יומי</button>
+    <button class="nav-btn" data-tab="pl"><span class="nav-ico">🗺️</span>אתרים</button>
     <button class="nav-btn" data-tab="rs"><span class="nav-ico">🍜</span>מסעדות</button>
     <button class="nav-btn" data-tab="ht"><span class="nav-ico">🏨</span>מלונות</button>
     <button class="nav-btn" data-tab="tr"><span class="nav-ico">🚄</span>תחבורה</button>
@@ -427,6 +428,26 @@ body{font-family:var(--font);background:var(--bg);color:var(--text1);direction:r
       <button class="add-dashed" onclick="openModal('modal-rest-day')">+ הוסף מסעדה</button>
     </div>
     <div id="day-list"><div class="loading"><div class="spinner"></div>טוען...</div></div>
+  </div>
+</div>
+
+<!-- PLACES -->
+<div class="panel" id="pnl-pl">
+  <div class="max-w">
+
+    <!-- CITY FILTER -->
+    <div style="display:flex;gap:7px;overflow-x:auto;padding:12px 16px 8px;scrollbar-width:none">
+      <button class="fb on" data-pf="all" onclick="filterPlaces('all')">🗾 הכל</button>
+      <button class="fb" data-pf="tokyo" onclick="filterPlaces('tokyo')">🏙️ טוקיו</button>
+      <button class="fb" data-pf="alps" onclick="filterPlaces('alps')">🏔️ האלפים</button>
+      <button class="fb" data-pf="kyoto" onclick="filterPlaces('kyoto')">⛩️ קיוטו</button>
+      <button class="fb" data-pf="osaka" onclick="filterPlaces('osaka')">🦀 אוסקה</button>
+    </div>
+
+    <div id="places-grid" style="padding:0 16px 20px;display:grid;grid-template-columns:1fr;gap:12px">
+      <div style="text-align:center;color:var(--text3);padding:40px">טוען אתרים...</div>
+    </div>
+
   </div>
 </div>
 
@@ -1420,7 +1441,7 @@ function startListeners(){
     ];
     if(allIds.length) nextId=Math.max(...allIds)+1;
     loaded=true;
-    buildDays();buildFilters();renderRests();buildTransTab();renderHotels();renderBudget();renderFlights();populateSelects();
+    buildDays();buildFilters();renderRests();buildTransTab();renderHotels();renderBudget();renderFlights();renderPlaces();populateSelects();
     document.querySelectorAll('#hdr-hotels').forEach(function(el){el.textContent=hotels.length;});
     document.getElementById('ov-rests').textContent=(RESTS||[]).filter(Boolean).length;
   });
@@ -2676,44 +2697,205 @@ function fabAddExpense(){
 }
 
 
-// COUNTDOWN
-var _tripStart=new Date('2026-09-16');
-var _daysLeft=Math.ceil((_tripStart-new Date())/86400000);
-var _cntText=_daysLeft>0?String(_daysLeft):'🎌';
-document.querySelectorAll('#cnt,[id="cnt"]').forEach(function(el){el.textContent=_cntText;});
 
-// START
-initData();startListeners();
 
-function setupBudgetListeners(){
-  // Wire add button
-  var addBtn = document.getElementById('do-add-expense');
-  if(addBtn){
-    addBtn.addEventListener('click', function(e){
-      e.preventDefault();
-      console.log('[btn] clicked!');
-      addExpense();
-    });
-    console.log('[setup] add button wired');
-  } else {
-    console.error('[setup] add button NOT FOUND');
-  }
-  var today = new Date();
-  var dateStr = today.getDate() + '/' + (today.getMonth()+1) + '/' + today.getFullYear();
-  var lblEl = document.getElementById('exp-date-lbl');
-  if(lblEl) lblEl.textContent = '📅 תאריך: ' + dateStr;
-  var amtEl = document.getElementById('exp-amt');
-  var curEl = document.getElementById('exp-cur');
-  var prevEl = document.getElementById('exp-preview');
-  if(amtEl) amtEl.addEventListener('input', function(){
-    if(!prevEl) return;
-    var a = parseFloat(amtEl.value);
-    var cur = curEl ? curEl.value : 'ILS';
-    if(!a||a<=0||cur==='ILS'){prevEl.textContent='';return;}
-    prevEl.textContent=(cur==='JPY'?'¥':'$')+a.toLocaleString()+' = '+fmtILS(toILS(a,cur));
+
+const PLACES_DATA = [
+
+  {id:"p1", city:"tokyo", area:"אסאקוסה", name:"מקדש סנסו-גי", emoji:"⛩️", day:"16/9",
+   desc:"המקדש הבודהיסטי העתיק ביותר בטוקיו נבנה לפני יותר מ-1,400 שנה. לפי האגדה שני דייגים מצאו פסל האלה קנון ברשת שלהם בנהר ומיד בנו לה מקדש. הפנס הענק בשער גובהו 4 מטר ומשקלו 700 ק.ג. — אחד הצילומים הכי מפורסמים בכל יפן.",
+   tips:["להגיע מוקדם (לפני 8:00) לפני ההמונים", "שוק נאקמיסה-דורי לאורך הדרך — קניות וחטיפים", "חינם לכניסה לחצר המקדש", "יפהפה במיוחד בשחרית עם הערפל"],
+   hours:"24/7 (המקדש הפנימי 06:00-17:00)", price:"חינם", duration:"1-2 שעות", must:true},
+
+  {id:"p2", city:"tokyo", area:"Ueno", name:"שוק אמיוקו", emoji:"🛍️", day:"1/10",
+   desc:"השוק קיים מאז אחרי מלחמת העולם השנייה כשמכרו כאן מצרכים בשוק שחור. Ameyoko פירושו שדרת הממתקים כי זה מה שמכרו בעיקר בהתחלה. היום יש פה 400+ חנויות בקטע של פחות מ-500 מטר עם כל דבר מסשימי טרי ועד נעליים.",
+   tips:["ממוקם בין תחנות Ueno ל-Okachimachi", "מחירים ניתנים למיקוח!", "אוכל רחוב מצוין — סשימי, פירות ים", "פתוח עד 19:00"],
+   hours:"10:00-19:00", price:"חינם לכניסה", duration:"1-2 שעות", must:false},
+
+  {id:"p3", city:"tokyo", area:"שיבויה", name:"צומת שיבויה", emoji:"🚶", day:"18/9",
+   desc:"בכל פעם שמתחיל אור ירוק חוצים כאן יותר מ-3,000 איש בו-זמנית מכל הכיוונים. הסוד הוא שכל המעברים נדלקים ירוק בבת אחת כולל בניצב — טכניקה הנקראת scramble crossing. בשעת שיא מגיעים ליותר מ-2.4 מיליון אנשים שעוברים כאן ביום אחד.",
+   tips:["צלם מלמעלה מ-Shibuya Sky או מקפה", "הכי צפוף בלילה (20:00-23:00)", "קרוב לחנויות Shibuya 109", "פסל הכלב האמין האציקו בכניסה"],
+   hours:"24/7", price:"חינם", duration:"30 דק", must:true},
+
+  {id:"p4", city:"tokyo", area:"שיבויה", name:"Shibuya Sky", emoji:"🌆", day:"18/9",
+   desc:"Shibuya Sky נמצאת בגג הבניין הגבוה ביותר בשיבויה — 230 מטר ו-47 קומות. בניגוד למרות תצפיות מסוגרות יש כאן קומה פתוחה לגמרי לרוח ולשמים. אפשר לשכב על רצפה שקופה ולהסתכל ישר מטה אל הצומת המפורסם.",
+   tips:["להזמין כרטיסים מראש אונליין (זול יותר)", "הכי יפה בשקיעה ואחריה", "מחיר: 2,200 יין", "יש מקומות ישיבה ובר"],
+   hours:"10:00-22:30 (כניסה אחרונה 21:30)", price:"¥2,200", duration:"1 שעה", must:false},
+
+  {id:"p5", city:"tokyo", area:"הרגוקו", name:"Meiji Jingu", emoji:"🌿", day:"30/9",
+   desc:"Meiji Jingu נבנה ב-1920 לכבוד הקיסר שפתח את יפן לעולם אחרי 250 שנות סגר. היער סביב המקדש נשתל ידנית על ידי 100,000 מתנדבים מכל רחבי יפן — עצי מתנה לקיסר שנפטר. בכל 1 בינואר כ-3 מיליון איש מגיעים לתפילת השנה החדשה — הכי הרבה בכל יפן.",
+   tips:["כניסה חינם", "שביל ארוך ויפה בין עצים ענקיים", "בשבת/ראשון — לפעמים יש חתונות מסורתיות", "הגיעו מוקדם לאווירה שקטה"],
+   hours:"שעות אור יום", price:"חינם", duration:"1-1.5 שעות", must:true},
+
+  {id:"p6", city:"tokyo", area:"שינגוקו", name:"Omoide Yokocho", emoji:"🍢", day:"29/9",
+   desc:"Omoide Yokocho פירושו סמטת הזיכרונות ורוחבה פחות משני מטר! אחרי המלחמה הפכה לסמטת ברים קטנטנים שכל אחד מהם מכיל 6-8 כיסאות בלבד. כל ערב מתמלאים הברים בעשן הגריל ריח שיפוד הקקיוקי ואווירה שמרגישה כאילו טסתם 70 שנה אחורה.",
+   tips:["נמצאת ממש ליד תחנת שינגוקו (מוצא מערב)", "ללכת בלילה — האווירה הכי טובה", "תאכלו בברים קטנים עם 6-8 מקומות ישיבה", "מזומן בלבד ברוב המקומות"],
+   hours:"17:00-01:00", price:"¥¥", duration:"1-2 שעות", must:true},
+
+  {id:"p7", city:"tokyo", area:"אקיהברה", name:"אקיהברה", emoji:"🎮", day:"17/9",
+   desc:"אקיהברה הייתה שכונת אלקטרוניקה רגילה עד שנות ה-90 — אז צעירים מהאנימה גילו אותה. היום זה המרכז העולמי של תרבות האנימה מנגה וגיימינג עם 400+ חנויות. בימי ראשון נסגרת הכביש הראשית ונהיית מדרחוב ענק עם קוספלייירים ואמנים ברחוב.",
+   tips:["Yodobashi Camera — חנות אלקטרוניקה ענקית", "Don Quijote — פריטים מוזרים וזולים", "Retro game stores בקומות עליונות", "Maid Cafes אם רוצים חוויה ייחודית"],
+   hours:"10:00-21:00", price:"חינם לכניסה", duration:"2-3 שעות", must:false},
+
+  {id:"p8", city:"tokyo", area:"גינזה", name:"Tsukiji Outer Market", emoji:"🐟", day:"18/9",
+   desc:"שוק טסוקיגי הגדול היה פה עד 2018 ונחשב לשוק הדגים הגדול בעולם עם 480 דונם. הוא עבר למיקום חדש אבל השוק החיצוני הישן ממשיך לפעול. הרשומה: טונה אחת שנמכרה פה ב-333 מיליון יין — כ-2.2 מיליון דולר — לרגל שנת 2019.",
+   tips:["להגיע לפני 10:00 — הכי טרי ופחות עמוס", "פתוח עד 14:00 (חלק סוגר מוקדם יותר)", "סושי בוקר מ-1,000 יין — מדהים!", "סגור ימי ראשון ורביעי"],
+   hours:"05:00-14:00", price:"חינם לכניסה", duration:"1-2 שעות", must:true},
+
+  {id:"p9", city:"alps", area:"טאקיאמה", name:"שוק הבוקר של טאקיאמה", emoji:"🌅", day:"20/9",
+   desc:"שווקי הבוקר של טאקיאמה פועלים כבר למעלה מ-100 שנה ברציפות. מגיעים אליהם חקלאים מהכפרים הסמוכים עם תוצרת טרייה שנקטפה אותו בוקר. אחת הסחורות המיוחדות: אפל-גיוזה — כיסון ממולא בתפוח מקומי — קיים רק כאן בעולם.",
+   tips:["פתוח מ-7:00 עד 12:00", "Jinya-mae — מול בניין הממשל ההיסטורי", "אל תפספסו Mitarashi Dango (קבב אורז)", "הכי טוב בימים גשומים — פחות תיירים"],
+   hours:"07:00-12:00", price:"חינם", duration:"1 שעה", must:true},
+
+  {id:"p10", city:"alps", area:"טאקיאמה", name:"סאנמאצ'י Suji", emoji:"🏯", day:"20/9",
+   desc:"יש חוק מיוחד ברחוב הזה: אסור לבנות בניין גבוה מ-3 קומות! כך שמרו על האופי ההיסטורי של תקופת אדו. בתי הסאקה ניכרים בכדור ארז ירוק תלוי מעל הדלת — כשהוא ירוק הסאקה החדשה הגיעה וכשהוא חום היא כבר יושנה.",
+   tips:["אזור ההיסטוריה הכי יפה בעיר", "חניות סאקה מקומיות עם טעימות חינם", "Hida Folk Village לא רחוק משם", "צלמו בשחרית לאור הכי יפה"],
+   hours:"09:00-17:00", price:"חינם לטיול", duration:"1.5 שעות", must:true},
+
+  {id:"p11", city:"alps", area:"שירקאווה-גו", name:"כפר שירקאווה-גו", emoji:"🏠", day:"21/9",
+   desc:"גגות הקש התלולים עבים 1.5 מטר ומחזיקים עד 200 שנה ללא רקבון. הם מבודדים כל כך טוב שבחורף כמעט לא מצטבר שלג עליהם. הכפר הצליח להישאר נסתר מהצבא האמריקאי במלחמת העולם השנייה — הוא היה נידח כל כך עד שאיש לא ידע שהוא קיים.",
+   tips:["הגיעו ב-9:00 לפני האוטובוסים", "נקודת תצפית Shiroyama — 200 יין, מרהיבה", "כמה בתים פתוחים לביקור (300 יין)", "בחורף עם שלג — יפהפה במיוחד"],
+   hours:"09:00-17:00", price:"כניסה חינם, בתים 300 יין", duration:"2-3 שעות", must:true},
+
+  {id:"p12", city:"alps", area:"קמיקוצי", name:"קמיקוצי", emoji:"🏔️", day:"21/9",
+   desc:"קמיקוצי פירושו מקום האלים בשפה המקורית של ילידי האזור. המים הכחולים-ירוקים של נהר אזוסה כל כך נקיים שניתן לשתות ישר מהם. מ-1905 אסור להכניס מכוניות לאזור — מגיעים אליו רק באוטובוס — כדי לשמר את הטבע הפראי.",
+   tips:["מגיעים רק באוטובוס (אין כניסת מכוניות)", "Kappa-bashi Bridge — ציר הצילום הקלאסי", "ללכת לאורך נהר Azusa (5 קמ קל)", "להביא שכבות — קר גם בקיץ"],
+   hours:"כל היום (אוטובוסים עד 17:00)", price:"חינם + אוטובוס 2,500 יין", duration:"חצי יום", must:false},
+
+  {id:"p13", city:"kyoto", area:"פושימי", name:"Fushimi Inari", emoji:"⛩️", day:"22/9",
+   desc:"יש כאן בדיוק 10,000 שערי טורי כתומים וכל אחד נתרם על ידי אדם או חברה שביקשו ברכה. על כל שער חקוק שם התורם ותאריך התרומה — אפשר לקרוא את ההיסטוריה של מאות שנים. השועלים (kitsune) נחשבים שליחי האלה אינארי ותמצאו פסלי שועל בכל פינה.",
+   tips:["חינם ופתוח 24/7", "לטפס עד החצי (45 דק) להימנע מההמונים", "הכי יפה בשחרית מוקדמת", "10 דק ברכבת מתחנת קיוטו (JR Nara line)"],
+   hours:"24/7", price:"חינם", duration:"1.5-2 שעות", must:true},
+
+  {id:"p14", city:"kyoto", area:"הגיאשיאמה", name:"Kiyomizudera", emoji:"🏯", day:"23/9",
+   desc:"המרפסת הענקית נבנתה ב-1633 ללא ולאו אחד ברזל — 139 עמודי עץ ענקיים מחזיקים אותה מעל הגבעה. יש אגדה שמי שקופץ מגובה 13 מטר ויישרד — משאלתו תתגשם. בתקופת אדו מאות אנשים אכן קפצו ו-85% שרדו — כמובן שזה אסור היום לחלוטין.",
+   tips:["500 יין כניסה", "שביל סנן-זאקה המרוצף לאורך הדרך — קניות", "הגיעו ב-8:00 לפתיחה לפני ההמונים", "יפהפה בסתיו עם עלים כתומים"],
+   hours:"06:00-18:00", price:"¥500", duration:"1.5 שעות", must:true},
+
+  {id:"p15", city:"kyoto", area:"הגיאשיאמה", name:"שביל הפילוסופים", emoji:"🌸", day:"23/9",
+   desc:"הפילוסוף היפני הגדול Kitaro Nishida הלך בשביל זה כל יום לפני הרצאותיו ומכאן שמו. 500 עצי דובדבן נטועים לאורך 2 ק.מ. מעל תעלת מים ובפריחה הם יוצרים כיפה ורודה מושלמת מעל השביל. זה אחד הנופים הרומנטיים ביותר בכל יפן.",
+   tips:["מחבר Ginkaku-ji ל-Nanzen-ji", "חינם לחלוטין", "שכונת Eikan-do בדרך — מומלץ", "הכי יפה בפריחה (מרץ-אפריל) ובסתיו"],
+   hours:"24/7", price:"חינם", duration:"45-60 דק", must:true},
+
+  {id:"p16", city:"kyoto", area:"ארשיאמה", name:"יער הבמבוק", emoji:"🎋", day:"24/9",
+   desc:"הבמבוק כאן גדל עד 25 מטר וגדל מ-0 לגובה מלא תוך 90 יום בלבד. כשהרוח נושבת הבמבוק מייצר רישרוש ייחודי כל כך מיוחד שהוא נרשם רשמית כאחד מ-100 קולות יפן שחייבים לשמר. הגיעו לפני 8:00 — אחרי כן זה ים של תיירים.",
+   tips:["הגיעו לפני 8:00 — אחרי כן עמוס מאוד", "קצר (200 מטר) אבל מדהים", "Tenryu-ji לידו — גן UNESCO מרהיב", "שכר אופניים לשוטט בכל האזור"],
+   hours:"24/7", price:"חינם", duration:"30-45 דק", must:true},
+
+  {id:"p17", city:"kyoto", area:"ארשיאמה", name:"Tenryu-ji", emoji:"🌊", day:"24/9",
+   desc:"Tenryu-ji נשרף ונבנה מחדש 8 פעמים אבל הגן שתוכנן ב-1339 שרד במלואו כל 700 שנה. הטכניקה של הגן (shakkei) משלבת את ההרים הסובבים כחלק מהגן עצמו כאילו ההרים שייכים לעיצוב. זה אחד הגנים הכי יפים ביפן.",
+   tips:["500 יין לגן, 800 יין כולל המקדש", "הגן המרהיב ביותר בארשיאמה", "יחד עם יער הבמבוק — בוקר שלם", "בשחרית הגן נוצץ עם הטל"],
+   hours:"08:30-17:30", price:"¥500-800", duration:"1-1.5 שעות", must:true},
+
+  {id:"p18", city:"kyoto", area:"גיון", name:"גיון", emoji:"🏮", day:"23/9",
+   desc:"הבתים הצרים בגיון נבנו כך בכוונה — ב-Edo Period שילמו מס לפי רוחב הבית ברחוב אז כולם בנו צר וארוך. מייקו היא גיישה מתמחה שלומדת 5 שנים לפחות — שיחה מוזיקה ריקוד ושירה — לפני שמתחילה לעבוד. בשעות הערב יש סיכוי אמיתי לראות מייקו הולכת ברחוב.",
+   tips:["Hanamikoji Street — הרחוב הצילומי הכי יפה", "ערב — סיכוי לראות מייקו (גיישה מתמחה)", "Yasaka Shrine בסוף הרחוב — כניסה חינם", "אל תצלמו גיישות ללא רשות"],
+   hours:"24/7", price:"חינם", duration:"1-2 שעות", must:true},
+
+  {id:"p19", city:"kyoto", area:"נארה", name:"נארה פארק", emoji:"🦌", day:"25/9",
+   desc:"האיילים בנארה חיים חופשי כבר 1,200 שנה ונחשבים שליחי האלים לפי הדת השינטואיסטית. דבר מדהים: האיילים למדו לקוד ראש כשמבקשים מהם ביסקוויטים — ממש כמו קידה יפנית מסורתית. פסל הבודהה ב-Todai-ji גבוה 15 מטר ומשקלו 500 טון — הגדול ביפן.",
+   tips:["45 דק מקיוטו (JR)", "קנו Shika Senbei (ביסקוויטים לאיילים) 150 יין", "Todai-ji — הבודהה הענק — 600 יין", "הביאו שקית — האיילים מחטטים!"],
+   hours:"24/7 (פארק), 07:30-17:30 (Todai-ji)", price:"¥600 (Todai-ji)", duration:"חצי יום", must:true},
+
+  {id:"p20", city:"osaka", area:"דוטונבורי", name:"דוטונבורי", emoji:"🦀", day:"26/9",
+   desc:"דוטונבורי קיבלה שמה מ-Doton שחפר את התעלה ב-1612 ומת בקרב לפני שסיים ומשפחתו השלימה את העבודה לזכרו. שלט Glico Man הרץ קיים מ-1935 ועבר 6 עדכוני עיצוב — הדמות מייצגת את המרחק שאפשר לרוץ אחרי אכילת שוקולד Glico אחד. זה הסמל הכי מפורסם של אוסקה.",
+   tips:["Glico Man השלט האייקוני — לצלם!", "Takoyaki ו-Okonomiyaki — הכרחי לאכול פה", "טיול לאורך התעלה בלילה — מרהיב", "Don Quijote — קניות 24/7"],
+   hours:"24/7", price:"חינם", duration:"2-3 שעות", must:true},
+
+  {id:"p21", city:"osaka", area:"אומדה", name:"Umeda Sky Building", emoji:"🌃", day:"27/9",
+   desc:"Umeda Sky Building נחשב לאחד מ-20 הבניינים המדהימים בעולם. המעלית האחרונה לגג שקופה לחלוטין ומרחפת בין שני המגדלים בגובה 40 קומות — חוויה שמרגישה כמו טיסה. הגן הישן מתחת לבניין שוחזר מתמונות של שכונה שנהרסה כדי לבנות אותו.",
+   tips:["1,500 יין לתצפית", "הכי יפה בשקיעה ואחריה (17:00-20:00)", "יש גן בסגנון עתיק מתחת לבניין", "Floating Garden Observatory — השם הרשמי"],
+   hours:"09:30-22:30", price:"¥1,500", duration:"1-1.5 שעות", must:true},
+
+  {id:"p22", city:"osaka", area:"USJ", name:"Universal Studios Japan", emoji:"🎢", day:"27/9",
+   desc:"Universal Studios Japan הוא הפארק הרביעי של הרשת בעולם ונפתח ב-2001. Harry Potter World כאן הוא האינטראקטיבי ביותר — אפשר לאמן שרביטים ולבצע לחשים ב-7 נקודות שונות בפארק. Nintendo World שנפתח ב-2021 הוא הגדול בסוגו בעולם עם Mario Kart ride אמיתי.",
+   tips:["הזמינו Express Pass מראש — חוסך שעות המתנה", "הגיעו בפתיחה (08:30-09:00)", "Butterbeer ב-Hogwarts — חובה!", "Nintendo World — להזמין כניסה מראש"],
+   hours:"08:30-21:00 (משתנה)", price:"¥8,600+", duration:"יום שלם", must:true},
+
+  {id:"p23", city:"osaka", area:"נמבה", name:"Kuromon Market", emoji:"🦐", day:"26/9",
+   desc:"השוק קיים מ-1902 ונקרא מטבח אוסקה כי כאן קונים הטבחים הכי טובים בעיר כל בוקר. Kuromon פירושו שחור-שער על שם שער שחור של מקדש עתיק שהיה במקום. ב-170 חנויות על פני 580 מטר תמצאו פירות ים שמעולם לא ראיתם כולל תמן חי ועוד.",
+   tips:["פתוח בעיקר בבוקר עד 14:00", "טאקו, סושי ומנות בודדות לאכול בעמידה", "Wagyu Beef על שיפוד — 1,000 יין", "קרוב לתחנת Namba"],
+   hours:"09:00-18:00", price:"חינם לכניסה", duration:"1-1.5 שעות", must:true},
+
+  {id:"p24", city:"osaka", area:"ארמון אוסקה", name:"ארמון אוסקה", emoji:"🏯", day:"26/9",
+   desc:"הארמון נבנה ב-1583 על ידי הגנרל שאיחד את יפן אחרי 100 שנות מלחמת אזרחים. הוא נשרף 3 פעמים — הגרסה הנוכחית מ-1931 היא בטון מזויין מבפנים עם מעטפת מסורתית מבחוץ. בגינות פורחים 600 עצי דובדבן ויוצרים אחת הנקודות הכי יפות לחגיגות פריחה ביפן.",
+   tips:["600 יין כניסה למוזיאון", "הגינות הסובבות — חינם וגדולות", "נוף מהקומה ה-8 של הארמון", "קלה להגיע ברכבת"],
+   hours:"09:00-17:00", price:"¥600", duration:"1.5 שעות", must:false}
+];
+
+
+let activePlaceFilter = 'all';
+
+function filterPlaces(city){
+  activePlaceFilter = city;
+  document.querySelectorAll('[data-pf]').forEach(function(b){
+    b.classList.toggle('on', b.dataset.pf === city);
   });
+  renderPlaces();
 }
-setupBudgetListeners();setupBudgetListeners();
+
+function renderPlaces(){
+  var filtered = activePlaceFilter === 'all'
+    ? PLACES_DATA
+    : PLACES_DATA.filter(function(p){ return p.city === activePlaceFilter; });
+
+  var el = document.getElementById('places-grid');
+  if(!el) return;
+
+  if(!filtered.length){
+    el.innerHTML = '<div style="text-align:center;color:var(--text3);padding:40px">אין אתרים לאזור זה</div>';
+    return;
+  }
+
+  el.innerHTML = filtered.map(function(p){
+    var cityColor = p.city==='tokyo'?'#3B82F6':p.city==='alps'?'#F59E0B':p.city==='kyoto'?'#059669':'#7C3AED';
+    var cityLabel = p.city==='tokyo'?'טוקיו':p.city==='alps'?'האלפים':p.city==='kyoto'?'קיוטו':'אוסקה';
+
+    var tipsHtml = p.tips.map(function(t){
+      return '<div style="display:flex;align-items:flex-start;gap:7px;margin-bottom:6px;font-size:13px;color:#4B4B68">'
+        +'<span style="color:'+cityColor+';font-weight:800;flex-shrink:0">·</span>'
+        +'<span>'+t+'</span></div>';
+    }).join('');
+
+    return '<div style="background:#fff;border-radius:20px;box-shadow:0 2px 12px rgba(0,0,0,0.07);overflow:hidden;border:1px solid #f0f0f5">'
+      // Color header bar
+      +'<div style="background:linear-gradient(135deg,'+cityColor+'22,'+cityColor+'11);padding:14px 16px 12px;border-bottom:1px solid '+cityColor+'22">'
+        +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">'
+          +'<span style="font-size:28px">'+p.emoji+'</span>'
+          +'<div style="flex:1">'
+            +'<div style="font-size:16px;font-weight:800;color:#111118">'+p.name+'</div>'
+            +'<div style="display:flex;gap:6px;margin-top:4px;flex-wrap:wrap">'
+              +'<span style="background:'+cityColor+';color:#fff;font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px">'+cityLabel+'</span>'
+              +'<span style="background:#f5f4fa;color:#9B9BB8;font-size:10px;font-weight:600;padding:2px 9px;border-radius:20px">📍 '+p.area+'</span>'
+              +(p.must?'<span style="background:#FFF3CD;color:#856404;font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px">⭐ חובה</span>':'')
+            +'</div>'
+          +'</div>'
+        +'</div>'
+        // Info row
+        +'<div style="display:flex;gap:12px;flex-wrap:wrap">'
+          +'<span style="font-size:11px;color:#6B7280;display:flex;align-items:center;gap:3px">⏱ '+p.duration+'</span>'
+          +'<span style="font-size:11px;color:#6B7280;display:flex;align-items:center;gap:3px">💴 '+p.price+'</span>'
+          +'<span style="font-size:11px;color:#6B7280;display:flex;align-items:center;gap:3px">🕐 '+p.hours+'</span>'
+        +'</div>'
+      +'</div>'
+      // Description
+      +'<div style="padding:13px 16px 10px">'
+        +'<p style="font-size:14px;color:#4B4B68;line-height:1.6;margin-bottom:10px">'+p.desc+'</p>'
+        // Tips
+        +'<div style="background:#F8F8FC;border-radius:12px;padding:10px 12px">'
+          +'<div style="font-size:11px;font-weight:700;color:#9B9BB8;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">💡 טיפים</div>'
+          +tipsHtml
+        +'</div>'
+        // Day badge
+        +'<div style="margin-top:10px;text-align:left">'
+          +'<span style="font-size:11px;color:#9B9BB8;background:#f5f4fa;padding:3px 10px;border-radius:20px">📅 יום '+p.day+'</span>'
+        +'</div>'
+      +'</div>'
+    +'</div>';
+  }).join('');
+}
+
+
 </script>
 
 <!-- FAB — add expense only -->

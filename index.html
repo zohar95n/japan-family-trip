@@ -1444,6 +1444,14 @@ function startListeners(){
     buildDays();buildFilters();renderRests();buildTransTab();renderHotels();renderBudget();renderFlights();renderPlaces();populateSelects();
     document.querySelectorAll('#hdr-hotels').forEach(function(el){el.textContent=hotels.length;});
     document.getElementById('ov-rests').textContent=(RESTS||[]).filter(Boolean).length;
+  }).catch(function(err){
+    // Firebase failed — load with defaults so app still works
+    console.error('[Firebase] Promise.all failed:', err);
+    DAYS=D0; RESTS=R0; hotels=[]; expenses=[]; visitedActs={}; flights={}; 
+    highlights={}; actNotes={}; mustRests={}; dayPlans={};
+    loaded=true;
+    buildDays();buildFilters();renderRests();buildTransTab();renderHotels();renderBudget();renderFlights();renderPlaces();populateSelects();
+    setSync('off');
   });
   db.ref('days').on('value',s=>{DAYS=s.val()||D0;if(loaded){buildDays();buildFilters();renderRests();}});
   db.ref('rests').on('value',s=>{RESTS=s.val()||R0;if(loaded){buildFilters();renderRests();}});
@@ -2895,7 +2903,45 @@ function renderPlaces(){
   }).join('');
 }
 
+// ===== STARTUP =====
+document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',function(){
+  document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('on'));
+  this.classList.add('on');
+  var p=document.getElementById('pnl-'+this.dataset.tab);if(p)p.classList.add('on');
+}));
 
+// Category filter for budget
+document.querySelectorAll('#exp-cat-filter .fb').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('#exp-cat-filter .fb').forEach(function(x){x.classList.remove('on');});
+    this.classList.add('on');
+    activeCatFilter=this.dataset.cf||'all';
+    renderBudget();
+  });
+});
+
+// Countdown
+var _tripStart=new Date('2026-09-16');
+var _daysLeft=Math.ceil((_tripStart-new Date())/86400000);
+var _cntText=_daysLeft>0?String(_daysLeft):'🎌';
+document.querySelectorAll('#cnt').forEach(function(el){el.textContent=_cntText;});
+
+// Safety timeout — if Firebase doesn't respond in 6s, load with defaults
+setTimeout(function(){
+  if(!loaded){
+    console.warn('[timeout] Firebase slow — loading with defaults');
+    DAYS=D0; RESTS=R0;
+    loaded=true;
+    buildDays();buildFilters();renderRests();buildTransTab();
+    renderHotels();renderBudget();renderFlights();renderPlaces();populateSelects();
+    setSync('off');
+  }
+},6000);
+
+setupBudgetListeners();
+initData();
+startListeners();
 </script>
 
 <!-- FAB — add expense only -->

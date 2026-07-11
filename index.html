@@ -1291,7 +1291,7 @@ const TYPE_COLORS={tokyo:'#3b82f6',hakone:'#10b981',alps:'#f59e0b',kyoto:'#e8628
 const TYPE_BG={tokyo:'#dbeafe',hakone:'#d1fae5',alps:'#fef3c7',kyoto:'#fce4ec',osaka:'#ede9fe',park:'#e5e7eb'};
 const TYPE_LABEL={tokyo:'טוקיו',hakone:'האקונה',alps:'האלפים',kyoto:'קיוטו',osaka:'אוסקה',park:'פארק'};
 
-let DAYS=[],RESTS=[],hotels=[],expenses=[],visitedActs={};
+let DAYS=[],RESTS=[],hotels=[],expenses=[],flights=[],visitedActs={};
 let _savingExpenses=false;
 let pF='all',lF='all',dF='all';
 let placeSlot='morning',placeType='⛩️';
@@ -1447,7 +1447,7 @@ function startListeners(){
   }).catch(function(err){
     // Firebase failed — load with defaults so app still works
     console.error('[Firebase] Promise.all failed:', err);
-    DAYS=D0; RESTS=R0; hotels=[]; expenses=[]; visitedActs={}; flights={}; 
+    DAYS=D0; RESTS=R0; flights=flights||[]; hotels=[]; expenses=[]; visitedActs={}; flights={}; 
     highlights={}; actNotes={}; mustRests={}; dayPlans={};
     loaded=true;
     buildDays();buildFilters();renderRests();buildTransTab();renderHotels();renderBudget();renderFlights();renderPlaces();populateSelects();
@@ -2903,6 +2903,35 @@ function renderPlaces(){
   }).join('');
 }
 
+
+function setupBudgetListeners(){
+  var today = new Date();
+  var dateStr = today.getDate() + '/' + (today.getMonth()+1) + '/' + today.getFullYear();
+  var lblEl = document.getElementById('exp-date-lbl');
+  if(lblEl) lblEl.textContent = '📅 תאריך: ' + dateStr;
+
+  var amtEl = document.getElementById('exp-amt');
+  var curEl = document.getElementById('exp-cur');
+  var prevEl = document.getElementById('exp-preview');
+  if(amtEl) amtEl.addEventListener('input', function(){
+    if(!prevEl) return;
+    var a = parseFloat(amtEl.value);
+    var cur = curEl ? curEl.value : 'ILS';
+    if(!a || a<=0 || cur==='ILS'){ prevEl.textContent=''; return; }
+    prevEl.textContent = (cur==='JPY'?'¥':'$') + a.toLocaleString() + ' = ' + fmtILS(toILS(a,cur));
+  });
+  if(curEl && amtEl) curEl.addEventListener('change', function(){
+    amtEl.dispatchEvent(new Event('input'));
+  });
+
+  // Wire add button via addEventListener
+  var addBtn = document.getElementById('do-add-expense');
+  if(addBtn) addBtn.addEventListener('click', function(e){
+    e.preventDefault();
+    addExpense();
+  });
+}
+
 // ===== STARTUP =====
 document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',function(){
   document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('on'));
@@ -2931,7 +2960,7 @@ document.querySelectorAll('#cnt').forEach(function(el){el.textContent=_cntText;}
 setTimeout(function(){
   if(!loaded){
     console.warn('[timeout] Firebase slow — loading with defaults');
-    DAYS=D0; RESTS=R0;
+    DAYS=D0; RESTS=R0; flights=flights||[];
     loaded=true;
     buildDays();buildFilters();renderRests();buildTransTab();
     renderHotels();renderBudget();renderFlights();renderPlaces();populateSelects();
